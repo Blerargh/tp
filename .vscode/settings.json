@@ -45,7 +45,7 @@
     "editor.defaultFormatter": "yzhang.markdown-all-in-one",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-      "source.fixAll.markdownlint": true
+      "source.fixAll.markdownlint": "always"
     }
   },
   "markdown.extension.tableFormatter.enabled": true,
@@ -64,6 +64,9 @@
     },
     "strong-style": {
       "style": "asterisk"
+    },
+    "emphasis-style": {
+      "style": "underscore"
     },
     "table-column-style": {
       "style": "aligned"
