@@ -1,5 +1,6 @@
 package cpp.model;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import cpp.logic.commands.CommandTestUtil;
 import cpp.model.assignment.Assignment;
+import cpp.model.assignment.Name;
 import cpp.model.person.Person;
 import cpp.model.person.exceptions.DuplicatePersonException;
 import cpp.testutil.Assert;
@@ -78,7 +80,8 @@ public class AddressBookTest {
 
     @Test
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
-        Assert.assertThrows(UnsupportedOperationException.class, () -> this.addressBook.getPersonList().remove(0));
+        Assert.assertThrows(UnsupportedOperationException.class,
+                () -> this.addressBook.getPersonList().remove(0));
     }
 
     @Test
@@ -86,6 +89,52 @@ public class AddressBookTest {
         String expected = AddressBook.class.getCanonicalName() + "{persons=" + this.addressBook.getPersonList()
                 + ", assignments=" + this.addressBook.getAssignmentList() + "}";
         Assertions.assertEquals(expected, this.addressBook.toString());
+    }
+
+    @Test
+    public void hasAssignment_nullAssignment_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class,
+                () -> this.addressBook.hasAssignment(null));
+    }
+
+    @Test
+    public void hasAssignment_assignmentNotInAddressBook_returnsFalse() {
+        Assignment assignment = new Assignment(new Name("Assignment 1"),
+                LocalDateTime.of(2020, 1, 1, 10, 0));
+        Assertions.assertFalse(this.addressBook.hasAssignment(assignment));
+    }
+
+    @Test
+    public void hasAssignment_assignmentInAddressBook_returnsTrue() {
+        Assignment assignment = new Assignment(new Name("Assignment 1"),
+                LocalDateTime.of(2020, 1, 1, 10, 0));
+        this.addressBook.addAssignment(assignment);
+        Assertions.assertTrue(this.addressBook.hasAssignment(assignment));
+    }
+
+    @Test
+    public void hasAssignment_assignmentWithSameIdentityFieldsInAddressBook_returnsTrue() {
+        Assignment assignment = new Assignment(new Name("Assignment 1"),
+                LocalDateTime.of(2020, 1, 1, 10, 0));
+        this.addressBook.addAssignment(assignment);
+        // Same name (identity), different deadline
+        Assignment editedAssignment = new Assignment(new Name("Assignment 1"),
+                LocalDateTime.of(2021, 1, 1, 10, 0));
+        Assertions.assertTrue(this.addressBook.hasAssignment(editedAssignment));
+    }
+
+    @Test
+    public void addAssignment_nullAssignment_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class,
+                () -> this.addressBook.addAssignment(null));
+    }
+
+    @Test
+    public void addAssignment_validAssignment_addSuccessful() {
+        Assignment assignment = new Assignment(new Name("Assignment 1"),
+                LocalDateTime.of(2020, 1, 1, 10, 0));
+        this.addressBook.addAssignment(assignment);
+        Assertions.assertTrue(this.addressBook.hasAssignment(assignment));
     }
 
     /**
