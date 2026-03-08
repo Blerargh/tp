@@ -168,12 +168,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public boolean allocateAssignmentToPerson(Assignment assignment, Person person) {
+        public boolean allocateAssignmentToContact(Assignment assignment, Contact contact) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public boolean unallocateAssignmentFromPerson(Assignment assignment, Person person) {
+        public boolean unallocateAssignmentFromContact(Assignment assignment, Contact contact) {
             throw new AssertionError("This method should not be called.");
         }
     }

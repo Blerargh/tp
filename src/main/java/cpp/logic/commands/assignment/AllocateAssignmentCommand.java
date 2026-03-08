@@ -14,17 +14,17 @@ import cpp.logic.parser.CliSyntax;
 import cpp.model.Model;
 import cpp.model.assignment.Assignment;
 import cpp.model.assignment.Name;
-import cpp.model.person.Person;
+import cpp.model.contact.Contact;
 
 /**
- * Allocates an existing assignment to a person by their displayed indices.
+ * Allocates an existing assignment to a contact by their displayed indices.
  */
 public class AllocateAssignmentCommand extends Command {
 
     public static final String COMMAND_WORD = "allocass";
 
     public static final String MESSAGE_USAGE = AllocateAssignmentCommand.COMMAND_WORD
-            + ": Allocates an assignment to a person. "
+            + ": Allocates an assignment to a contact. "
             + "Parameters: "
             + CliSyntax.PREFIX_NAME + "ASSIGNMENT NAME "
             + "[" + CliSyntax.PREFIX_CLASS + "CLASS NAME] "
@@ -45,7 +45,7 @@ public class AllocateAssignmentCommand extends Command {
 
     /**
      * Creates an AllocateAssignmentCommand with the specified assignment and
-     * person indices.
+     * contact indices.
      */
     public AllocateAssignmentCommand(Name assignmentName, List<Index> contactIndices) {
         Objects.requireNonNull(assignmentName);
@@ -66,9 +66,9 @@ public class AllocateAssignmentCommand extends Command {
             throw new CommandException(AllocateAssignmentCommand.MESSAGE_INVALID_ASSIGNMENT_NAME);
         }
 
-        List<Person> lastShownPersonList = model.getFilteredPersonList();
+        List<Contact> lastShownContactList = model.getFilteredContactList();
 
-        return this.allocateToContacts(model, assignmentToAllocate, lastShownPersonList);
+        return this.allocateToContacts(model, assignmentToAllocate, lastShownContactList);
     }
 
     @Override
@@ -92,27 +92,27 @@ public class AllocateAssignmentCommand extends Command {
     }
 
     private CommandResult allocateToContacts(Model model, Assignment assignmentToAllocate,
-            List<Person> lastShownPersonList) throws CommandException {
-        StringBuilder allocatedPersons = new StringBuilder();
+            List<Contact> lastShownContactList) throws CommandException {
+        StringBuilder allocatedContacts = new StringBuilder();
         boolean anyAllocated = false;
         int allocatedCount = 0;
 
         for (Index idx : this.contactIndices) {
-            if (idx.getZeroBased() >= lastShownPersonList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            if (idx.getZeroBased() >= lastShownContactList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
             }
 
-            Person person = lastShownPersonList.get(idx.getZeroBased());
-            boolean allocated = model.allocateAssignmentToPerson(assignmentToAllocate, person);
+            Contact contact = lastShownContactList.get(idx.getZeroBased());
+            boolean allocated = model.allocateAssignmentToContact(assignmentToAllocate, contact);
 
             if (!allocated) {
                 continue;
             }
 
-            if (allocatedPersons.length() > 0) {
-                allocatedPersons.append("; ");
+            if (allocatedContacts.length() > 0) {
+                allocatedContacts.append("; ");
             }
-            allocatedPersons.append(person.getName().fullName);
+            allocatedContacts.append(contact.getName().fullName);
             anyAllocated = true;
             allocatedCount++;
         }
@@ -122,7 +122,7 @@ public class AllocateAssignmentCommand extends Command {
         }
 
         return new CommandResult(String.format(AllocateAssignmentCommand.MESSAGE_SUCCESS,
-                Messages.format(assignmentToAllocate), allocatedCount, allocatedPersons.toString()));
+                Messages.format(assignmentToAllocate), allocatedCount, allocatedContacts.toString()));
     }
 
 }

@@ -102,12 +102,12 @@ public interface Model {
     void addAssignment(Assignment assignment);
 
     /**
-     * Assigns the given assignment to the given person.
+     * Assigns the given assignment to the given contact.
      */
-    boolean allocateAssignmentToPerson(Assignment assignment, Person person);
+    boolean allocateAssignmentToContact(Assignment assignment, Contact contact);
 
     /**
-     * Unassigns the given assignment from the given person.
+     * Unassigns the given assignment from the given contact.
      */
-    boolean unallocateAssignmentFromPerson(Assignment assignment, Person person);
+    boolean unallocateAssignmentFromContact(Assignment assignment, Contact contact);
 }
