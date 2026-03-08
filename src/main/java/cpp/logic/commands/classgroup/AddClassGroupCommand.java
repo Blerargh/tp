@@ -3,7 +3,6 @@ package cpp.logic.commands.classgroup;
 import java.util.Objects;
 
 import cpp.commons.util.ToStringBuilder;
-import cpp.logic.commands.AddCommand;
 import cpp.logic.commands.Command;
 import cpp.logic.commands.CommandResult;
 import cpp.logic.parser.CliSyntax;
@@ -17,7 +16,7 @@ public class AddClassGroupCommand extends Command {
 
     public static final String COMMAND_WORD = "addclass";
 
-    public static final String MESSAGE_USAGE = AddCommand.COMMAND_WORD + ": Defines a new class grouping. "
+    public static final String MESSAGE_USAGE = AddClassGroupCommand.COMMAND_WORD + ": Defines a new class grouping. "
             + "Parameters: "
             + CliSyntax.PREFIX_NAME + "NAME "
             + "[" + CliSyntax.PREFIX_TAG + "TAG]...\n"
