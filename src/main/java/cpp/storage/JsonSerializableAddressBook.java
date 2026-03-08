@@ -12,6 +12,7 @@ import cpp.commons.exceptions.IllegalValueException;
 import cpp.model.AddressBook;
 import cpp.model.ReadOnlyAddressBook;
 import cpp.model.assignment.Assignment;
+import cpp.model.classgroup.ClassGroup;
 import cpp.model.person.Person;
 
 /**
@@ -22,9 +23,11 @@ class JsonSerializableAddressBook {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
     public static final String MESSAGE_DUPLICATE_ASSIGNMENT = "Assignments list contains duplicate assignment(s).";
+    public static final String MESSAGE_DUPLICATE_CLASS_GROUP = "Class groups list contains duplicate class group(s).";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
     private final List<JsonAdaptedAssignment> assignments = new ArrayList<>();
+    private final List<JsonAdaptedClassGroup> classGroups = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonSerializableAddressBook} with the given persons and
@@ -32,12 +35,16 @@ class JsonSerializableAddressBook {
      */
     @JsonCreator
     public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons,
-            @JsonProperty("assignments") List<JsonAdaptedAssignment> assignments) {
+            @JsonProperty("assignments") List<JsonAdaptedAssignment> assignments,
+            @JsonProperty("classGroups") List<JsonAdaptedClassGroup> classGroups) {
         if (persons != null) {
             this.persons.addAll(persons);
         }
         if (assignments != null) {
             this.assignments.addAll(assignments);
+        }
+        if (classGroups != null) {
+            this.classGroups.addAll(classGroups);
         }
     }
 
@@ -48,8 +55,11 @@ class JsonSerializableAddressBook {
      *               {@code JsonSerializableAddressBook}.
      */
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
-        this.persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
+        this.persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new)
+                .collect(Collectors.toList()));
         this.assignments.addAll(source.getAssignmentList().stream().map(JsonAdaptedAssignment::new)
+                .collect(Collectors.toList()));
+        this.classGroups.addAll(source.getClassGroupList().stream().map(JsonAdaptedClassGroup::new)
                 .collect(Collectors.toList()));
     }
 
@@ -74,6 +84,14 @@ class JsonSerializableAddressBook {
                 throw new IllegalValueException(JsonSerializableAddressBook.MESSAGE_DUPLICATE_ASSIGNMENT);
             }
             addressBook.addAssignment(assignment);
+        }
+
+        for (JsonAdaptedClassGroup jsonAdaptedClassGroup : this.classGroups) {
+            ClassGroup classGroup = jsonAdaptedClassGroup.toModelType();
+            if (addressBook.hasClassGroup(classGroup)) {
+                throw new IllegalValueException(JsonSerializableAddressBook.MESSAGE_DUPLICATE_CLASS_GROUP);
+            }
+            addressBook.addClassGroup(classGroup);
         }
 
         return addressBook;

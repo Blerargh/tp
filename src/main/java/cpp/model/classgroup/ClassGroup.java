@@ -27,6 +27,19 @@ public class ClassGroup {
         this.name = name;
     }
 
+    /**
+     * Creates a class grouping with the given id and name. Every field must be
+     * present and not null.
+     *
+     * This constructor is used for loading from storage, where the id is already
+     * available.
+     */
+    public ClassGroup(String id, Name name) {
+        CollectionUtil.requireAllNonNull(id, name);
+        this.id = id;
+        this.name = name;
+    }
+
     public String getId() {
         return this.id;
     }
