@@ -80,6 +80,6 @@ configurations.all {
         force 'org.junit.platform:junit-platform-commons:1.9.3'
         force 'org.junit.platform:junit-platform-launcher:1.9.3'
     }
-} 
+}
 
 defaultTasks 'clean', 'test'
