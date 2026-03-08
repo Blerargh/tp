@@ -9,6 +9,7 @@ import cpp.commons.core.GuiSettings;
 import cpp.commons.core.LogsCenter;
 import cpp.commons.util.CollectionUtil;
 import cpp.model.assignment.Assignment;
+import cpp.model.classgroup.ClassGroup;
 import cpp.model.person.Person;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -123,6 +124,18 @@ public class ModelManager implements Model {
     public void addAssignment(Assignment assignment) {
         Objects.requireNonNull(assignment);
         this.addressBook.addAssignment(assignment);
+    }
+
+    @Override
+    public boolean hasClassGroup(ClassGroup classGroup) {
+        Objects.requireNonNull(classGroup);
+        return this.addressBook.hasClassGroup(classGroup);
+    }
+
+    @Override
+    public void addClassGroup(ClassGroup classGroup) {
+        Objects.requireNonNull(classGroup);
+        this.addressBook.addClassGroup(classGroup);
     }
 
     // =========== Filtered Person List Accessors

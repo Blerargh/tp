@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import cpp.commons.core.GuiSettings;
 import cpp.model.assignment.Assignment;
+import cpp.model.classgroup.ClassGroup;
 import cpp.model.person.Person;
 import javafx.collections.ObservableList;
 
@@ -100,4 +101,15 @@ public interface Model {
      * Adds the given assignment.
      */
     void addAssignment(Assignment assignment);
+
+    /**
+     * Returns true if a class group with the same identity as {@code classGroup}
+     * exists in the class group list.
+     */
+    boolean hasClassGroup(ClassGroup classGroup);
+
+    /**
+     * Adds the given class group.
+     */
+    void addClassGroup(ClassGroup classGroup);
 }

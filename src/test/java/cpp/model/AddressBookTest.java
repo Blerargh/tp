@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import cpp.logic.commands.CommandTestUtil;
 import cpp.model.assignment.Assignment;
 import cpp.model.assignment.Name;
+import cpp.model.classgroup.ClassGroup;
 import cpp.model.person.Person;
 import cpp.model.person.exceptions.DuplicatePersonException;
 import cpp.testutil.Assert;
@@ -87,7 +88,8 @@ public class AddressBookTest {
     @Test
     public void toStringMethod() {
         String expected = AddressBook.class.getCanonicalName() + "{persons=" + this.addressBook.getPersonList()
-                + ", assignments=" + this.addressBook.getAssignmentList() + "}";
+                + ", assignments=" + this.addressBook.getAssignmentList()
+                + ", classGroups=" + this.addressBook.getClassGroupList() + "}";
         Assertions.assertEquals(expected, this.addressBook.toString());
     }
 
@@ -186,6 +188,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<Assignment> getAssignmentList() {
             throw new UnsupportedOperationException("Method 'getAssignmentList' should not be called.");
+        }
+
+        @Override
+        public ObservableList<ClassGroup> getClassGroupList() {
+            throw new UnsupportedOperationException("Method 'getClassGroupList' should not be called.");
         }
     }
 
