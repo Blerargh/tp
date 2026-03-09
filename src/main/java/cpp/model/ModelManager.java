@@ -9,6 +9,7 @@ import cpp.commons.core.GuiSettings;
 import cpp.commons.core.LogsCenter;
 import cpp.commons.util.CollectionUtil;
 import cpp.model.assignment.Assignment;
+import cpp.model.classgroup.ClassGroup;
 import cpp.model.contact.Contact;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -109,7 +110,6 @@ public class ModelManager implements Model {
     @Override
     public void setContact(Contact target, Contact editedContact) {
         CollectionUtil.requireAllNonNull(target, editedContact);
-
         this.addressBook.setContact(target, editedContact);
     }
 
@@ -123,6 +123,29 @@ public class ModelManager implements Model {
     public void addAssignment(Assignment assignment) {
         Objects.requireNonNull(assignment);
         this.addressBook.addAssignment(assignment);
+    }
+
+    @Override
+    public boolean hasClassGroup(ClassGroup classGroup) {
+        Objects.requireNonNull(classGroup);
+        return this.addressBook.hasClassGroup(classGroup);
+    }
+
+    @Override
+    public void addClassGroup(ClassGroup classGroup) {
+        Objects.requireNonNull(classGroup);
+        this.addressBook.addClassGroup(classGroup);
+    }
+
+    @Override
+    public void setClassGroup(ClassGroup target, ClassGroup editedClassGroup) {
+        CollectionUtil.requireAllNonNull(target, editedClassGroup);
+        this.addressBook.setClassGroup(target, editedClassGroup);
+    }
+
+    @Override
+    public void deleteClassGroup(ClassGroup target) {
+        this.addressBook.removeClassGroup(target);
     }
 
     // =========== Filtered Contact List Accessors
