@@ -17,6 +17,7 @@ import cpp.model.Model;
 import cpp.model.ReadOnlyAddressBook;
 import cpp.model.ReadOnlyUserPrefs;
 import cpp.model.assignment.Assignment;
+import cpp.model.assignment.ContactAssignment;
 import cpp.testutil.Assert;
 import cpp.testutil.AssignmentBuilder;
 import cpp.testutil.TypicalAssignments;
@@ -176,12 +177,12 @@ public class AddAssignmentCommandTest {
         }
 
         @Override
-        public void allocateAssignmentToContact(Assignment assignment, cpp.model.contact.Contact contact) {
+        public void addContactAssignment(ContactAssignment ca) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void unallocateAssignmentFromContact(Assignment assignment, cpp.model.contact.Contact contact) {
+        public void removeContactAssignment(ContactAssignment ca) {
             throw new AssertionError("This method should not be called.");
         }
     }

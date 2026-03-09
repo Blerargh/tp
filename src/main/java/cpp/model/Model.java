@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import cpp.commons.core.GuiSettings;
 import cpp.model.assignment.Assignment;
+import cpp.model.assignment.ContactAssignment;
 import cpp.model.contact.Contact;
 import javafx.collections.ObservableList;
 
@@ -102,12 +103,12 @@ public interface Model {
     void addAssignment(Assignment assignment);
 
     /**
-     * Assigns the given assignment to the given contact.
+     * Registers and persists the {@code ContactAssignment} allocation.
      */
-    void allocateAssignmentToContact(Assignment assignment, Contact contact);
+    void addContactAssignment(ContactAssignment ca);
 
     /**
-     * Unassigns the given assignment from the given contact.
+     * Deregisters and persists the {@code ContactAssignment} unallocation.
      */
-    void unallocateAssignmentFromContact(Assignment assignment, Contact contact);
+    void removeContactAssignment(ContactAssignment ca);
 }

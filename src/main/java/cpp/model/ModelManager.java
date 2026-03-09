@@ -11,10 +11,9 @@ import cpp.commons.util.CollectionUtil;
 import cpp.model.assignment.Assignment;
 import cpp.model.assignment.AssignmentManager;
 import cpp.model.assignment.ContactAssignment;
-import cpp.model.assignment.exceptions.AssignmentNotFoundException;
 import cpp.model.assignment.exceptions.ContactAlreadyAllocatedAssignmentException;
+import cpp.model.assignment.exceptions.ContactAssignmentNotFoundException;
 import cpp.model.contact.Contact;
-import cpp.model.contact.exceptions.ContactNotFoundException;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
@@ -96,6 +95,8 @@ public class ModelManager implements Model {
         return this.addressBook;
     }
 
+    // =========== Contact-level operations
+    // ===============================================================================
     @Override
     public boolean hasContact(Contact contact) {
         Objects.requireNonNull(contact);
@@ -120,6 +121,8 @@ public class ModelManager implements Model {
         this.addressBook.setContact(target, editedContact);
     }
 
+    // =========== Assignment-level operations
+    // ===============================================================================
     @Override
     public boolean hasAssignment(Assignment assignment) {
         Objects.requireNonNull(assignment);
@@ -133,45 +136,25 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void allocateAssignmentToContact(Assignment assignment, Contact contact) {
-        Objects.requireNonNull(assignment);
-        Objects.requireNonNull(contact);
-        if (!this.addressBook.hasAssignment(assignment)) {
-            throw new AssignmentNotFoundException();
-        }
-
-        if (!this.addressBook.hasContact(contact)) {
-            throw new ContactNotFoundException();
-        }
-
-        ContactAssignment ca = new ContactAssignment(assignment.getId(), contact.getId());
+    public void addContactAssignment(ContactAssignment ca) {
+        Objects.requireNonNull(ca);
         if (this.addressBook.hasContactAssignment(ca)) {
             throw new ContactAlreadyAllocatedAssignmentException();
         }
 
-        this.assignmentManager.allocate(ca);
+        this.assignmentManager.registerContactAssignment(ca);
         this.addressBook.addContactAssignment(ca);
     }
 
     @Override
-    public void unallocateAssignmentFromContact(Assignment assignment, Contact contact) {
-        Objects.requireNonNull(assignment);
-        Objects.requireNonNull(contact);
-        if (!this.addressBook.hasAssignment(assignment)) {
-            throw new AssignmentNotFoundException();
+    public void removeContactAssignment(ContactAssignment ca) {
+        Objects.requireNonNull(ca);
+        if (!this.addressBook.hasContactAssignment(ca)) {
+            throw new ContactAssignmentNotFoundException();
         }
 
-        if (!this.addressBook.hasContact(contact)) {
-            throw new ContactNotFoundException();
-        }
-
-        ContactAssignment ca = new ContactAssignment(assignment.getId(), contact.getId());
-
-        this.assignmentManager.unallocate(assignment.getId(), contact.getId());
-
-        if (this.addressBook.hasContactAssignment(ca)) {
-            this.addressBook.removeContactAssignment(ca);
-        }
+        this.assignmentManager.deregisterContactAssignment(ca);
+        this.addressBook.removeContactAssignment(ca);
     }
 
     // =========== Filtered Contact List Accessors
