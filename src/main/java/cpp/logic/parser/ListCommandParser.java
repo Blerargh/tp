@@ -15,6 +15,8 @@ public class ListCommandParser implements Parser<ListCommand> {
             return new ListCommand("contacts");
         } else if (trimmedArgs.equals("assignments")) {
             return new ListCommand("assignments");
+        } else if (trimmedArgs.equals("classes")) {
+            return new ListCommand("classes");
         } else if (trimmedArgs.isEmpty()) {
             throw new ParseException(ListCommand.MESSAGE_TAB_EMPTY);
         } else {

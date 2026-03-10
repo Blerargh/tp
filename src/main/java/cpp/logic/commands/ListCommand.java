@@ -12,6 +12,7 @@ public class ListCommand extends Command {
     public static final String COMMAND_WORD = "list";
     public static final String MESSAGE_SUCCESS = "Listed all contacts";
     public static final String MESSAGE_ASSIGNMENTS = "Listed all assignments";
+    public static final String MESSAGE_CLASSES = "Listed all classes";
     public static final String MESSAGE_TAB_EMPTY = "Tab cannot be empty!";
     public static final String MESSAGE_TAB_INVALID = "Tab must be one of the following: contacts, classes, assignments";
     private String tab;
@@ -25,10 +26,10 @@ public class ListCommand extends Command {
             return new CommandResult(ListCommand.MESSAGE_ASSIGNMENTS, "assignments");
         } else if (this.tab.equals("contacts")) {
             return new CommandResult(ListCommand.MESSAGE_SUCCESS, "contacts");
+        } else if (this.tab.equals("classes")) {
+            return new CommandResult(ListCommand.MESSAGE_CLASSES, "classes");
         }
-        return new CommandResult(ListCommand.MESSAGE_SUCCESS, "contacts");
-    }
-
+        return new CommandResult(ListCommand.MESSAGE_SUCCESS);
     }
 
     public ListCommand(String tab) {

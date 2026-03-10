@@ -11,6 +11,9 @@ public class CommandResult {
 
     private final String feedbackToUser;
 
+    /** The tab to be shown to the user. */
+    private final String tab;
+
     /** Help information should be shown to the user. */
     private final boolean showHelp;
 
@@ -20,10 +23,11 @@ public class CommandResult {
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, String tab) {
         this.feedbackToUser = Objects.requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
+        this.tab = tab;
     }
 
     /**
@@ -31,11 +35,23 @@ public class CommandResult {
      * and other fields set to their default value.
      */
     public CommandResult(String feedbackToUser) {
-        this(feedbackToUser, false, false);
+        this(feedbackToUser, false, false, null);
+    }
+
+    public CommandResult(String feedbackToUser, String tab) {
+        this(feedbackToUser, false, false, tab);
     }
 
     public String getFeedbackToUser() {
         return this.feedbackToUser;
+    }
+
+    public String getTab() {
+        return this.tab;
+    }
+
+    public boolean isTabNull() {
+        return this.tab == null;
     }
 
     public boolean isShowHelp() {

@@ -11,6 +11,8 @@ import cpp.logic.parser.exceptions.ParseException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -49,6 +51,18 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private TabPane mainTabPane;
+
+    @FXML
+    private Tab contactsTab;
+
+    @FXML
+    private Tab classesTab;
+
+    @FXML
+    private Tab assignmentsTab;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -164,6 +178,25 @@ public class MainWindow extends UiPart<Stage> {
         this.primaryStage.hide();
     }
 
+    private void handleListCommand(CommandResult commandResult) {
+        String targetTab = commandResult.getTab();
+        if (targetTab != null) {
+            switch (targetTab) {
+            case "contacts":
+                this.mainTabPane.getSelectionModel().select(this.contactsTab);
+                break;
+            case "classes":
+                this.mainTabPane.getSelectionModel().select(this.classesTab);
+                break;
+            case "assignments":
+                this.mainTabPane.getSelectionModel().select(this.assignmentsTab);
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
     public ContactListPanel getContactListPanel() {
         return this.contactListPanel;
     }
@@ -186,6 +219,8 @@ public class MainWindow extends UiPart<Stage> {
             if (commandResult.isExit()) {
                 this.handleExit();
             }
+
+            this.handleListCommand(commandResult);
 
             return commandResult;
         } catch (CommandException | ParseException e) {
