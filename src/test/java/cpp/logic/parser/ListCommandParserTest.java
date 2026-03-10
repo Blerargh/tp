@@ -11,7 +11,7 @@ public class ListCommandParserTest {
     @Test
     public void parse_emptyArg_throwsParseException() {
         CommandParserTestUtil.assertParseFailure(this.parser, "     ",
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_TAB_EMPTY));
     }
 
     @Test

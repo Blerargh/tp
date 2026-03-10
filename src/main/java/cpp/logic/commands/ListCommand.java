@@ -12,24 +12,27 @@ public class ListCommand extends Command {
     public static final String COMMAND_WORD = "list";
     public static final String MESSAGE_SUCCESS = "Listed all contacts";
     public static final String MESSAGE_ASSIGNMENTS = "Listed all assignments";
-    public static final String MESSAGE_USAGE = ListCommand.COMMAND_WORD
-            + ": Lists all contacts or assignments in the address book.\n"
-            + "Parameters: [contacts/assignments]\n"
-            + "Example: " + ListCommand.COMMAND_WORD + " contacts";
-    private String listType;
+    public static final String MESSAGE_TAB_EMPTY = "Tab cannot be empty!";
+    public static final String MESSAGE_TAB_INVALID = "Tab must be one of the following: contacts, classes, assignments";
+    private String tab;
 
     @Override
     public CommandResult execute(Model model) {
         Objects.requireNonNull(model);
         model.updateFilteredContactList(Model.PREDICATE_SHOW_ALL_CONTACTS);
-        if (this.listType.equals("assignments")) {
-            return new CommandResult(ListCommand.MESSAGE_ASSIGNMENTS);
+
+        if (this.tab.equals("assignments")) {
+            return new CommandResult(ListCommand.MESSAGE_ASSIGNMENTS, "assignments");
+        } else if (this.tab.equals("contacts")) {
+            return new CommandResult(ListCommand.MESSAGE_SUCCESS, "contacts");
         }
-        return new CommandResult(ListCommand.MESSAGE_SUCCESS);
+        return new CommandResult(ListCommand.MESSAGE_SUCCESS, "contacts");
     }
 
-    public ListCommand(String listType) {
-        this.listType = listType;
+    }
+
+    public ListCommand(String tab) {
+        this.tab = tab;
     }
 
     @Override
@@ -44,6 +47,6 @@ public class ListCommand extends Command {
         }
 
         ListCommand otherListCommand = (ListCommand) other;
-        return this.listType.equals(otherListCommand.listType);
+        return this.tab.equals(otherListCommand.tab);
     }
 }
