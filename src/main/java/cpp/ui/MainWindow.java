@@ -8,6 +8,7 @@ import cpp.logic.Logic;
 import cpp.logic.commands.CommandResult;
 import cpp.logic.commands.exceptions.CommandException;
 import cpp.logic.parser.exceptions.ParseException;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -136,6 +137,14 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
         this.commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        // Set default tab to contacts
+        Platform.runLater(() -> {
+            if (this.mainTabPane != null) {
+                this.mainTabPane.getSelectionModel().select(this.assignmentsTab);
+                this.mainTabPane.getSelectionModel().select(this.contactsTab);
+            }
+        });
     }
 
     /**
