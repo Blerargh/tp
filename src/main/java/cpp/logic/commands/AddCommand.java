@@ -16,7 +16,6 @@ import cpp.model.assignment.exceptions.ContactAlreadyAllocatedAssignmentExceptio
 //import cpp.model.classgroup.ClassGroupName;
 import cpp.model.contact.Contact;
 
-
 /**
  * Adds a contact to the address book.
  */
@@ -45,8 +44,8 @@ public class AddCommand extends Command {
     public static final String MESSAGE_INVALID_ASSIGNMENT_NAME = "The assignment name provided is invalid";
 
     private final Contact toAdd;
-    private final AssignmentName assignmentName;
     // private final ClassGroupName classGroupName;
+    private final AssignmentName assignmentName;
 
     public AddCommand(Contact contact) {
         this(contact, null);
@@ -70,6 +69,8 @@ public class AddCommand extends Command {
         }
 
         model.addContact(this.toAdd);
+
+        // TODO: add classGroup allocation
 
         if (this.assignmentName != null) {
             List<Assignment> assignmentList = model.getAddressBook().getAssignmentList();

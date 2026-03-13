@@ -15,7 +15,6 @@ import cpp.model.contact.Email;
 import cpp.model.contact.Phone;
 import cpp.model.tag.Tag;
 
-
 /**
  * Parses input arguments and creates a new AddCommand object
  */
@@ -46,9 +45,11 @@ public class AddCommandParser implements Parser<AddCommand> {
         Email email = ParserUtil.parseEmail(argMultimap.getValue(CliSyntax.PREFIX_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(CliSyntax.PREFIX_ADDRESS).get());
 
+        // TODO: add classGroup implementation
+
         String assignmentNameValue = argMultimap.getValue(CliSyntax.PREFIX_ASSIGNMENT).orElse("");
-        AssignmentName assignmentName =
-                assignmentNameValue != "" ? ParserUtil.parseAssignmentName(assignmentNameValue) : null;
+        AssignmentName assignmentName = assignmentNameValue != "" ? ParserUtil.parseAssignmentName(assignmentNameValue)
+                : null;
 
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(CliSyntax.PREFIX_TAG));
 
