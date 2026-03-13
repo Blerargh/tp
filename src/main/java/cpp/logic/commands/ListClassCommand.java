@@ -33,4 +33,9 @@ public class ListClassCommand extends ListCommand {
 
         return true;
     }
+
+    @Override
+    public int hashCode() {
+        return ListClassCommand.class.hashCode();
+    }
 }

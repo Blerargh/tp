@@ -71,4 +71,21 @@ public class ListCommandTest {
         Assertions.assertNotEquals(assignment, classCmd);
         Assertions.assertNotEquals(contact, classCmd);
     }
+
+    @Test
+    public void hashCode_equalObjects_sameHashCode() {
+        ListContactCommand command1 = new ListContactCommand();
+        ListContactCommand command2 = new ListContactCommand();
+        Assertions.assertEquals(command1.hashCode(), command2.hashCode());
+    }
+
+    @Test
+    public void hashCode_differentTypes_mayBeDifferent() {
+        ListContactCommand contact = new ListContactCommand();
+        ListAssignmentCommand assignment = new ListAssignmentCommand();
+        // Different types should generally have different hash codes (not required but
+        // typical)
+        // This test documents the behavior
+        Assertions.assertNotEquals(contact, assignment);
+    }
 }

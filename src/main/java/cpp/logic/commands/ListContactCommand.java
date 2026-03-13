@@ -33,4 +33,9 @@ public class ListContactCommand extends ListCommand {
 
         return true;
     }
+
+    @Override
+    public int hashCode() {
+        return ListContactCommand.class.hashCode();
+    }
 }

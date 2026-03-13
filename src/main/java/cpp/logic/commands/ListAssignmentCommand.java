@@ -33,4 +33,9 @@ public class ListAssignmentCommand extends ListCommand {
 
         return true;
     }
+
+    @Override
+    public int hashCode() {
+        return ListAssignmentCommand.class.hashCode();
+    }
 }

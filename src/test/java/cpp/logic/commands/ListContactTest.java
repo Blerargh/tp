@@ -129,4 +129,26 @@ public class ListContactTest {
         String result = command.toString();
         Assertions.assertNotNull(result);
     }
+
+    @Test
+    public void hashCode_sameCommands_returnsTrue() {
+        ListContactCommand command1 = new ListContactCommand();
+        ListContactCommand command2 = new ListContactCommand();
+        Assertions.assertEquals(command1.hashCode(), command2.hashCode());
+    }
+
+    @Test
+    public void equals_twoInstancesOfSameType_returnsTrue() {
+        ListContactCommand command1 = new ListContactCommand();
+        ListContactCommand command2 = new ListContactCommand();
+        // This tests the third branch of equals that just returns true
+        Assertions.assertEquals(command1, command2);
+        Assertions.assertTrue(command1.equals(command2));
+    }
+
+    @Test
+    public void execute_nullModel_throwsNullPointerException() {
+        ListContactCommand command = new ListContactCommand();
+        Assertions.assertThrows(NullPointerException.class, () -> command.execute(null));
+    }
 }
