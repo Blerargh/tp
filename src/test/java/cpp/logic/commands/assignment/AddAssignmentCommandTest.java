@@ -215,7 +215,7 @@ public class AddAssignmentCommandTest {
 
         @Override
         public void updateFilteredAssignmentList(Predicate<Assignment> predicate) {
-            // Empty implementation
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
@@ -225,7 +225,7 @@ public class AddAssignmentCommandTest {
 
         @Override
         public void updateFilteredClassGroupList(Predicate<ClassGroup> predicate) {
-            // Empty implementation
+            throw new AssertionError("This method should not be called.");
         }
     }
 
