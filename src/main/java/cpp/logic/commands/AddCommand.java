@@ -11,7 +11,6 @@ import cpp.model.Model;
 import cpp.model.assignment.Assignment;
 import cpp.model.assignment.AssignmentName;
 import cpp.model.assignment.ContactAssignment;
-import cpp.model.assignment.exceptions.ContactAlreadyAllocatedAssignmentException;
 //import cpp.model.classgroup.ClassGroup;
 //import cpp.model.classgroup.ClassGroupName;
 import cpp.model.contact.Contact;
@@ -68,25 +67,30 @@ public class AddCommand extends Command {
             throw new CommandException(AddCommand.MESSAGE_DUPLICATE_CONTACT);
         }
 
-        model.addContact(this.toAdd);
-
         // TODO: add classGroup allocation
+
+        Assignment assignmentToAllocate = null;
 
         if (this.assignmentName != null) {
             List<Assignment> assignmentList = model.getAddressBook().getAssignmentList();
-            Assignment assignmentToAllocate = Assignment.findAssignment(assignmentList, this.assignmentName);
+            assignmentToAllocate = Assignment.findAssignment(assignmentList, this.assignmentName);
 
             if (assignmentToAllocate == null) {
                 throw new CommandException(AddCommand.MESSAGE_INVALID_ASSIGNMENT_NAME);
             }
-
-            ContactAssignment ca = new ContactAssignment(assignmentToAllocate.getId(), this.toAdd.getId());
-            try {
-                model.addContactAssignment(ca);
-            } catch (ContactAlreadyAllocatedAssignmentException e) {
-                // Should not be reachable
-            }
         }
+
+        // TODO: add classGroup validity check
+
+        // Code under here only if everything is valid
+
+        if (assignmentToAllocate != null) {
+            ContactAssignment ca = new ContactAssignment(assignmentToAllocate.getId(), this.toAdd.getId());
+            model.addContactAssignment(ca);
+        }
+
+        model.addContact(this.toAdd);
+
         return new CommandResult(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(this.toAdd)));
     }
 
