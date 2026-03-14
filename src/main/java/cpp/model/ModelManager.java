@@ -136,6 +136,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void deleteAssignment(Assignment target) {
+        this.addressBook.removeAssignment(target);
+    }
+
+    @Override
     public void addContactAssignment(ContactAssignment ca) {
         Objects.requireNonNull(ca);
         if (this.addressBook.hasContactAssignment(ca)) {
@@ -178,11 +183,6 @@ public class ModelManager implements Model {
     @Override
     public void deleteClassGroup(ClassGroup target) {
         this.addressBook.removeClassGroup(target);
-    }
-
-    @Override
-    public void deleteAssignment(Assignment target) {
-        this.addressBook.removeAssignment(target);
     }
 
     // =========== Filtered Contact List Accessors

@@ -119,6 +119,7 @@ public class ModelManagerTest {
     @Test
     public void deleteContact_contactInAddressBook_removesContact() {
         this.modelManager.addContact(TypicalContacts.ALICE);
+        Assertions.assertTrue(this.modelManager.hasContact(TypicalContacts.ALICE));
         this.modelManager.deleteContact(TypicalContacts.ALICE);
         Assertions.assertFalse(this.modelManager.hasContact(TypicalContacts.ALICE));
     }

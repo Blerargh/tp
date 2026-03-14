@@ -52,7 +52,9 @@ public interface Model {
      */
     void setAddressBook(ReadOnlyAddressBook addressBook);
 
-    /** Returns the AddressBook */
+    /**
+     * Returns the AddressBook.
+     */
     ReadOnlyAddressBook getAddressBook();
 
     /**
@@ -81,7 +83,9 @@ public interface Model {
      */
     void setContact(Contact target, Contact editedContact);
 
-    /** Returns an unmodifiable view of the filtered contact list */
+    /**
+     * Returns an unmodifiable view of the filtered contact list.
+     */
     ObservableList<Contact> getFilteredContactList();
 
     /**
@@ -102,6 +106,12 @@ public interface Model {
      * Adds the given assignment.
      */
     void addAssignment(Assignment assignment);
+
+    /**
+     * Deletes the given assignment.
+     * The assignment must exist in the address book.
+     */
+    void deleteAssignment(Assignment target);
 
     /**
      * Registers and persists the {@code ContactAssignment} allocation.
@@ -138,10 +148,4 @@ public interface Model {
      * The class group must exist in the address book.
      */
     void deleteClassGroup(ClassGroup target);
-
-    /**
-     * Deletes the given assignment.
-     * The assignment must exist in the address book.
-     */
-    void deleteAssignment(Assignment target);
 }

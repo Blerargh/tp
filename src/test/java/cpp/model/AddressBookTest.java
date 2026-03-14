@@ -143,6 +143,7 @@ public class AddressBookTest {
     @Test
     public void removeContact_contactInAddressBook_removesContact() {
         this.addressBook.addContact(TypicalContacts.ALICE);
+        Assertions.assertTrue(this.addressBook.hasContact(TypicalContacts.ALICE));
         this.addressBook.removeContact(TypicalContacts.ALICE);
         Assertions.assertFalse(this.addressBook.hasContact(TypicalContacts.ALICE));
     }

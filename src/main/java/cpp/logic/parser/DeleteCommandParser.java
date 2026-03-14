@@ -36,26 +36,26 @@ public class DeleteCommandParser implements Parser<Command> {
 
     // parse delete contact by one or more space-separated indices
     private DeleteContactCommand parseDeleteContact(ArgumentMultimap argMultimap) throws ParseException {
+        List<Index> indices;
         try {
-            List<Index> indices = ParserUtil.parseContactIndices(
+            indices = ParserUtil.parseContactIndices(
                     argMultimap.getValue(CliSyntax.PREFIX_CONTACT).get());
-            return new DeleteContactCommand(indices);
         } catch (ParseException pe) {
             throw new ParseException(
                     String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);
         }
+        if (indices.isEmpty()) {
+            throw new ParseException(
+                    String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        }
+        return new DeleteContactCommand(indices);
     }
 
     // parse delete assignment by name
     private DeleteAssignmentCommand parseDeleteAssignment(ArgumentMultimap argMultimap) throws ParseException {
-        try {
-            AssignmentName name = ParserUtil.parseAssignmentName(
-                    argMultimap.getValue(CliSyntax.PREFIX_ASSIGNMENT).get());
-            return new DeleteAssignmentCommand(name);
-        } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);
-        }
+        AssignmentName name = ParserUtil.parseAssignmentName(
+                argMultimap.getValue(CliSyntax.PREFIX_ASSIGNMENT).get());
+        return new DeleteAssignmentCommand(name);
     }
 
 }
