@@ -55,6 +55,6 @@ public class DeleteCommandParserTest {
     @Test
     public void parse_emptyContactIndices_throwsParseException() {
         CommandParserTestUtil.assertParseFailure(this.parser, " ct/",
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+                ParserUtil.MESSAGE_EMPTY_INDICES);
     }
 }

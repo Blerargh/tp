@@ -45,8 +45,7 @@ public class DeleteCommandParser implements Parser<Command> {
                     String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);
         }
         if (indices.isEmpty()) {
-            throw new ParseException(
-                    String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+            throw new ParseException(ParserUtil.MESSAGE_EMPTY_INDICES);
         }
         return new DeleteContactCommand(indices);
     }
