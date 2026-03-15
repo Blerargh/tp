@@ -3,7 +3,6 @@ package cpp.logic.commands.assignment;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import cpp.commons.core.index.Index;
 import cpp.commons.util.ToStringBuilder;
@@ -152,10 +151,10 @@ public class UnallocateAssignmentCommand extends Command {
 
     private void unallocateFromContactsByClassGroup(Model model, Assignment assignmentToUnallocate,
             ClassGroup classGroupToUnallocate) {
-        Stream<Contact> contactList = model.getAddressBook().getContactList().stream();
+        List<Contact> contactList = model.getAddressBook().getContactList();
 
         for (String contactId : classGroupToUnallocate.getContactIdSet()) {
-            Contact contact = contactList
+            Contact contact = contactList.stream()
                     .filter(c -> c.getId().equals(contactId))
                     .findAny()
                     .orElse(null);
