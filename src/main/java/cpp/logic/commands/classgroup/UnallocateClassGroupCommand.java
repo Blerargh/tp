@@ -69,7 +69,6 @@ public class UnallocateClassGroupCommand extends Command {
 
         List<Contact> lastShownContactList = model.getFilteredContactList();
         CommandUtil.checkContactIndices(lastShownContactList, this.contactIndices);
-
         this.unallocateContactsFromClassGroup(classGroupToUnallocate, lastShownContactList);
 
         return new CommandResult(
@@ -107,7 +106,7 @@ public class UnallocateClassGroupCommand extends Command {
                 classGroupToUnallocate.unallocateContact(contactToUnallocate.getId());
                 anySuccessfulUnallocation = true;
                 this.unallocatedCount++;
-                this.buildSuccessfullyUnallocatedNames(contactToUnallocate.getName().fullName);
+                this.buildSuccessfullyUnallocatedString(contactToUnallocate.getName().fullName);
             } catch (ContactNotAllocatedClassGroupException e) {
                 // Contact was not allocated to the class group, skip and continue unallocating
                 // the rest of the contacts
@@ -119,7 +118,7 @@ public class UnallocateClassGroupCommand extends Command {
         }
     }
 
-    private void buildSuccessfullyUnallocatedNames(String contactName) {
+    private void buildSuccessfullyUnallocatedString(String contactName) {
         if (this.successfullyUnallocatedNames.length() > 0) {
             this.successfullyUnallocatedNames.append("; ");
         }
