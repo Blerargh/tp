@@ -69,7 +69,7 @@ public class AllocateClassGroupCommandTest {
                         validContact1.getName() + "; " + validContact2.getName()),
                 commandResult.getFeedbackToUser());
         Assertions.assertEquals(2, validClassGroup.getContactIdSet().size());
-        Assertions.assertEquals(2, allocateClassGroupCommand.getSuccessfulAllocations());
+        Assertions.assertEquals(2, modelStub.classGroup.getContactIdSet().size());
         Assertions.assertTrue(validClassGroup.getContactIdSet().contains(validContact1.getId()));
         Assertions.assertTrue(validClassGroup.getContactIdSet().contains(validContact2.getId()));
     }
