@@ -1,5 +1,6 @@
 package cpp.logic.commands.classgroup;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -53,7 +54,7 @@ public class UnallocateClassGroupCommand extends Command {
         Objects.requireNonNull(classGroupName);
         Objects.requireNonNull(contactIndices);
         this.classGroupName = classGroupName;
-        this.contactIndices = contactIndices;
+        this.contactIndices = new ArrayList<>(contactIndices);
     }
 
     @Override
