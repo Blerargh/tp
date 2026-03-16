@@ -52,8 +52,8 @@ public class AddAssignmentCommand extends Command {
     private final Assignment toAdd;
     private final List<Index> contactIndices;
     private final ClassGroupName classGroupName;
-    private int allocatedCount; // Tracks the number of contacts successfully allocated.
-    private StringBuilder allocatedContacts; // Tracks the names of contacts successfully allocated for feedback.
+    private int allocatedCount;
+    private StringBuilder allocatedContacts;
 
     /**
      * Creates an AddAssignmentCommand to add the specified {@code Assignment} and
