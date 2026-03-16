@@ -71,4 +71,16 @@ public class DeleteCommandParserTest {
         CommandParserTestUtil.assertParseFailure(this.parser, " c/",
                 ParserUtil.MESSAGE_EMPTY_CLASS_GROUP_NAME);
     }
+
+    @Test
+    public void parse_contactAndClassPrefixes_throwsParseException() {
+        CommandParserTestUtil.assertParseFailure(this.parser, " ct/1 c/CS2103T10",
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_assignmentAndClassPrefixes_throwsParseException() {
+        CommandParserTestUtil.assertParseFailure(this.parser, " ass/Assignment 1 c/CS2103T10",
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+    }
 }
