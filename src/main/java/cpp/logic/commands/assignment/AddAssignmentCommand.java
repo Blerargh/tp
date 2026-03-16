@@ -1,5 +1,6 @@
 package cpp.logic.commands.assignment;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -62,7 +63,7 @@ public class AddAssignmentCommand extends Command {
         Objects.requireNonNull(assignment);
         Objects.requireNonNull(contactIndices);
         this.toAdd = assignment;
-        this.contactIndices = contactIndices;
+        this.contactIndices = new ArrayList<>(contactIndices);
         this.classGroupName = null;
         this.allocatedCount = 0;
         this.allocatedContacts = new StringBuilder();
@@ -77,7 +78,7 @@ public class AddAssignmentCommand extends Command {
         Objects.requireNonNull(contactIndices);
         Objects.requireNonNull(classGroupName);
         this.toAdd = assignment;
-        this.contactIndices = contactIndices;
+        this.contactIndices = new ArrayList<>(contactIndices);
         this.classGroupName = classGroupName;
         this.allocatedCount = 0;
         this.allocatedContacts = new StringBuilder();
