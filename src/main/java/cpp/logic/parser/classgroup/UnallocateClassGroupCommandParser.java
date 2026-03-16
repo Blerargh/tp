@@ -31,6 +31,8 @@ public class UnallocateClassGroupCommandParser implements Parser<UnallocateClass
                     UnallocateClassGroupCommand.MESSAGE_USAGE));
         }
 
+        argMultimap.verifyNoDuplicatePrefixesFor(CliSyntax.PREFIX_CLASS, CliSyntax.PREFIX_CONTACT);
+
         ClassGroupName classGroupName = ParserUtil
                 .parseClassGroupName(argMultimap.getValue(CliSyntax.PREFIX_CLASS).get());
         String contactString = argMultimap.getValue(CliSyntax.PREFIX_CONTACT).orElse("");
