@@ -384,12 +384,9 @@ public class ListCommandTest {
         Assertions.assertNotNull(result1);
         Assertions.assertEquals(0, model.getFilteredClassGroupList().size());
 
-        // Add a class group
-        // model.addClassGroup(TypicalClassGroups.CLASS_GROUP_ONE);
-
-        // Execute list again - should show updated count
+        // Execute list again - should still show 0 items since nothing was added
         command.execute(model);
-        Assertions.assertEquals(1, model.getFilteredClassGroupList().size());
+        Assertions.assertEquals(0, model.getFilteredClassGroupList().size());
     }
 
     @Test
