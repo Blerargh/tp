@@ -68,6 +68,28 @@ public class UniqueContactAssignmentListTest {
     }
 
     @Test
+    public void removeMultiple_nullList_throwsNullPointerException() {
+        Assertions.assertThrows(NullPointerException.class,
+                () -> this.uniqueContactAssignmentList.removeMultiple(null));
+    }
+
+    @Test
+    public void removeMultiple_normalList_removesAllContactAssignmentsInList() {
+        ContactAssignment ca1 = new ContactAssignment("contactId1", "assignmentId1");
+        ContactAssignment ca2 = new ContactAssignment("contactId2", "assignmentId2");
+        this.uniqueContactAssignmentList.add(ca1);
+        this.uniqueContactAssignmentList.add(ca2);
+
+        java.util.List<ContactAssignment> toRemoveList = new java.util.ArrayList<>();
+        toRemoveList.add(ca1);
+        toRemoveList.add(ca2);
+
+        this.uniqueContactAssignmentList.removeMultiple(toRemoveList);
+        assert !this.uniqueContactAssignmentList.contains(ca1);
+        assert !this.uniqueContactAssignmentList.contains(ca2);
+    }
+
+    @Test
     public void setContactAssignments_nullUniqueContactAssignmentList_throwsNullPointerException() {
         Assertions.assertThrows(NullPointerException.class,
                 () -> this.uniqueContactAssignmentList.setContactAssignments((UniqueContactAssignmentList) null));

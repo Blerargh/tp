@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import cpp.model.assignment.exceptions.AssignmentNotSubmittedException;
 import cpp.model.assignment.exceptions.ContactAssignmentNotFoundException;
 import cpp.testutil.Assert;
+import cpp.testutil.TypicalAssignments;
+import cpp.testutil.TypicalContacts;
 
 public class AssignmentManagerTest {
 
@@ -190,4 +192,65 @@ public class AssignmentManagerTest {
         Assert.assertThrows(ContactAssignmentNotFoundException.class, () -> this.manager.grade("no", "no", 10));
     }
 
+    @Test
+    public void deregisterContactAssignmentsForAssignment_success() {
+        ContactAssignment ca3 = new ContactAssignment(TypicalAssignments.ASSIGNMENT_ONE.getId(), "C1");
+        ContactAssignment ca4 = new ContactAssignment(TypicalAssignments.ASSIGNMENT_TWO.getId(), "C1");
+        this.manager.registerContactAssignment(ca3);
+        this.manager.registerContactAssignment(ca4);
+
+        Assertions.assertTrue(this.manager.getContactAssignmentMappingForAssignment("C1").containsKey(
+                TypicalAssignments.ASSIGNMENT_ONE.getId()));
+        Assertions.assertTrue(this.manager.getContactAssignmentMappingForAssignment("C1").containsKey(
+                TypicalAssignments.ASSIGNMENT_TWO.getId()));
+
+        this.manager.deregisterContactAssignmentsForAssignment(
+                TypicalAssignments.ASSIGNMENT_ONE);
+
+        Assertions.assertFalse(this.manager.getContactAssignmentMappingForAssignment("C1").isEmpty());
+        Assertions.assertTrue(this.manager
+                .getContactAssignmentMappingForContact(TypicalAssignments.ASSIGNMENT_ONE.getId()).isEmpty());
+
+        this.manager.deregisterContactAssignmentsForAssignment(
+                TypicalAssignments.ASSIGNMENT_TWO);
+        Assertions.assertTrue(this.manager.getContactAssignmentMappingForAssignment("C1").isEmpty());
+        Assertions.assertTrue(this.manager
+                .getContactAssignmentMappingForContact(TypicalAssignments.ASSIGNMENT_TWO.getId()).isEmpty());
+
+    }
+
+    @Test
+    public void deregisterContactAssignmentsForAssignment_missingAssignment_doesNothing() {
+        ContactAssignment ca3 = new ContactAssignment(TypicalAssignments.ASSIGNMENT_ONE.getId(), "C1");
+        this.manager.registerContactAssignment(ca3);
+        this.manager.deregisterContactAssignmentsForAssignment(TypicalAssignments.ASSIGNMENT_TWO);
+        Assertions.assertTrue(this.manager.getContactAssignmentMappingForAssignment("C1").containsKey(
+                TypicalAssignments.ASSIGNMENT_ONE.getId()));
+        Assertions.assertFalse(this.manager.getContactAssignmentMappingForAssignment("C1").containsKey(
+                TypicalAssignments.ASSIGNMENT_TWO.getId()));
+    }
+
+    @Test
+    public void deregisterContactAssignmentsForContact_success() {
+        ContactAssignment ca3 = new ContactAssignment("a1", TypicalContacts.ALICE.getId());
+        ContactAssignment ca4 = new ContactAssignment("a2", TypicalContacts.BOB.getId());
+        ContactAssignment ca5 = new ContactAssignment("a1", TypicalContacts.BOB.getId());
+        this.manager.registerContactAssignment(ca3);
+        this.manager.registerContactAssignment(ca4);
+        this.manager.registerContactAssignment(ca5);
+
+        this.manager.deregisterContactAssignmentsForContact(TypicalContacts.BOB);
+        Assertions
+                .assertTrue(
+                        this.manager.getContactAssignmentMappingForAssignment(TypicalContacts.BOB.getId()).isEmpty());
+
+        Assertions.assertFalse(
+                this.manager.getContactAssignmentMappingForAssignment(TypicalContacts.ALICE.getId()).isEmpty());
+
+        this.manager.deregisterContactAssignmentsForContact(TypicalContacts.ALICE);
+
+        Assertions.assertTrue(
+                this.manager.getContactAssignmentMappingForAssignment(TypicalContacts.ALICE.getId()).isEmpty());
+
+    }
 }
