@@ -81,6 +81,17 @@ public class AddContactCommandTest {
     }
 
     @Test
+    public void execute_bothInvalidOptionalNames_classGroupValidationHappensFirst() {
+        Contact validContact = new ContactBuilder().build();
+        AddContactCommand addContactCommand = new AddContactCommand(validContact,
+                new ClassGroupName("CS2103T10"), new AssignmentName("Assignment 9"));
+        ModelStub modelStub = new ModelStubAcceptingContactAdded();
+
+        Assert.assertThrows(CommandException.class, AllocateClassGroupCommand.MESSAGE_INVALID_CLASS_GROUP_NAME,
+                () -> addContactCommand.execute(modelStub));
+    }
+
+    @Test
     public void equals() {
         Contact alice = new ContactBuilder().withName("Alice").build();
         Contact bob = new ContactBuilder().withName("Bob").build();
