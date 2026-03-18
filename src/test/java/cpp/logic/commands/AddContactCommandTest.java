@@ -11,8 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import cpp.commons.core.GuiSettings;
 import cpp.logic.Messages;
-import cpp.logic.commands.assignment.AllocateAssignmentCommand;
-import cpp.logic.commands.classgroup.AllocateClassGroupCommand;
 import cpp.logic.commands.exceptions.CommandException;
 import cpp.model.AddressBook;
 import cpp.model.Model;
@@ -65,7 +63,7 @@ public class AddContactCommandTest {
                 null);
         ModelStub modelStub = new ModelStubAcceptingContactAdded();
 
-        Assert.assertThrows(CommandException.class, AllocateClassGroupCommand.MESSAGE_INVALID_CLASS_GROUP_NAME,
+        Assert.assertThrows(CommandException.class, Messages.MESSAGE_CLASS_GROUP_NOT_FOUND,
                 () -> addContactCommand.execute(modelStub));
     }
 
@@ -76,7 +74,7 @@ public class AddContactCommandTest {
                 new AssignmentName("Assignment 9"));
         ModelStub modelStub = new ModelStubAcceptingContactAdded();
 
-        Assert.assertThrows(CommandException.class, AllocateAssignmentCommand.MESSAGE_INVALID_ASSIGNMENT_NAME,
+        Assert.assertThrows(CommandException.class, Messages.MESSAGE_ASSIGNMENT_NOT_FOUND,
                 () -> addContactCommand.execute(modelStub));
     }
 
@@ -87,7 +85,7 @@ public class AddContactCommandTest {
                 new ClassGroupName("CS2103T10"), new AssignmentName("Assignment 9"));
         ModelStub modelStub = new ModelStubAcceptingContactAdded();
 
-        Assert.assertThrows(CommandException.class, AllocateClassGroupCommand.MESSAGE_INVALID_CLASS_GROUP_NAME,
+        Assert.assertThrows(CommandException.class, Messages.MESSAGE_CLASS_GROUP_NOT_FOUND,
                 () -> addContactCommand.execute(modelStub));
     }
 

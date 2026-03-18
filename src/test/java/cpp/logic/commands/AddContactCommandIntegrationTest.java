@@ -5,8 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import cpp.logic.Messages;
-import cpp.logic.commands.assignment.AllocateAssignmentCommand;
-import cpp.logic.commands.classgroup.AllocateClassGroupCommand;
 import cpp.model.Model;
 import cpp.model.ModelManager;
 import cpp.model.UserPrefs;
@@ -60,7 +58,7 @@ public class AddContactCommandIntegrationTest {
         CommandTestUtil.assertCommandFailure(
                 new AddContactCommand(validContact, new ClassGroupName("CS2103T10"), null),
                 this.model,
-                AllocateClassGroupCommand.MESSAGE_INVALID_CLASS_GROUP_NAME);
+                Messages.MESSAGE_CLASS_GROUP_NOT_FOUND);
     }
 
     @Test
@@ -70,7 +68,7 @@ public class AddContactCommandIntegrationTest {
         CommandTestUtil.assertCommandFailure(
                 new AddContactCommand(validContact, null, new AssignmentName("Assignment 9")),
                 this.model,
-                AllocateAssignmentCommand.MESSAGE_INVALID_ASSIGNMENT_NAME);
+                Messages.MESSAGE_ASSIGNMENT_NOT_FOUND);
     }
 
     @Test
