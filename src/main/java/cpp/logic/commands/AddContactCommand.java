@@ -126,7 +126,9 @@ public class AddContactCommand extends Command {
         }
 
         AddContactCommand otherAddContactCommand = (AddContactCommand) other;
-        return this.toAdd.equals(otherAddContactCommand.toAdd);
+        return this.toAdd.equals(otherAddContactCommand.toAdd)
+                && Objects.equals(this.classGroupName, otherAddContactCommand.classGroupName)
+                && Objects.equals(this.assignmentName, otherAddContactCommand.assignmentName);
     }
 
     @Override

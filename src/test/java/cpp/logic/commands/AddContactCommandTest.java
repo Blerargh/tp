@@ -93,8 +93,20 @@ public class AddContactCommandTest {
     public void equals() {
         Contact alice = new ContactBuilder().withName("Alice").build();
         Contact bob = new ContactBuilder().withName("Bob").build();
+        ClassGroupName classGroupName = new ClassGroupName("CS2103T10");
+        ClassGroupName anotherClassGroupName = new ClassGroupName("CS2101T10");
+        AssignmentName assignmentName = new AssignmentName("Assignment 1");
+        AssignmentName anotherAssignmentName = new AssignmentName("Assignment 2");
+
         AddContactCommand addAliceCommand = new AddContactCommand(alice);
         AddContactCommand addBobCommand = new AddContactCommand(bob);
+        AddContactCommand addAliceWithOptionalFieldsCommand = new AddContactCommand(alice, classGroupName,
+                assignmentName);
+        AddContactCommand addAliceWithDifferentClassCommand = new AddContactCommand(alice, anotherClassGroupName,
+                assignmentName);
+        AddContactCommand addAliceWithDifferentAssignmentCommand = new AddContactCommand(alice, classGroupName,
+                anotherAssignmentName);
+        AddContactCommand addAliceWithoutOptionalFieldsCommand = new AddContactCommand(alice);
 
         // same object -> returns true
         Assertions.assertTrue(addAliceCommand.equals(addAliceCommand));
@@ -111,6 +123,22 @@ public class AddContactCommandTest {
 
         // different contact -> returns false
         Assertions.assertFalse(addAliceCommand.equals(addBobCommand));
+
+        // same contact and same optional fields -> returns true
+        Assertions.assertTrue(addAliceWithOptionalFieldsCommand
+                .equals(new AddContactCommand(alice, classGroupName, assignmentName)));
+
+        // different class group name -> returns false
+        Assertions.assertFalse(addAliceWithOptionalFieldsCommand.equals(addAliceWithDifferentClassCommand));
+
+        // different assignment name -> returns false
+        Assertions.assertFalse(addAliceWithOptionalFieldsCommand.equals(addAliceWithDifferentAssignmentCommand));
+
+        // different class group name and assignment name -> returns false
+        Assertions.assertFalse(addAliceWithDifferentClassCommand.equals(addAliceWithDifferentAssignmentCommand));
+
+        // one command has optional fields while the other does not -> returns false
+        Assertions.assertFalse(addAliceWithOptionalFieldsCommand.equals(addAliceWithoutOptionalFieldsCommand));
     }
 
     @Test
