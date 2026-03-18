@@ -45,14 +45,14 @@ public class AddContactCommandIntegrationTest {
     }
 
     @Test
-    public void execute_duplicateContact_throwsCommandException() {
+    public void execute_duplicateContact_commandFailure() {
         Contact contactInList = this.model.getAddressBook().getContactList().get(0);
         CommandTestUtil.assertCommandFailure(new AddContactCommand(contactInList), this.model,
                 AddContactCommand.MESSAGE_DUPLICATE_CONTACT);
     }
 
     @Test
-    public void execute_nonexistentClassGroup_throwsCommandException() {
+    public void execute_nonexistentClassGroup_commandFailure() {
         Contact validContact = new ContactBuilder().build();
 
         CommandTestUtil.assertCommandFailure(
@@ -62,7 +62,7 @@ public class AddContactCommandIntegrationTest {
     }
 
     @Test
-    public void execute_nonexistentAssignment_throwsCommandException() {
+    public void execute_nonexistentAssignment_commandFailure() {
         Contact validContact = new ContactBuilder().build();
 
         CommandTestUtil.assertCommandFailure(
