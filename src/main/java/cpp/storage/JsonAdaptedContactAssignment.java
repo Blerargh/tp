@@ -23,7 +23,6 @@ class JsonAdaptedContactAssignment {
     public static final String INVALID_ASSIGNMENT_ID_MESSAGE = """
             Assignment with id %s does not exist in the address book""";
     public static final String INVALID_CONTACT_ID_MESSAGE = "Contact with id %s does not exist in the address book";
-    public static final String INVALID_SCORE_MESSAGE = "Score must be a non-negative integer below 100";
     public static final String GRADED_BUT_NOT_SUBMITTED_MESSAGE = """
             A contact assignment cannot be graded if it has not been submitted""";
     public static final String INVALID_GRADING_DATE_MESSAGE = """
@@ -125,7 +124,7 @@ class JsonAdaptedContactAssignment {
                     "isGraded"));
         }
         if (this.score == null) {
-            throw new IllegalValueException(JsonAdaptedContactAssignment.INVALID_SCORE_MESSAGE);
+            throw new IllegalValueException(GradeInfo.INVALID_SCORE_STRING);
         }
         final LocalDateTime modelGradingDate;
         try {

@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import cpp.model.assignment.exceptions.AssignmentNotSubmittedException;
 import cpp.model.assignment.exceptions.ContactAssignmentNotFoundException;
+import cpp.model.assignment.exceptions.ContactAssignmentNotSubmittedException;
 import cpp.testutil.Assert;
 import cpp.testutil.TypicalAssignments;
 import cpp.testutil.TypicalContacts;
@@ -145,7 +145,7 @@ public class AssignmentManagerTest {
     @Test
     public void grade_withoutSubmit_throws() {
         this.manager.registerContactAssignment(this.ca2);
-        Assert.assertThrows(AssignmentNotSubmittedException.class,
+        Assert.assertThrows(ContactAssignmentNotSubmittedException.class,
                 () -> this.manager.grade("A2", "C2", 50, LocalDateTime.now()));
     }
 

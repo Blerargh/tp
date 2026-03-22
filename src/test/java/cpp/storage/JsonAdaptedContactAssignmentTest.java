@@ -169,7 +169,7 @@ public class JsonAdaptedContactAssignmentTest {
                 JsonAdaptedContactAssignmentTest.VALID_ASSIGNMENT_ID, JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID,
                 "true", JsonAdaptedContactAssignmentTest.submissionDateString, "true",
                 JsonAdaptedContactAssignmentTest.gradingDateString, null);
-        String expectedMessage = String.format(JsonAdaptedContactAssignment.INVALID_SCORE_MESSAGE);
+        String expectedMessage = String.format(GradeInfo.INVALID_SCORE_STRING);
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> json.toModelType(addressBook));
     }
 
@@ -327,7 +327,7 @@ public class JsonAdaptedContactAssignmentTest {
                 JsonAdaptedContactAssignmentTest.VALID_ASSIGNMENT_ID, JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID,
                 "true", JsonAdaptedContactAssignmentTest.submissionDateString, "true",
                 JsonAdaptedContactAssignmentTest.gradingDateString, "not_a_number");
-        String expectedMessage = String.format(JsonAdaptedContactAssignment.INVALID_SCORE_MESSAGE);
+        String expectedMessage = String.format(GradeInfo.INVALID_SCORE_STRING);
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> json.toModelType(addressBook));
     }
 
