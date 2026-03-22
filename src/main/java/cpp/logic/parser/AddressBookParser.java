@@ -20,6 +20,7 @@ import cpp.logic.commands.assignment.AllocateAssignmentCommand;
 import cpp.logic.commands.assignment.GradeAssignmentCommand;
 import cpp.logic.commands.assignment.SubmitAssignmentCommand;
 import cpp.logic.commands.assignment.UnallocateAssignmentCommand;
+import cpp.logic.commands.assignment.UngradeAssignmentCommand;
 import cpp.logic.commands.assignment.UnsubmitAssignmentCommand;
 import cpp.logic.commands.classgroup.AddClassGroupCommand;
 import cpp.logic.commands.classgroup.AllocateClassGroupCommand;
@@ -29,6 +30,7 @@ import cpp.logic.parser.assignment.AllocateAssignmentCommandParser;
 import cpp.logic.parser.assignment.GradeAssignmentCommandParser;
 import cpp.logic.parser.assignment.SubmitAssignmentCommandParser;
 import cpp.logic.parser.assignment.UnallocateAssignmentCommandParser;
+import cpp.logic.parser.assignment.UngradeAssignmentCommandParser;
 import cpp.logic.parser.assignment.UnsubmitAssignmentCommandParser;
 import cpp.logic.parser.classgroup.AddClassGroupCommandParser;
 import cpp.logic.parser.classgroup.AllocateClassGroupCommandParser;
@@ -111,6 +113,9 @@ public class AddressBookParser {
 
         case GradeAssignmentCommand.COMMAND_WORD:
             return new GradeAssignmentCommandParser().parse(arguments);
+
+        case UngradeAssignmentCommand.COMMAND_WORD:
+            return new UngradeAssignmentCommandParser().parse(arguments);
 
         case AddClassGroupCommand.COMMAND_WORD:
             return new AddClassGroupCommandParser().parse(arguments);
