@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import cpp.logic.parser.ParserUtil;
 import cpp.testutil.Assert;
 
 public class ContactAssignmentTest {
@@ -61,12 +62,17 @@ public class ContactAssignmentTest {
 
     @Test
     public void toString_validContactAssignment_returnsString() {
-        LocalDateTime submissionDate = LocalDateTime.now();
-        LocalDateTime gradingDate = submissionDate.plusDays(1);
+        LocalDateTime submissionDate = LocalDateTime.parse(LocalDateTime.now().format(ParserUtil.DATETIME_FORMATTER),
+                ParserUtil.DATETIME_FORMATTER);
+        LocalDateTime gradingDate = LocalDateTime.parse(
+                submissionDate.plusDays(1).format(ParserUtil.DATETIME_FORMATTER), ParserUtil.DATETIME_FORMATTER);
         ContactAssignment ca = new ContactAssignment(
                 "a1", "c1", true, submissionDate, true, gradingDate, 90);
         String expected = """
-                ContactAssignment[assignmentId=a1, contactId=c1, submitted=true, graded=true, score=90]""";
+                ContactAssignment[assignmentId=a1, contactId=c1, submission=SubmissionInfo[submitted=true, \
+                date=%s], grade=GradeInfo[graded=true, date=%s, score=90]]"""
+                .formatted(submissionDate.format(ParserUtil.DATETIME_FORMATTER),
+                        gradingDate.format(ParserUtil.DATETIME_FORMATTER));
         Assertions.assertEquals(expected, ca.toString());
     }
 
@@ -93,7 +99,9 @@ public class ContactAssignmentTest {
         ContactAssignment ca = new ContactAssignment("a1", "c1");
         Assertions.assertFalse(ca.isGraded());
         Assertions.assertEquals(0, ca.getScore());
-        ca.grade(85);
+        LocalDateTime submissionDate = LocalDateTime.now();
+        ca.markSubmitted(submissionDate);
+        ca.grade(85, submissionDate.plusDays(1));
         Assertions.assertTrue(ca.isGraded());
         Assertions.assertEquals(85, ca.getScore());
     }

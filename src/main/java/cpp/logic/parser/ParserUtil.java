@@ -31,6 +31,8 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_EMPTY_INDICES = "Contact indices should not be blank.";
+    public static final String MESSAGE_INVALID_DATETIME = """
+            Invalid date and time format. Please use the format: dd-MM-yyyy HH:mm""";
     public static final DateTimeFormatter DATETIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
     /**

@@ -103,7 +103,7 @@ public class AssignmentManagerTest {
         this.manager.submit("A1", "C1", submissionDate);
         Assertions.assertTrue(this.ca1.isSubmitted());
 
-        this.manager.grade("A1", "C1", 90);
+        this.manager.grade("A1", "C1", 90, submissionDate.plusDays(1));
         Assertions.assertTrue(this.ca1.isGraded());
         Assertions.assertEquals(90, this.ca1.getScore());
     }
@@ -123,7 +123,8 @@ public class AssignmentManagerTest {
     @Test
     public void grade_withoutSubmit_throws() {
         this.manager.registerContactAssignment(this.ca2);
-        Assert.assertThrows(AssignmentNotSubmittedException.class, () -> this.manager.grade("A2", "C2", 50));
+        Assert.assertThrows(AssignmentNotSubmittedException.class,
+                () -> this.manager.grade("A2", "C2", 50, LocalDateTime.now()));
     }
 
     @Test
@@ -198,7 +199,8 @@ public class AssignmentManagerTest {
         LocalDateTime gradingDate = submissionDate.plusDays(1);
         Assert.assertThrows(ContactAssignmentNotFoundException.class,
                 () -> this.manager.submit("no", "no", submissionDate));
-        Assert.assertThrows(ContactAssignmentNotFoundException.class, () -> this.manager.grade("no", "no", 10));
+        Assert.assertThrows(ContactAssignmentNotFoundException.class,
+                () -> this.manager.grade("no", "no", 100, gradingDate));
     }
 
     @Test

@@ -13,6 +13,7 @@ import cpp.model.AddressBook;
 import cpp.model.assignment.Assignment;
 import cpp.model.assignment.AssignmentName;
 import cpp.model.assignment.ContactAssignment;
+import cpp.model.assignment.GradeInfo;
 import cpp.model.contact.Address;
 import cpp.model.contact.Contact;
 import cpp.model.contact.ContactName;
@@ -46,8 +47,8 @@ public class JsonAdaptedContactAssignmentTest {
         addressBook.addContact(contact);
         JsonAdaptedContactAssignment json = new JsonAdaptedContactAssignment(
                 JsonAdaptedContactAssignmentTest.VALID_ASSIGNMENT_ID, JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID,
-                true, JsonAdaptedContactAssignmentTest.submissionDateString, true,
-                JsonAdaptedContactAssignmentTest.gradingDateString, 100);
+                "true", JsonAdaptedContactAssignmentTest.submissionDateString, "true",
+                JsonAdaptedContactAssignmentTest.gradingDateString, "100");
         ContactAssignment expected = new ContactAssignment(JsonAdaptedContactAssignmentTest.VALID_ASSIGNMENT_ID,
                 JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID, true,
                 JsonAdaptedContactAssignmentTest.submissionDate, true, JsonAdaptedContactAssignmentTest.gradingDate,
@@ -79,10 +80,10 @@ public class JsonAdaptedContactAssignmentTest {
     public void toModelType_nullAssignmentId_throwsIllegalValueException() {
         JsonAdaptedContactAssignment json = new JsonAdaptedContactAssignment(
                 JsonAdaptedContactAssignmentTest.INVALID_ASSIGNMENT_ID,
-                JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID, true,
-                JsonAdaptedContactAssignmentTest.submissionDateString, true,
+                JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID, "true",
+                JsonAdaptedContactAssignmentTest.submissionDateString, "true",
                 JsonAdaptedContactAssignmentTest.gradingDateString,
-                100);
+                "100");
         String expectedMessage = String.format(JsonAdaptedContactAssignment.MISSING_FIELD_MESSAGE_FORMAT,
                 "assignmentId");
         Assert.assertThrows(IllegalValueException.class, expectedMessage,
@@ -97,9 +98,9 @@ public class JsonAdaptedContactAssignmentTest {
         addressBook.addAssignment(assignment);
         JsonAdaptedContactAssignment json = new JsonAdaptedContactAssignment(
                 JsonAdaptedContactAssignmentTest.VALID_ASSIGNMENT_ID,
-                JsonAdaptedContactAssignmentTest.INVALID_CONTACT_ID, true,
-                JsonAdaptedContactAssignmentTest.submissionDateString, true,
-                JsonAdaptedContactAssignmentTest.gradingDateString, 100);
+                JsonAdaptedContactAssignmentTest.INVALID_CONTACT_ID, "true",
+                JsonAdaptedContactAssignmentTest.submissionDateString, "true",
+                JsonAdaptedContactAssignmentTest.gradingDateString, "100");
         String expectedMessage = String.format(JsonAdaptedContactAssignment.MISSING_FIELD_MESSAGE_FORMAT,
                 "contactId");
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> json.toModelType(addressBook));
@@ -109,10 +110,10 @@ public class JsonAdaptedContactAssignmentTest {
     public void toModelType_invalidAssignmentId_throwsIllegalValueException() {
         JsonAdaptedContactAssignment json = new JsonAdaptedContactAssignment(
                 JsonAdaptedContactAssignmentTest.VALID_ASSIGNMENT_ID,
-                JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID, true,
-                JsonAdaptedContactAssignmentTest.submissionDateString, true,
+                JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID, "true",
+                JsonAdaptedContactAssignmentTest.submissionDateString, "true",
                 JsonAdaptedContactAssignmentTest.gradingDateString,
-                100);
+                "100");
         String expectedMessage = String.format(JsonAdaptedContactAssignment.INVALID_ASSIGNMENT_ID_MESSAGE,
                 JsonAdaptedContactAssignmentTest.VALID_ASSIGNMENT_ID);
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> json.toModelType(new AddressBook()));
@@ -126,9 +127,9 @@ public class JsonAdaptedContactAssignmentTest {
         addressBook.addAssignment(assignment);
         JsonAdaptedContactAssignment json = new JsonAdaptedContactAssignment(
                 JsonAdaptedContactAssignmentTest.VALID_ASSIGNMENT_ID,
-                JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID, true,
-                JsonAdaptedContactAssignmentTest.submissionDateString, true,
-                JsonAdaptedContactAssignmentTest.gradingDateString, 100);
+                JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID, "true",
+                JsonAdaptedContactAssignmentTest.submissionDateString, "true",
+                JsonAdaptedContactAssignmentTest.gradingDateString, "100");
         String expectedMessage = String.format(JsonAdaptedContactAssignment.INVALID_CONTACT_ID_MESSAGE,
                 JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID);
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> json.toModelType(addressBook));
@@ -147,9 +148,9 @@ public class JsonAdaptedContactAssignmentTest {
         addressBook.addContact(contact);
         JsonAdaptedContactAssignment json = new JsonAdaptedContactAssignment(
                 JsonAdaptedContactAssignmentTest.VALID_ASSIGNMENT_ID, JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID,
-                true, JsonAdaptedContactAssignmentTest.submissionDateString, true,
-                JsonAdaptedContactAssignmentTest.gradingDateString, -10);
-        String expectedMessage = String.format(JsonAdaptedContactAssignment.INVALID_SCORE_MESSAGE);
+                "true", JsonAdaptedContactAssignmentTest.submissionDateString, "true",
+                JsonAdaptedContactAssignmentTest.gradingDateString, "-10");
+        String expectedMessage = String.format(GradeInfo.INVALID_GRADE_STRING);
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> json.toModelType(addressBook));
     }
 
@@ -166,9 +167,9 @@ public class JsonAdaptedContactAssignmentTest {
         addressBook.addContact(contact);
         JsonAdaptedContactAssignment json = new JsonAdaptedContactAssignment(
                 JsonAdaptedContactAssignmentTest.VALID_ASSIGNMENT_ID, JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID,
-                true, JsonAdaptedContactAssignmentTest.submissionDateString, true,
+                "true", JsonAdaptedContactAssignmentTest.submissionDateString, "true",
                 JsonAdaptedContactAssignmentTest.gradingDateString, null);
-        String expectedMessage = String.format(JsonAdaptedContactAssignment.MISSING_FIELD_MESSAGE_FORMAT, "score");
+        String expectedMessage = String.format(JsonAdaptedContactAssignment.INVALID_SCORE_MESSAGE);
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> json.toModelType(addressBook));
     }
 
@@ -185,7 +186,7 @@ public class JsonAdaptedContactAssignmentTest {
         addressBook.addContact(contact);
         JsonAdaptedContactAssignment json = new JsonAdaptedContactAssignment(
                 JsonAdaptedContactAssignmentTest.VALID_ASSIGNMENT_ID, JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID,
-                null, null, true, null, 100);
+                null, null, "true", null, "100");
         String expectedMessage = String.format(JsonAdaptedContactAssignment.MISSING_FIELD_MESSAGE_FORMAT,
                 "isSubmitted");
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> json.toModelType(addressBook));
@@ -204,7 +205,7 @@ public class JsonAdaptedContactAssignmentTest {
         addressBook.addContact(contact);
         JsonAdaptedContactAssignment json = new JsonAdaptedContactAssignment(
                 JsonAdaptedContactAssignmentTest.VALID_ASSIGNMENT_ID, JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID,
-                true, JsonAdaptedContactAssignmentTest.submissionDateString, null, null, 100);
+                "true", JsonAdaptedContactAssignmentTest.submissionDateString, null, null, "100");
         String expectedMessage = String.format(JsonAdaptedContactAssignment.MISSING_FIELD_MESSAGE_FORMAT, "isGraded");
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> json.toModelType(addressBook));
     }
@@ -222,18 +223,18 @@ public class JsonAdaptedContactAssignmentTest {
         addressBook.addContact(contact);
         JsonAdaptedContactAssignment json = new JsonAdaptedContactAssignment(
                 JsonAdaptedContactAssignmentTest.VALID_ASSIGNMENT_ID, JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID,
-                true, null, false, null, 0);
+                "true", null, "false", null, "0");
         String expectedMessage = String.format(JsonAdaptedContactAssignment.MISSING_FIELD_MESSAGE_FORMAT,
                 "submissionDate");
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> json.toModelType(addressBook));
         JsonAdaptedContactAssignment json2 = new JsonAdaptedContactAssignment(
                 JsonAdaptedContactAssignmentTest.VALID_ASSIGNMENT_ID, JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID,
-                true, "123", false, null, 0);
+                "true", "123", "false", null, "0");
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> json2.toModelType(addressBook));
     }
 
     @Test
-    public void toModelType_missingGradingDate_throwsIllegalValueException() {
+    public void toModelType_invalidGradingDate() {
         AddressBook addressBook = new AddressBook();
         Assignment assignment = new Assignment(JsonAdaptedContactAssignmentTest.VALID_ASSIGNMENT_ID,
                 new AssignmentName("Assignment 1"), LocalDateTime.now());
@@ -245,14 +246,14 @@ public class JsonAdaptedContactAssignmentTest {
         addressBook.addContact(contact);
         JsonAdaptedContactAssignment json = new JsonAdaptedContactAssignment(
                 JsonAdaptedContactAssignmentTest.VALID_ASSIGNMENT_ID, JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID,
-                true, JsonAdaptedContactAssignmentTest.submissionDateString, true, null, 50);
-        String expectedMessage = String.format(JsonAdaptedContactAssignment.MISSING_FIELD_MESSAGE_FORMAT,
-                "gradingDate");
+                "true", JsonAdaptedContactAssignmentTest.submissionDateString, "true", null, "50");
+        String expectedMessage = GradeInfo.INVALID_GRADE_STRING;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> json.toModelType(addressBook));
 
+        expectedMessage = ParserUtil.MESSAGE_INVALID_DATETIME;
         JsonAdaptedContactAssignment json2 = new JsonAdaptedContactAssignment(
                 JsonAdaptedContactAssignmentTest.VALID_ASSIGNMENT_ID, JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID,
-                true, JsonAdaptedContactAssignmentTest.submissionDateString, true, "123", 50);
+                "true", JsonAdaptedContactAssignmentTest.submissionDateString, "true", "123", "50");
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> json2.toModelType(addressBook));
     }
 
@@ -269,8 +270,8 @@ public class JsonAdaptedContactAssignmentTest {
         addressBook.addContact(contact);
         JsonAdaptedContactAssignment json = new JsonAdaptedContactAssignment(
                 JsonAdaptedContactAssignmentTest.VALID_ASSIGNMENT_ID, JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID,
-                false, null, true, JsonAdaptedContactAssignmentTest.gradingDateString, 50);
-        String expectedMessage = JsonAdaptedContactAssignment.GRADED_BUT_NOT_SUBMITTED_MESSAGE;
+                "false", null, "true", JsonAdaptedContactAssignmentTest.gradingDateString, "50");
+        String expectedMessage = GradeInfo.INVALID_GRADE_STRING;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> json.toModelType(addressBook));
     }
 
@@ -289,10 +290,9 @@ public class JsonAdaptedContactAssignmentTest {
         String invalidGradingDateString = invalidGradingDate.format(ParserUtil.DATETIME_FORMATTER);
         JsonAdaptedContactAssignment json = new JsonAdaptedContactAssignment(
                 JsonAdaptedContactAssignmentTest.VALID_ASSIGNMENT_ID, JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID,
-                true, JsonAdaptedContactAssignmentTest.submissionDateString, true,
-                invalidGradingDateString, 50);
-        String expectedMessage = String.format(JsonAdaptedContactAssignment.INVALID_GRADING_DATE_MESSAGE,
-                invalidGradingDateString, JsonAdaptedContactAssignmentTest.submissionDateString);
+                "true", JsonAdaptedContactAssignmentTest.submissionDateString, "true",
+                invalidGradingDateString, "50");
+        String expectedMessage = String.format(GradeInfo.INVALID_GRADE_STRING);
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> json.toModelType(addressBook));
     }
 
@@ -309,9 +309,9 @@ public class JsonAdaptedContactAssignmentTest {
         addressBook.addContact(contact);
         JsonAdaptedContactAssignment json = new JsonAdaptedContactAssignment(
                 JsonAdaptedContactAssignmentTest.VALID_ASSIGNMENT_ID, JsonAdaptedContactAssignmentTest.VALID_CONTACT_ID,
-                true, JsonAdaptedContactAssignmentTest.submissionDateString, true,
-                JsonAdaptedContactAssignmentTest.gradingDateString, 101);
-        String expectedMessage = String.format(JsonAdaptedContactAssignment.INVALID_SCORE_MESSAGE);
+                "true", JsonAdaptedContactAssignmentTest.submissionDateString, "true",
+                JsonAdaptedContactAssignmentTest.gradingDateString, "101");
+        String expectedMessage = String.format(GradeInfo.INVALID_GRADE_STRING);
         Assert.assertThrows(IllegalValueException.class, expectedMessage, () -> json.toModelType(addressBook));
     }
 

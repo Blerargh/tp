@@ -131,11 +131,12 @@ public class AssignmentManager {
      * @param assignmentId the id of the assignment to grade
      * @param contactId    the id of the contact to mark as graded
      * @param score        the score to assign to this contact assignment
+     * @param gradingDate  the date and time when this contact assignment was graded
      */
-    public void grade(String assignmentId, String contactId, int score) {
+    public void grade(String assignmentId, String contactId, int score, LocalDateTime gradingDate) {
         ContactAssignment ca = this.find(assignmentId, contactId);
         if (ca.isSubmitted()) {
-            ca.grade(score);
+            ca.grade(score, gradingDate);
         } else {
             throw new AssignmentNotSubmittedException();
         }

@@ -10,6 +10,8 @@ import cpp.commons.exceptions.IllegalValueException;
 import cpp.logic.parser.ParserUtil;
 import cpp.model.AddressBook;
 import cpp.model.assignment.ContactAssignment;
+import cpp.model.assignment.GradeInfo;
+import cpp.model.assignment.SubmissionInfo;
 
 /**
  * Jackson-friendly version of {@link ContactAssignment}.
@@ -28,20 +30,20 @@ class JsonAdaptedContactAssignment {
 
     private final String assignmentId;
     private final String contactId;
-    private final Boolean isSubmitted;
+    private final String isSubmitted;
     private final String submissionDate;
-    private final Boolean isGraded;
+    private final String isGraded;
     private final String gradingDate;
-    private final Integer score;
+    private final String score;
 
     /**
      * Constructs a {@code JsonAdaptedContactAssignment} with the given details.
      */
     @JsonCreator
     public JsonAdaptedContactAssignment(@JsonProperty("assignmentId") String assignmentId,
-            @JsonProperty("contactId") String contactId, @JsonProperty("isSubmitted") Boolean isSubmitted,
-            @JsonProperty("submissionDate") String submissionDate, @JsonProperty("isGraded") Boolean isGraded,
-            @JsonProperty("gradingDate") String gradingDate, @JsonProperty("score") Integer score) {
+            @JsonProperty("contactId") String contactId, @JsonProperty("isSubmitted") String isSubmitted,
+            @JsonProperty("submissionDate") String submissionDate, @JsonProperty("isGraded") String isGraded,
+            @JsonProperty("gradingDate") String gradingDate, @JsonProperty("score") String score) {
         this.assignmentId = assignmentId;
         this.contactId = contactId;
         this.isSubmitted = isSubmitted;
@@ -57,15 +59,15 @@ class JsonAdaptedContactAssignment {
     public JsonAdaptedContactAssignment(ContactAssignment source) {
         this.assignmentId = source.getAssignmentId();
         this.contactId = source.getContactId();
-        this.isSubmitted = source.isSubmitted();
+        this.isSubmitted = String.valueOf(source.isSubmitted());
         this.submissionDate = source.getSubmissionDate() != null
                 ? source.getSubmissionDate().format(ParserUtil.DATETIME_FORMATTER)
                 : null;
-        this.isGraded = source.isGraded();
+        this.isGraded = String.valueOf(source.isGraded());
         this.gradingDate = source.getGradingDate() != null
                 ? source.getGradingDate().format(ParserUtil.DATETIME_FORMATTER)
                 : null;
-        this.score = source.getScore();
+        this.score = String.valueOf(source.getScore());
     }
 
     /**
@@ -92,11 +94,12 @@ class JsonAdaptedContactAssignment {
             throw new IllegalValueException(
                     String.format(JsonAdaptedContactAssignment.INVALID_CONTACT_ID_MESSAGE, this.contactId));
         }
+
+        final SubmissionInfo modelSubmissionInfo;
         if (this.isSubmitted == null) {
             throw new IllegalValueException(String.format(JsonAdaptedContactAssignment.MISSING_FIELD_MESSAGE_FORMAT,
                     "isSubmitted"));
         }
-
         final LocalDateTime modelSubmissionDate;
         try {
             if (this.submissionDate != null) {
@@ -108,19 +111,25 @@ class JsonAdaptedContactAssignment {
             throw new IllegalValueException(String.format(JsonAdaptedContactAssignment.MISSING_FIELD_MESSAGE_FORMAT,
                     "submissionDate"));
         }
-        if (modelSubmissionDate == null && this.isSubmitted) {
+        if (!SubmissionInfo.isValidSubmissionInfo(Boolean.parseBoolean(
+                this.isSubmitted), modelSubmissionDate)) {
             throw new IllegalValueException(String.format(JsonAdaptedContactAssignment.MISSING_FIELD_MESSAGE_FORMAT,
                     "submissionDate"));
         }
+        modelSubmissionInfo = new SubmissionInfo(Boolean.parseBoolean(this.isSubmitted), modelSubmissionDate);
+
+        final GradeInfo modelGradeInfo;
         if (this.isGraded == null) {
             throw new IllegalValueException(String.format(JsonAdaptedContactAssignment.MISSING_FIELD_MESSAGE_FORMAT,
                     "isGraded"));
         }
-
+        if (this.score == null) {
+            throw new IllegalValueException(JsonAdaptedContactAssignment.INVALID_SCORE_MESSAGE);
+        }
         final LocalDateTime modelGradingDate;
         try {
             if (this.gradingDate != null) {
-                modelGradingDate = LocalDateTime.parse(this.gradingDate, ParserUtil.DATETIME_FORMATTER);
+                modelGradingDate = ParserUtil.parseDeadline(this.gradingDate);
             } else {
                 modelGradingDate = null;
             }
@@ -128,29 +137,21 @@ class JsonAdaptedContactAssignment {
             throw new IllegalValueException(String.format(JsonAdaptedContactAssignment.MISSING_FIELD_MESSAGE_FORMAT,
                     "gradingDate"));
         }
-        if (modelGradingDate == null && this.isGraded) {
-            throw new IllegalValueException(String.format(JsonAdaptedContactAssignment.MISSING_FIELD_MESSAGE_FORMAT,
-                    "gradingDate"));
-        }
-        if (this.isGraded && !this.isSubmitted) {
-            throw new IllegalValueException(JsonAdaptedContactAssignment.GRADED_BUT_NOT_SUBMITTED_MESSAGE);
-        }
-        if (this.isGraded && this.isSubmitted && modelSubmissionDate.isAfter(modelGradingDate)) {
-            throw new IllegalValueException(String.format(
-                    JsonAdaptedContactAssignment.INVALID_GRADING_DATE_MESSAGE,
-                    modelGradingDate.format(ParserUtil.DATETIME_FORMATTER),
-                    modelSubmissionDate.format(ParserUtil.DATETIME_FORMATTER)));
-        }
-        if (this.score == null) {
-            throw new IllegalValueException(String.format(JsonAdaptedContactAssignment.MISSING_FIELD_MESSAGE_FORMAT,
-                    "score"));
-        }
-        if (this.score < 0 || this.score > 100) {
+        try {
+            if (!GradeInfo.isValidGradeInfo(Boolean.parseBoolean(this.isGraded), modelGradingDate,
+                    Integer.parseInt(this.score),
+                    modelSubmissionInfo)) {
+                throw new IllegalValueException(GradeInfo.INVALID_GRADE_STRING);
+            }
+        } catch (NumberFormatException e) {
             throw new IllegalValueException(JsonAdaptedContactAssignment.INVALID_SCORE_MESSAGE);
         }
 
-        return new ContactAssignment(this.assignmentId, this.contactId, this.isSubmitted, modelSubmissionDate,
-                this.isGraded, modelGradingDate, this.score);
+        modelGradeInfo = new GradeInfo(Boolean.parseBoolean(this.isGraded), modelGradingDate,
+                Integer.parseInt(this.score), modelSubmissionInfo);
+
+        return new ContactAssignment(this.assignmentId, this.contactId, modelSubmissionInfo.isSubmitted(),
+                modelSubmissionDate, modelGradeInfo.isGraded(), modelGradingDate, modelGradeInfo.getScore());
     }
 
 }
