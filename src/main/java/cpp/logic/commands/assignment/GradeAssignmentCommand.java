@@ -41,7 +41,7 @@ public class GradeAssignmentCommand extends Command {
             + CliSyntax.PREFIX_CONTACT + "CONTACT INDICES... "
             + CliSyntax.PREFIX_SCORE + "SCORE "
             + "[" + CliSyntax.PREFIX_DATETIME + "GRADING DATE]\n"
-            + "Example: " + SubmitAssignmentCommand.COMMAND_WORD + " "
+            + "Example: " + GradeAssignmentCommand.COMMAND_WORD + " "
             + CliSyntax.PREFIX_ASSIGNMENT + "Assignment 1 "
             + CliSyntax.PREFIX_CONTACT + "1 2 3 "
             + CliSyntax.PREFIX_SCORE + "85 "
