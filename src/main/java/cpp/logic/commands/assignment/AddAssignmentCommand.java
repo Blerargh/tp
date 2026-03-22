@@ -29,7 +29,7 @@ public class AddAssignmentCommand extends Command {
     public static final String COMMAND_WORD = "addass";
 
     public static final String MESSAGE_USAGE = AddAssignmentCommand.COMMAND_WORD
-            + ": Adds an assignment to the assignment list. "
+            + ": Adds an assignment to the assignment list.\n"
             + "Parameters: "
             + CliSyntax.PREFIX_ASSIGNMENT + "ASSIGNMENT NAME "
             + CliSyntax.PREFIX_DATETIME + "DEADLINE "

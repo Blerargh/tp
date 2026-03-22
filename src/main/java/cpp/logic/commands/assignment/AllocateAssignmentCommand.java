@@ -34,7 +34,7 @@ public class AllocateAssignmentCommand extends Command {
     public static final String COMMAND_WORD = "allocass";
 
     public static final String MESSAGE_USAGE = AllocateAssignmentCommand.COMMAND_WORD
-            + ": Allocates an assignment to contact(s). "
+            + ": Allocates an assignment to contact(s).\n"
             + "Parameters: "
             + CliSyntax.PREFIX_ASSIGNMENT + "ASSIGNMENT NAME "
             + "[" + CliSyntax.PREFIX_CLASS + "CLASS NAME] "

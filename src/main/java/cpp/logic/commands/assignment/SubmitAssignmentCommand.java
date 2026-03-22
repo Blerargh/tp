@@ -15,6 +15,7 @@ import cpp.logic.commands.CommandResult;
 import cpp.logic.commands.CommandUtil;
 import cpp.logic.commands.exceptions.CommandException;
 import cpp.logic.parser.CliSyntax;
+import cpp.logic.parser.ParserUtil;
 import cpp.model.Model;
 import cpp.model.assignment.Assignment;
 import cpp.model.assignment.AssignmentName;
@@ -35,16 +36,18 @@ public class SubmitAssignmentCommand extends Command {
     public static final String COMMAND_WORD = "submitass";
 
     public static final String MESSAGE_USAGE = SubmitAssignmentCommand.COMMAND_WORD
-            + ": Marks an assignment as submitted by contact(s) or class group. "
+            + ": Marks an assignment as submitted by contact(s) or class group.\n"
             + "Parameters: "
             + CliSyntax.PREFIX_ASSIGNMENT + "ASSIGNMENT NAME "
             + "[" + CliSyntax.PREFIX_CLASS + "CLASS NAME] "
-            + "[" + CliSyntax.PREFIX_CONTACT + "CONTACT INDICES...]\n"
+            + "[" + CliSyntax.PREFIX_CONTACT + "CONTACT INDICES...] "
+            + "[" + CliSyntax.PREFIX_DATETIME + "SUBMISSION DATE]\n"
             + "At least one of " + CliSyntax.PREFIX_CLASS + " or " + CliSyntax.PREFIX_CONTACT + " must be provided.\n"
             + "Example: " + SubmitAssignmentCommand.COMMAND_WORD + " "
             + CliSyntax.PREFIX_ASSIGNMENT + "Assignment 1 "
             + CliSyntax.PREFIX_CLASS + "CS2103T10 "
-            + CliSyntax.PREFIX_CONTACT + "1 2 3";
+            + CliSyntax.PREFIX_CONTACT + "1 2 3 "
+            + CliSyntax.PREFIX_DATETIME + "21-02-2026 23:50";
 
     public static final String MESSAGE_SUCCESS = """
             Marked assignment: %1$s as submitted on %2$s by %3$s contacts.
@@ -140,7 +143,8 @@ public class SubmitAssignmentCommand extends Command {
         }
 
         return new CommandResult(String.format(SubmitAssignmentCommand.MESSAGE_SUCCESS,
-                Messages.format(assignmentToUnallocate), this.submissionDate, this.markedCount,
+                Messages.format(assignmentToUnallocate), this.submissionDate.format(ParserUtil.DATETIME_FORMATTER),
+                this.markedCount,
                 this.markedContacts.toString(), this.alreadyMarkedContacts.toString(),
                 this.notAllocatedContacts.toString()));
 
