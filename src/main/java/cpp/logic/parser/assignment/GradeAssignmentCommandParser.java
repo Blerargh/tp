@@ -45,7 +45,7 @@ public class GradeAssignmentCommandParser implements Parser<GradeAssignmentComma
         AssignmentName assignmentName = ParserUtil
                 .parseAssignmentName(argMultimap.getValue(CliSyntax.PREFIX_ASSIGNMENT).get());
 
-        LocalDateTime gradingDate = ParserUtil.parseDeadline(argMultimap.getValue(CliSyntax.PREFIX_DATETIME)
+        LocalDateTime gradingDate = ParserUtil.parseDateTime(argMultimap.getValue(CliSyntax.PREFIX_DATETIME)
                 .orElseGet(() -> LocalDateTime.now().format(ParserUtil.DATETIME_FORMATTER)));
 
         List<Index> contactIndices = List.of();
