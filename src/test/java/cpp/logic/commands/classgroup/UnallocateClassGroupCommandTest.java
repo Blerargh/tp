@@ -1,29 +1,22 @@
 package cpp.logic.commands.classgroup;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import cpp.commons.core.GuiSettings;
 import cpp.commons.core.index.Index;
 import cpp.logic.commands.CommandResult;
 import cpp.logic.commands.exceptions.CommandException;
 import cpp.model.AddressBook;
-import cpp.model.Model;
-import cpp.model.ReadOnlyAddressBook;
-import cpp.model.ReadOnlyUserPrefs;
-import cpp.model.assignment.Assignment;
-import cpp.model.assignment.ContactAssignment;
 import cpp.model.classgroup.ClassGroup;
 import cpp.model.classgroup.ClassGroupName;
 import cpp.model.contact.Contact;
 import cpp.testutil.Assert;
 import cpp.testutil.ClassGroupBuilder;
+import cpp.testutil.ModelStub;
 import cpp.testutil.TypicalClassGroups;
 import cpp.testutil.TypicalContacts;
 import cpp.testutil.TypicalIndexes;
@@ -52,17 +45,20 @@ public class UnallocateClassGroupCommandTest {
         ClassGroupName validClassGroupName = new ClassGroupName(ClassGroupBuilder.DEFAULT_NAME);
         Contact validContact1 = TypicalContacts.getTypicalContacts().get(0);
         Contact validContact2 = TypicalContacts.getTypicalContacts().get(1);
+        Contact validContact3 = TypicalContacts.getTypicalContacts().get(2);
         ClassGroup validClassGroup = new ClassGroup(validClassGroupName);
         validClassGroup.allocateContact(validContact1.getId());
         validClassGroup.allocateContact(validContact2.getId());
+        validClassGroup.allocateContact(validContact3.getId());
         ModelStubWithContactAndClassGroup modelStub = new ModelStubWithContactAndClassGroup(validContact1,
-                validContact2,
+                validContact2, validContact3,
                 validClassGroup);
 
-        Assertions.assertEquals(2, validClassGroup.getContactIdSet().size());
-        Assertions.assertEquals(2, modelStub.classGroup.getContactIdSet().size());
+        Assertions.assertEquals(3, validClassGroup.getContactIdSet().size());
+        Assertions.assertEquals(3, modelStub.classGroup.getContactIdSet().size());
         Assertions.assertTrue(validClassGroup.getContactIdSet().contains(validContact1.getId()));
         Assertions.assertTrue(validClassGroup.getContactIdSet().contains(validContact2.getId()));
+        Assertions.assertTrue(validClassGroup.getContactIdSet().contains(validContact3.getId()));
 
         ArrayList<Index> validContactIndices = new ArrayList<>(
                 Arrays.asList(TypicalIndexes.INDEX_FIRST_CONTACT, TypicalIndexes.INDEX_SECOND_CONTACT));
@@ -74,12 +70,32 @@ public class UnallocateClassGroupCommandTest {
 
         Assertions.assertEquals(
                 String.format(UnallocateClassGroupCommand.MESSAGE_SUCCESS, validClassGroupName.fullName, 2,
-                        validContact1.getName() + "; " + validContact2.getName()),
+                        validContact1.getName() + "; " + validContact2.getName(), "None"),
                 commandResult.getFeedbackToUser());
+        Assertions.assertEquals(1, validClassGroup.getContactIdSet().size());
+        Assertions.assertEquals(1, modelStub.classGroup.getContactIdSet().size());
+        Assertions.assertFalse(validClassGroup.getContactIdSet().contains(validContact1.getId()));
+        Assertions.assertFalse(validClassGroup.getContactIdSet().contains(validContact2.getId()));
+        Assertions.assertTrue(validClassGroup.getContactIdSet().contains(validContact3.getId()));
+
+        // New command with Indexes 1 to 3, where indicees 1 and 2 are already
+        // unallocated from the class group, and index 3 is not unallocated yet
+        ArrayList<Index> allContactIndices = new ArrayList<>(
+                Arrays.asList(TypicalIndexes.INDEX_FIRST_CONTACT, TypicalIndexes.INDEX_SECOND_CONTACT,
+                        TypicalIndexes.INDEX_THIRD_CONTACT));
+        UnallocateClassGroupCommand unallocateClassGroupCommand2 = new UnallocateClassGroupCommand(validClassGroupName,
+                allContactIndices);
+        CommandResult newCommandResult = unallocateClassGroupCommand2.execute(modelStub);
+
+        Assertions.assertEquals(
+                String.format(UnallocateClassGroupCommand.MESSAGE_SUCCESS, validClassGroupName.fullName, 1,
+                        validContact3.getName(), validContact1.getName() + "; " + validContact2.getName()),
+                newCommandResult.getFeedbackToUser());
         Assertions.assertEquals(0, validClassGroup.getContactIdSet().size());
         Assertions.assertEquals(0, modelStub.classGroup.getContactIdSet().size());
         Assertions.assertFalse(validClassGroup.getContactIdSet().contains(validContact1.getId()));
         Assertions.assertFalse(validClassGroup.getContactIdSet().contains(validContact2.getId()));
+        Assertions.assertFalse(validClassGroup.getContactIdSet().contains(validContact3.getId()));
     }
 
     @Test
@@ -88,10 +104,11 @@ public class UnallocateClassGroupCommandTest {
         ClassGroupName invalidClassGroupName = new ClassGroupName("UnknownClass");
         Contact validContact1 = TypicalContacts.getTypicalContacts().get(0);
         Contact validContact2 = TypicalContacts.getTypicalContacts().get(1);
+        Contact validContact3 = TypicalContacts.getTypicalContacts().get(2);
         ClassGroup existingClassGroup = new ClassGroup(existingClassGroupName);
         existingClassGroup.allocateContact(validContact1.getId());
         ModelStubWithContactAndClassGroup modelStub = new ModelStubWithContactAndClassGroup(validContact1,
-                validContact2,
+                validContact2, validContact3,
                 existingClassGroup);
 
         ArrayList<Index> validContactIndices = new ArrayList<>(
@@ -109,9 +126,10 @@ public class UnallocateClassGroupCommandTest {
         ClassGroupName validClassGroupName = new ClassGroupName(ClassGroupBuilder.DEFAULT_NAME);
         Contact validContact1 = TypicalContacts.getTypicalContacts().get(0);
         Contact validContact2 = TypicalContacts.getTypicalContacts().get(1);
+        Contact validContact3 = TypicalContacts.getTypicalContacts().get(2);
         ClassGroup validClassGroup = new ClassGroup(validClassGroupName);
         ModelStubWithContactAndClassGroup modelStub = new ModelStubWithContactAndClassGroup(validContact1,
-                validContact2,
+                validContact2, validContact3,
                 validClassGroup);
 
         ArrayList<Index> validContactIndices = new ArrayList<>(
@@ -199,159 +217,22 @@ public class UnallocateClassGroupCommandTest {
     }
 
     /**
-     * A default model stub that have all of the methods failing.
-     */
-    private class ModelStub implements Model {
-        @Override
-        public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyUserPrefs getUserPrefs() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public GuiSettings getGuiSettings() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setGuiSettings(GuiSettings guiSettings) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public Path getAddressBookFilePath() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setAddressBookFilePath(Path addressBookFilePath) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addContact(Contact contact) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setAddressBook(ReadOnlyAddressBook newData) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public boolean hasContact(Contact contact) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void deleteContact(Contact target) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setContact(Contact target, Contact editedContact) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Contact> getFilteredContactList() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void updateFilteredContactList(Predicate<Contact> predicate) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public boolean hasAssignment(Assignment assignment) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addAssignment(Assignment assignment) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void deleteAssignment(Assignment target) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addContactAssignment(ContactAssignment ca) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void removeContactAssignment(ContactAssignment ca) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public boolean hasClassGroup(ClassGroup classGroup) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addClassGroup(ClassGroup classGroup) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setClassGroup(ClassGroup target, ClassGroup editedClassGroup) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void deleteClassGroup(ClassGroup target) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Assignment> getFilteredAssignmentList() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void updateFilteredAssignmentList(Predicate<Assignment> predicate) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<ClassGroup> getFilteredClassGroupList() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void updateFilteredClassGroupList(Predicate<ClassGroup> predicate) {
-            throw new AssertionError("This method should not be called.");
-        }
-    }
-
-    /**
      * A Model stub that contains a single class group and two contacts.
      */
     private class ModelStubWithContactAndClassGroup extends ModelStub {
         private final Contact contact1;
         private final Contact contact2;
+        private final Contact contact3;
         private final ClassGroup classGroup;
 
-        ModelStubWithContactAndClassGroup(Contact contact1, Contact contact2, ClassGroup classGroup) {
+        ModelStubWithContactAndClassGroup(Contact contact1, Contact contact2, Contact contact3, ClassGroup classGroup) {
             Objects.requireNonNull(contact1);
             Objects.requireNonNull(contact2);
+            Objects.requireNonNull(contact3);
             Objects.requireNonNull(classGroup);
             this.contact1 = contact1;
             this.contact2 = contact2;
+            this.contact3 = contact3;
             this.classGroup = classGroup;
         }
 
@@ -366,6 +247,7 @@ public class UnallocateClassGroupCommandTest {
             AddressBook addressBook = new AddressBook();
             addressBook.addContact(this.contact1);
             addressBook.addContact(this.contact2);
+            addressBook.addContact(this.contact3);
             addressBook.addClassGroup(this.classGroup);
             return addressBook;
         }
@@ -375,6 +257,7 @@ public class UnallocateClassGroupCommandTest {
             AddressBook addressBook = new AddressBook();
             addressBook.addContact(this.contact1);
             addressBook.addContact(this.contact2);
+            addressBook.addContact(this.contact3);
             return addressBook.getContactList();
         }
     }
