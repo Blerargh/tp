@@ -14,6 +14,10 @@ import cpp.logic.parser.exceptions.ParseException;
 import cpp.model.assignment.AssignmentName;
 import cpp.model.classgroup.ClassGroupName;
 
+/**
+ * Parses input arguments and creates a new {@code UnsubmitAssignmentCommand}
+ * object
+ */
 public class UnsubmitAssignmentCommandParser implements Parser<UnsubmitAssignmentCommand> {
 
     @Override
