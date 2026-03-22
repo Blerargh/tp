@@ -44,7 +44,7 @@ public class GradeAssignmentCommand extends Command {
             + "Example: " + GradeAssignmentCommand.COMMAND_WORD + " "
             + CliSyntax.PREFIX_ASSIGNMENT + "Assignment 1 "
             + CliSyntax.PREFIX_CONTACT + "1 2 3 "
-            + CliSyntax.PREFIX_SCORE + "85 "
+            + CliSyntax.PREFIX_SCORE + "67.9 "
             + CliSyntax.PREFIX_DATETIME + "21-02-2026 23:50";
 
     public static final String MESSAGE_SUCCESS = """
