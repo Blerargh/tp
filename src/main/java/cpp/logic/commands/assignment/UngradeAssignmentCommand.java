@@ -103,12 +103,12 @@ public class UngradeAssignmentCommand extends Command {
 
         if (this.ungradedCount == 0) {
             throw new CommandException(
-                    String.format(GradeAssignmentCommand.MESSAGE_GRADE_FAILED, this.notGradedContacts.toString(),
+                    String.format(UngradeAssignmentCommand.MESSAGE_GRADE_FAILED, this.notGradedContacts.toString(),
                             this.notSubmittedContacts.toString(), this.notAllocatedContacts.toString()));
         }
 
         return new CommandResult(
-                String.format(GradeAssignmentCommand.MESSAGE_SUCCESS, Messages.format(assignmentToUngrade),
+                String.format(UngradeAssignmentCommand.MESSAGE_SUCCESS, Messages.format(assignmentToUngrade),
                         this.ungradedCount, this.ungradedContacts.toString(), this.notGradedContacts.toString(),
                         this.notSubmittedContacts.toString(), this.notAllocatedContacts.toString()));
     }
