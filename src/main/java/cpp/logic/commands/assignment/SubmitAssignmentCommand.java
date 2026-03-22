@@ -206,11 +206,11 @@ public class SubmitAssignmentCommand extends Command {
         } catch (ContactAssignmentNotFoundException e) {
             // Skip contacts that don't have the assignment allocated.
             this.notAllocatedCount++;
-            this.buildNotAllocatedMarkString(contact.getName().fullName);
+            this.buildNotAllocatedString(contact.getName().fullName);
         } catch (ContactAssignmentAlreadySubmittedException e) {
             // Skip contacts that have already been marked as submitted.
             this.alreadyMarkedCount++;
-            this.buildAlreadyMarkedMarkString(contact.getName().fullName);
+            this.buildAlreadyMarkedString(contact.getName().fullName);
         }
     }
 
@@ -221,14 +221,14 @@ public class SubmitAssignmentCommand extends Command {
         this.markedContacts.append(contactName);
     }
 
-    private void buildNotAllocatedMarkString(String contactName) {
+    private void buildNotAllocatedString(String contactName) {
         if (this.notAllocatedContacts.length() > 0) {
             this.notAllocatedContacts.append("; ");
         }
         this.notAllocatedContacts.append(contactName);
     }
 
-    private void buildAlreadyMarkedMarkString(String contactName) {
+    private void buildAlreadyMarkedString(String contactName) {
         if (this.alreadyMarkedContacts.length() > 0) {
             this.alreadyMarkedContacts.append("; ");
         }
