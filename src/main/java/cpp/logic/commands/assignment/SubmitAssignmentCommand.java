@@ -48,7 +48,8 @@ public class SubmitAssignmentCommand extends Command {
     public static final String MESSAGE_SUCCESS = """
             Marked assignment: %1$s as submitted by %2$s contacts.
             Contacts marked submitted: %3$s
-            Contacts not marked submitted (already submitted or not allocated assignment): %4$s""";
+            Contacts not marked submitted (already submitted): %4$s
+            Contacts not marked submitted (not allocated the assignment): %5$s""";
     public static final String MESSAGE_SUBMISSION_FAILED = "No contacts were marked as submitted for the assignment";
 
     private final AssignmentName assignmentName;
@@ -56,9 +57,11 @@ public class SubmitAssignmentCommand extends Command {
     private final Set<Contact> contactsToMark;
     private final ClassGroupName classGroupName;
     private int markedCount = 0;
-    private int notMarkedCount = 0;
+    private int alreadyMarkedCount = 0;
+    private int notAllocatedCount = 0;
     private StringBuilder markedContacts;
-    private StringBuilder notMarkedContacts;
+    private StringBuilder alreadyMarkedContacts;
+    private StringBuilder notAllocatedContacts;
 
     /**
      * Creates a SubmitAssignmentCommand to mark the specified assignment as
@@ -72,7 +75,8 @@ public class SubmitAssignmentCommand extends Command {
         this.classGroupName = null;
         this.contactsToMark = new HashSet<>();
         this.markedContacts = new StringBuilder();
-        this.notMarkedContacts = new StringBuilder();
+        this.alreadyMarkedContacts = new StringBuilder();
+        this.notAllocatedContacts = new StringBuilder();
     }
 
     /**
@@ -86,7 +90,8 @@ public class SubmitAssignmentCommand extends Command {
         this.classGroupName = classGroupName;
         this.contactsToMark = new HashSet<>();
         this.markedContacts = new StringBuilder();
-        this.notMarkedContacts = new StringBuilder();
+        this.alreadyMarkedContacts = new StringBuilder();
+        this.notAllocatedContacts = new StringBuilder();
     }
 
     @Override
@@ -120,13 +125,17 @@ public class SubmitAssignmentCommand extends Command {
             throw new CommandException(SubmitAssignmentCommand.MESSAGE_SUBMISSION_FAILED);
         }
 
-        if (this.notMarkedCount == 0) {
-            this.notMarkedContacts.append("None");
+        if (this.alreadyMarkedCount == 0) {
+            this.alreadyMarkedContacts.append("None");
+        }
+
+        if (this.notAllocatedCount == 0) {
+            this.notAllocatedContacts.append("None");
         }
 
         return new CommandResult(String.format(SubmitAssignmentCommand.MESSAGE_SUCCESS,
                 Messages.format(assignmentToUnallocate), this.markedCount, this.markedContacts.toString(),
-                this.notMarkedContacts.toString()));
+                this.alreadyMarkedContacts.toString(), this.notAllocatedContacts.toString()));
 
     }
 
@@ -196,12 +205,12 @@ public class SubmitAssignmentCommand extends Command {
 
         } catch (ContactAssignmentNotFoundException e) {
             // Skip contacts that don't have the assignment allocated.
-            this.notMarkedCount++;
-            this.buildUnsuccessfulMarkString(contact.getName().fullName);
+            this.notAllocatedCount++;
+            this.buildNotAllocatedMarkString(contact.getName().fullName);
         } catch (ContactAssignmentAlreadySubmittedException e) {
             // Skip contacts that have already been marked as submitted.
-            this.notMarkedCount++;
-            this.buildUnsuccessfulMarkString(contact.getName().fullName);
+            this.alreadyMarkedCount++;
+            this.buildAlreadyMarkedMarkString(contact.getName().fullName);
         }
     }
 
@@ -212,10 +221,17 @@ public class SubmitAssignmentCommand extends Command {
         this.markedContacts.append(contactName);
     }
 
-    private void buildUnsuccessfulMarkString(String contactName) {
-        if (this.notMarkedContacts.length() > 0) {
-            this.notMarkedContacts.append("; ");
+    private void buildNotAllocatedMarkString(String contactName) {
+        if (this.notAllocatedContacts.length() > 0) {
+            this.notAllocatedContacts.append("; ");
         }
-        this.notMarkedContacts.append(contactName);
+        this.notAllocatedContacts.append(contactName);
+    }
+
+    private void buildAlreadyMarkedMarkString(String contactName) {
+        if (this.alreadyMarkedContacts.length() > 0) {
+            this.alreadyMarkedContacts.append("; ");
+        }
+        this.alreadyMarkedContacts.append(contactName);
     }
 }
