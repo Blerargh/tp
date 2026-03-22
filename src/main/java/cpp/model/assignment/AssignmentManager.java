@@ -138,6 +138,18 @@ public class AssignmentManager {
     }
 
     /**
+     * Ungrades the contact assignment for the given assignment and contact. Contact
+     * assignment must exist and be currently marked as graded.
+     *
+     * @param assignmentId the id of the assignment to ungrade
+     * @param contactId    the id of the contact to ungrade
+     */
+    public void ungrade(String assignmentId, String contactId) {
+        ContactAssignment ca = this.find(assignmentId, contactId);
+        ca.ungrade();
+    }
+
+    /**
      * Returns an unmodifiable map from assignment IDs to contact assignments for
      * the given contact.
      *

@@ -207,6 +207,14 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void ungrade(Assignment assignment, Contact contact) {
+        Objects.requireNonNull(assignment);
+        Objects.requireNonNull(contact);
+
+        this.assignmentManager.ungrade(assignment.getId(), contact.getId());
+    }
+
+    @Override
     public boolean hasClassGroup(ClassGroup classGroup) {
         Objects.requireNonNull(classGroup);
         return this.addressBook.hasClassGroup(classGroup);

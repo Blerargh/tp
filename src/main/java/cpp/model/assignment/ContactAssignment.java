@@ -6,6 +6,7 @@ import java.util.Objects;
 import cpp.commons.util.CollectionUtil;
 import cpp.model.assignment.exceptions.ContactAssignmentAlreadyGradedException;
 import cpp.model.assignment.exceptions.ContactAssignmentAlreadySubmittedException;
+import cpp.model.assignment.exceptions.ContactAssignmentNotGradedException;
 import cpp.model.assignment.exceptions.ContactAssignmentNotSubmittedException;
 
 /**
@@ -106,6 +107,9 @@ public class ContactAssignment {
 
     /**
      * Grade this contact assignment with the given score. Marks as graded.
+     * Throws an exception if it is already marked as graded.
+     * Throws an exception if it is not currently marked as submitted, as a contact
+     * assignment cannot be graded if it has not been submitted.
      *
      * @param score       the score to assign to this contact assignment
      * @param gradingDate the date and time when this contact assignment was graded
@@ -122,8 +126,17 @@ public class ContactAssignment {
 
     /**
      * Remove the grade from this contact assignment. Marks as ungraded.
+     * Throws an exception if it is not currently marked as graded.
+     * Throws an exception if it is not currently marked as submitted, as a contact
+     * assignment cannot be ungraded if it has not been submitted.
      */
     public void ungrade() {
+        if (!this.isSubmitted()) {
+            throw new ContactAssignmentNotSubmittedException();
+        }
+        if (!this.isGraded()) {
+            throw new ContactAssignmentNotGradedException();
+        }
         this.gradeInfo = new GradeInfo(false, null, 0, this.submissionInfo);
     }
 

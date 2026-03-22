@@ -145,6 +145,11 @@ public interface Model {
     void grade(Assignment assignment, Contact contact, float score, LocalDateTime gradingDate);
 
     /**
+     * Marks the assignment as ungraded for the given contact.
+     */
+    void ungrade(Assignment assignment, Contact contact);
+
+    /**
      * Returns true if a class group with the same identity as {@code classGroup}
      * exists in the class group list.
      */
