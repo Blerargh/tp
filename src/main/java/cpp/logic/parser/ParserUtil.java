@@ -167,6 +167,9 @@ public class ParserUtil {
         return new AssignmentName(trimmedName);
     }
 
+    /**
+     * Parses a {@code String score} into a {@code float}.
+     */
     public static float parseScore(String scoreString) throws ParseException {
         Objects.requireNonNull(scoreString);
         String trimmedScore = scoreString.trim().replaceAll("\\s+", " ");
