@@ -32,8 +32,8 @@ public class UngradeAssignmentCommand extends Command {
     public static final String MESSAGE_USAGE = UngradeAssignmentCommand.COMMAND_WORD
             + ": Ungrades an assignment for a contact."
             + "Parameters: "
-            + CliSyntax.PREFIX_ASSIGNMENT + "ASSIGNMENT NAME "
-            + CliSyntax.PREFIX_CONTACT + "CONTACT INDICES... "
+            + CliSyntax.PREFIX_ASSIGNMENT + "ASSIGNMENT_NAME "
+            + CliSyntax.PREFIX_CONTACT + "CONTACT_INDICES... "
             + "Example: " + UngradeAssignmentCommand.COMMAND_WORD + " "
             + CliSyntax.PREFIX_ASSIGNMENT + "Assignment 1 "
             + CliSyntax.PREFIX_CONTACT + "1 2 3";
