@@ -45,7 +45,7 @@ This quick start assumes you are a teacher who wants to install CPP, open the ap
 
 ### Prerequisites
 
-* Minimum disk space: 50 MB for app + data. Please refer to the section on [**How to check available disk space**](#how-to-check-available-disk-space) to ensure you have enough free space.
+* Minimum disk space: `500 MB` for app + data. Please refer to the section on [**How to check available disk space**](#how-to-check-available-disk-space) to ensure you have enough free space.
 
 * Java 17 or newer must be installed and available on your PATH. Please refer to the section on [**How to check and install Java**](#how-to-check-and-install-java) to check your Java version and install Java if needed.
 
