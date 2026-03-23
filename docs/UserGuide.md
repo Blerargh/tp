@@ -101,7 +101,7 @@ This quick start assumes you are a teacher who wants to install CPP, open the ap
 1. If Java is installed, you should see output showing the Java version (e.g., `java version "17.0.1"`).
     <box type="info">Any version that is 17.0.0 or newer is acceptable.</box>
     <box type="warning">Older versions (e.g., Java 8) will not work and must be updated using Step 4.</box>
-    <box type="warning">If you see an error like 'java' is not recognized, it means Java is not installed. Please follow Step 4 to install Java.</box>
+    <box type="warning">If you see an error like "bash: java: command not found", it means Java is not installed. Please follow Step 4 to install Java.</box>
 
     ![macOS Java Version](images/java-version-mac.png)
     <p style="font-size: 0.9em; color: #666; text-align: center; margin-top: 0;">(Source: tutorials24x7)</p>
@@ -239,7 +239,7 @@ Refer to the [**Features**](#features) below for advanced features with the full
 * Items in square brackets are optional.<br>
   e.g `n/NAME [t/TAG]...` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
-* Items with `...`​ after them can be used multiple times.<br>
+* Items with `...` after them can be used multiple times.<br>
   e.g. `[t/TAG]...` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.<br>
   e.g. `ct/CONTACT_INDICES...` can be used as `ct/1`, `ct/1 2 3`, `ct/1 3 5 7` etc.
 
@@ -351,7 +351,7 @@ Examples:
 
 Adds an assignment to the address book.
 
-Format: `addass ass/ASSIGNMENT_NAME d/DEADLINE [c/CLASS_NAME] [ct/CONTACT_INDICES...]​`
+Format: `addass ass/ASSIGNMENT_NAME d/DEADLINE [c/CLASS_NAME] [ct/CONTACT_INDICES...]`
 
 * Creates an assignment with the specified `ASSIGNMENT_NAME` and `DEADLINE`.
 
@@ -567,17 +567,17 @@ If you encounter other issues, please raise a ticket with the project maintainer
 
 ## Command summary
 
-| Action                    | Format, Examples                                                                                                                                                        |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Add**                   | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` |
-| **Clear**                 | `clear`                                                                                                                                                                 |
-| **Add Assignment**        | `addass n/ASSIGNMENT_NAME d/DEADLINE [c/CLASS_NAME] [ct/CONTACT_INDICES...]​` <br> e.g., `addass ass/Assignment 4 d/15-01-2024 23:59 c/CS2103T ct/4 5`                  |
-| **Allocate Assignment**   | `allocass n/ASSIGNMENT_NAME [c/CLASS_NAME] [ct/CONTACT_INDICES...]` <br> e.g., `allocass ass/Assignment 3 c/CS2103T ct/1 2 3`                                           |
-| **Unallocate Assignment** | `unallocass n/ASSIGNMENT_NAME [c/CLASS_NAME] [ct/CONTACT_INDICES...]` <br> e.g., `unallocass ass/Assignment 3 c/CS2103T ct/1 2 3`                                       |
-| **Delete**                | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                     |
-| **Edit**                  | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                           |
-| **Find**                  | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                              |
-| **List**                  | `list`                                                                                                                                                                  |
-| **Help**                  | `help`                                                                                                                                                                  |
+| Action                    | Format, Examples                                                                                                                                                       |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Add**                   | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` |
+| **Clear**                 | `clear`                                                                                                                                                                |
+| **Add Assignment**        | `addass ass/ASSIGNMENT_NAME d/DEADLINE [c/CLASS_NAME] [ct/CONTACT_INDICES...]` <br> e.g., `addass ass/Assignment 4 d/15-01-2024 23:59 c/CS2103T ct/4 5`                |
+| **Allocate Assignment**   | `allocass ass/ASSIGNMENT_NAME [c/CLASS_NAME] [ct/CONTACT_INDICES...]` <br> e.g., `allocass ass/Assignment 3 c/CS2103T ct/1 2 3`                                        |
+| **Unallocate Assignment** | `unallocass ass/ASSIGNMENT_NAME [c/CLASS_NAME] [ct/CONTACT_INDICES...]` <br> e.g., `unallocass ass/Assignment 3 c/CS2103T ct/1 2 3`                                    |
+| **Delete**                | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                    |
+| **Edit**                  | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                           |
+| **Find**                  | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                             |
+| **List**                  | `list`                                                                                                                                                                 |
+| **Help**                  | `help`                                                                                                                                                                 |
 
 </div>
