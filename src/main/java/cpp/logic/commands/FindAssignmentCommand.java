@@ -14,7 +14,7 @@ import cpp.model.assignment.AssignmentNameContainsKeywordsPredicate;
  */
 public class FindAssignmentCommand extends Command {
 
-    public static final String COMMAND_WORD = "findassignment";
+    public static final String COMMAND_WORD = "findass";
 
     public static final String MESSAGE_USAGE = FindAssignmentCommand.COMMAND_WORD
             + ": Finds all assignments whose names contain any of "

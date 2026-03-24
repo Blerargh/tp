@@ -16,7 +16,7 @@ import cpp.logic.commands.DeleteContactCommand;
 import cpp.logic.commands.EditCommand;
 import cpp.logic.commands.EditCommand.EditContactDescriptor;
 import cpp.logic.commands.ExitCommand;
-import cpp.logic.commands.FindCommand;
+import cpp.logic.commands.FindContactCommand;
 import cpp.logic.commands.HelpCommand;
 import cpp.logic.commands.ListCommand;
 import cpp.logic.commands.assignment.AddAssignmentCommand;
@@ -83,9 +83,9 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        FindCommand command = (FindCommand) this.parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        Assertions.assertEquals(new FindCommand(new ContactNameContainsKeywordsPredicate(keywords)), command);
+        FindContactCommand command = (FindContactCommand) this.parser.parseCommand(
+                FindContactCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        Assertions.assertEquals(new FindContactCommand(new ContactNameContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test
