@@ -46,9 +46,9 @@ public class AllocateAssignmentCommand extends Command {
             + CliSyntax.PREFIX_CONTACT + "1 2 3";
 
     public static final String MESSAGE_SUCCESS = """
-            Allocated assignment: %1$s to %2$s contact(s)
+            Allocated assignment: %1$s to %2$s contact(s).
             Contacts allocated: %3$s
-            Contacts not allocated (already allocated assignment): %4$s""";
+            Contacts not allocated (already allocated this assignment): %4$s""";
     public static final String MESSAGE_ALLOCATION_FAILED = "No contacts were allocated the assignment";
 
     private final AssignmentName assignmentName;

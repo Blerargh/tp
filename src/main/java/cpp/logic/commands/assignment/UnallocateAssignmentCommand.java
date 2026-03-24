@@ -48,7 +48,7 @@ public class UnallocateAssignmentCommand extends Command {
     public static final String MESSAGE_SUCCESS = """
             Unallocated assignment: %1$s from %2$s contact(s).
             Contacts unallocated: %3$s
-            Contacts not unallocated (not allocated assignment initially): %4$s""";
+            Contacts not unallocated (not allocated this assignment initially): %4$s""";
     public static final String MESSAGE_UNALLOCATION_FAILED = "No contacts were unallocated the assignment";
 
     private final AssignmentName assignmentName;
