@@ -30,11 +30,11 @@ public class AddClassGroupCommand extends Command {
             + CliSyntax.PREFIX_CLASS + "CS2103T10 "
             + CliSyntax.PREFIX_CONTACT + "1 2 3";
 
-    public static final String MESSAGE_SUCCESS = "New class grouping added: %1$s";
-    public static final String MESSAGE_DUPLICATE_CLASS_GROUP = "This class grouping already exists in the address book";
+    public static final String MESSAGE_SUCCESS = "New class group added: %1$s";
+    public static final String MESSAGE_DUPLICATE_CLASS_GROUP = "This class group already exists in the address book";
     public static final String MESSAGE_SUCCESS_WITH_ALLOCATION = """
-            New class grouping added: %1$s
-            Allocated class grouping to %2$s contact(s).
+            New class group added: %1$s
+            Allocated class group to %2$s contact(s).
             Contacts allocated: %3$s""";
 
     private final ClassGroup toAdd;
