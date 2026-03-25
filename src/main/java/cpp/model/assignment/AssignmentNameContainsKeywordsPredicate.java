@@ -1,26 +1,23 @@
 package cpp.model.assignment;
 
-import java.util.List;
 import java.util.function.Predicate;
 
-import cpp.commons.util.StringUtil;
 import cpp.commons.util.ToStringBuilder;
 
 /**
- * Tests that an {@code Assignment}'s {@code Name} matches any of the keywords
- * given.
+ * Tests that an {@code Assignment}'s {@code Name} contains the given search
+ * string.
  */
 public class AssignmentNameContainsKeywordsPredicate implements Predicate<Assignment> {
-    private final List<String> keywords;
+    private final String searchString;
 
-    public AssignmentNameContainsKeywordsPredicate(List<String> keywords) {
-        this.keywords = keywords;
+    public AssignmentNameContainsKeywordsPredicate(String searchString) {
+        this.searchString = searchString;
     }
 
     @Override
     public boolean test(Assignment assignment) {
-        return this.keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(assignment.getName().fullName, keyword));
+        return assignment.getName().fullName.toLowerCase().contains(this.searchString.toLowerCase());
     }
 
     @Override
@@ -35,11 +32,11 @@ public class AssignmentNameContainsKeywordsPredicate implements Predicate<Assign
         }
 
         AssignmentNameContainsKeywordsPredicate pred = (AssignmentNameContainsKeywordsPredicate) other;
-        return this.keywords.equals(pred.keywords);
+        return this.searchString.equals(pred.searchString);
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).add("keywords", this.keywords).toString();
+        return new ToStringBuilder(this).add("searchString", this.searchString).toString();
     }
 }

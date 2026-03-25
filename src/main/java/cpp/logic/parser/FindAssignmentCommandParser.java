@@ -1,7 +1,5 @@
 package cpp.logic.parser;
 
-import java.util.Arrays;
-
 import cpp.logic.Messages;
 import cpp.logic.commands.FindAssignmentCommand;
 import cpp.logic.parser.exceptions.ParseException;
@@ -21,15 +19,13 @@ public class FindAssignmentCommandParser implements Parser<FindAssignmentCommand
      */
     @Override
     public FindAssignmentCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
+        String trimmedArgs = args.trim().replaceAll("\\s+", " ");
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, FindAssignmentCommand.MESSAGE_USAGE));
         }
 
-        String[] nameKeywords = trimmedArgs.split("\\s+");
-
-        return new FindAssignmentCommand(new AssignmentNameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        return new FindAssignmentCommand(new AssignmentNameContainsKeywordsPredicate(trimmedArgs));
     }
 
 }

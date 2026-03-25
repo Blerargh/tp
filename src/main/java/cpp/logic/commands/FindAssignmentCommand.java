@@ -33,7 +33,8 @@ public class FindAssignmentCommand extends Command {
         Objects.requireNonNull(model);
         model.updateFilteredAssignmentList(this.predicate);
         return new CommandResult(
-                String.format(Messages.MESSAGE_ASSIGNMENTS_LISTED_OVERVIEW, model.getFilteredAssignmentList().size()));
+                String.format(Messages.MESSAGE_ASSIGNMENTS_LISTED_OVERVIEW, model.getFilteredAssignmentList().size()),
+                CommandResult.ListView.ASSIGNMENTS);
     }
 
     @Override

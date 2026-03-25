@@ -33,7 +33,8 @@ public class FindClassCommand extends Command {
         Objects.requireNonNull(model);
         model.updateFilteredClassGroupList(this.predicate);
         return new CommandResult(
-                String.format(Messages.MESSAGE_CLASS_GROUPS_LISTED_OVERVIEW, model.getFilteredClassGroupList().size()));
+                String.format(Messages.MESSAGE_CLASS_GROUPS_LISTED_OVERVIEW, model.getFilteredClassGroupList().size()),
+                CommandResult.ListView.CLASSGROUPS);
     }
 
     @Override
