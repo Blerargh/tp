@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import cpp.commons.core.index.Index;
 import cpp.commons.util.ToStringBuilder;
 import cpp.logic.Messages;
-import cpp.logic.commands.Command;
 import cpp.logic.commands.CommandResult;
 import cpp.logic.commands.exceptions.CommandException;
 import cpp.model.Model;
@@ -21,7 +20,7 @@ import cpp.model.contact.Contact;
  * Displays full detailed information including name, phone, email, classes, and
  * assignments.
  */
-public class ViewContactCommand extends Command {
+public class ViewContactCommand extends ViewCommand {
 
     public static final String MESSAGE_VIEW_CONTACT_SUCCESS = "Viewed Contact:\n%1$s";
 

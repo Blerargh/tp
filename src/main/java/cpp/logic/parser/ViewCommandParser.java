@@ -3,6 +3,7 @@ package cpp.logic.parser;
 import cpp.commons.core.index.Index;
 import cpp.logic.Messages;
 import cpp.logic.commands.view.ViewCommand;
+import cpp.logic.commands.view.ViewContactCommand;
 import cpp.logic.parser.exceptions.ParseException;
 import cpp.model.assignment.AssignmentName;
 import cpp.model.classgroup.ClassGroupName;
@@ -43,9 +44,9 @@ public class ViewCommandParser implements Parser<ViewCommand> {
     /**
      * Parses view contact arguments and returns a {@code ViewCommand}.
      */
-    private ViewCommand parseViewContact(ArgumentMultimap argMultimap) throws ParseException {
+    private ViewContactCommand parseViewContact(ArgumentMultimap argMultimap) throws ParseException {
         Index index = ParserUtil.parseIndex(argMultimap.getValue(CliSyntax.PREFIX_CONTACT).get());
-        throw new UnsupportedOperationException(index.toString());
+        return new ViewContactCommand(index);
     }
 
     /**
