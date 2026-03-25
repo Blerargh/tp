@@ -13,6 +13,8 @@ import cpp.model.assignment.Assignment;
 import cpp.model.assignment.ContactAssignment;
 import cpp.model.classgroup.ClassGroup;
 import cpp.model.contact.Contact;
+import cpp.model.view.ViewState;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.ObservableList;
 
 /**
@@ -176,6 +178,35 @@ public class ModelStub implements Model {
 
     @Override
     public void updateFilteredClassGroupList(Predicate<ClassGroup> predicate) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public void viewAssignment(Assignment assignment) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    /** Clears any currently viewed assignment. */
+    @Override
+    public void clearViewedAssignment() {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    /** Returns the currently viewed assignment, or null if none. */
+    @Override
+    public Assignment getViewedAssignment() {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    /** Returns the contact assignments for the given assignment. */
+    @Override
+    public java.util.List<ContactAssignment> getContactAssignmentsForAssignment(Assignment assignment) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    /** Observable property for the current view state. */
+    @Override
+    public ReadOnlyObjectProperty<ViewState> getViewStateProperty() {
         throw new AssertionError("This method should not be called.");
     }
 }

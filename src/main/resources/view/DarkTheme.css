@@ -142,6 +142,10 @@
      -fx-border-top-width: 1px;
 }
 
+.card-alt {
+    -fx-background-color: #515658;
+}
+
 .status-bar {
     -fx-background-color: derive(#1d1d1d, 30%);
 }

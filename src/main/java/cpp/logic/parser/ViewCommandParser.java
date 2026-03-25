@@ -2,6 +2,7 @@ package cpp.logic.parser;
 
 import cpp.commons.core.index.Index;
 import cpp.logic.Messages;
+import cpp.logic.commands.view.ViewAssignmentCommand;
 import cpp.logic.commands.view.ViewClassGroupCommand;
 import cpp.logic.commands.view.ViewCommand;
 import cpp.logic.commands.view.ViewContactCommand;
@@ -56,7 +57,7 @@ public class ViewCommandParser implements Parser<ViewCommand> {
     private ViewCommand parseViewAssignment(ArgumentMultimap argMultimap) throws ParseException {
         AssignmentName name = ParserUtil.parseAssignmentName(
                 argMultimap.getValue(CliSyntax.PREFIX_ASSIGNMENT).get());
-        throw new UnsupportedOperationException(name.toString());
+        return new ViewAssignmentCommand(name);
     }
 
     /**

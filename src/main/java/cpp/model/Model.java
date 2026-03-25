@@ -10,6 +10,8 @@ import cpp.model.assignment.Assignment;
 import cpp.model.assignment.ContactAssignment;
 import cpp.model.classgroup.ClassGroup;
 import cpp.model.contact.Contact;
+import cpp.model.view.ViewState;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.ObservableList;
 
 /**
@@ -202,4 +204,29 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredClassGroupList(Predicate<ClassGroup> predicate);
+
+    /**
+     * Set the current viewed assignment in the model.
+     */
+    void viewAssignment(Assignment assignment);
+
+    /**
+     * Clears any currently viewed assignment.
+     */
+    void clearViewedAssignment();
+
+    /**
+     * Returns the currently viewed assignment, or null if none.
+     */
+    Assignment getViewedAssignment();
+
+    /**
+     * Returns the contact assignments for the given assignment.
+     */
+    List<ContactAssignment> getContactAssignmentsForAssignment(Assignment assignment);
+
+    /**
+     * Observable property for the current view state.
+     */
+    ReadOnlyObjectProperty<ViewState> getViewStateProperty();
 }

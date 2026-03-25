@@ -1,13 +1,20 @@
 package cpp.ui;
 
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import cpp.commons.core.GuiSettings;
 import cpp.commons.core.LogsCenter;
 import cpp.logic.Logic;
 import cpp.logic.commands.CommandResult;
+import cpp.logic.commands.CommandResult.ListView;
+import cpp.logic.commands.CommandResult.ViewType;
 import cpp.logic.commands.exceptions.CommandException;
 import cpp.logic.parser.exceptions.ParseException;
+import cpp.model.assignment.Assignment;
+import cpp.model.assignment.ContactAssignment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -36,8 +43,13 @@ public class MainWindow extends UiPart<Stage> {
     private ContactListPanel contactListPanel;
     private AssignmentListPanel assignmentListPanel;
     private ClassGroupListPanel classGroupListPanel;
+
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private UniqueAssignmentView assignmentViewPanel;
+    private Map<ViewType, UiPart<?>> viewPanels = new EnumMap<>(ViewType.class);
+    private ViewType currentViewType = ViewType.NONE;
+    private Object currentViewPayload = null;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -53,6 +65,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane classListPanelPlaceholder;
+
+    @FXML
+    private StackPane viewPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -71,6 +86,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private Tab assignmentsTab;
+
+    @FXML
+    private Tab viewTab;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -141,6 +159,39 @@ public class MainWindow extends UiPart<Stage> {
         this.assignmentListPanelPlaceholder.getChildren().add(this.assignmentListPanel.getRoot());
         this.classListPanelPlaceholder.getChildren().add(this.classGroupListPanel.getRoot());
 
+        // set up assignment view panel inside the view tab placeholder; hide tab
+        // initially
+        this.assignmentViewPanel = new UniqueAssignmentView();
+        this.viewPanelPlaceholder.getChildren().add(this.assignmentViewPanel.getRoot());
+        // register known view panels
+        this.viewPanels.put(ViewType.ASSIGNMENT, this.assignmentViewPanel);
+
+        // remove the view tab so it is hidden until a view command adds it back
+        this.mainTabPane.getTabs().remove(this.viewTab);
+
+        // When user manually clicks any other tab, clear viewed object and hide view
+        // tab.
+        this.mainTabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
+            if (newTab != null && newTab != this.viewTab) {
+                this.logic.clearViewedAssignment();
+                this.hideViewTab();
+            }
+        });
+
+        // Listen to the central view state so unique views update reactively.
+        this.logic.getViewStateProperty().addListener((obs, oldState, newState) -> {
+            if (newState == null || newState.getType() == ViewType.NONE) {
+                this.hideViewTab();
+                this.currentViewType = ViewType.NONE;
+                this.currentViewPayload = null;
+                return;
+            }
+
+            this.currentViewType = newState.getType();
+            this.currentViewPayload = newState.getPayload();
+            this.showViewForCurrentState();
+        });
+
         this.resultDisplay = new ResultDisplay();
         this.resultDisplayPlaceholder.getChildren().add(this.resultDisplay.getRoot());
 
@@ -192,16 +243,43 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     private void handleListCommand(CommandResult commandResult) {
-        CommandResult.ListView listView = commandResult.getListView();
+        ListView listView = commandResult.getListView();
+        ViewType viewType = commandResult.getViewType();
+
+        // If a unique view was requested, show the view tab and populate it.
+        if (viewType == ViewType.ASSIGNMENT) {
+            Assignment viewedAssignment = this.logic.getViewedAssignment();
+            if (viewedAssignment != null) {
+                List<ContactAssignment> cas = this.logic
+                        .getContactAssignmentsForAssignment(viewedAssignment);
+                this.assignmentViewPanel.setAssignment(viewedAssignment, cas, this.logic.getAddressBook());
+                if (!this.mainTabPane.getTabs().contains(this.viewTab)) {
+                    this.mainTabPane.getTabs().add(this.viewTab);
+                }
+                this.mainTabPane.getSelectionModel().select(this.viewTab);
+                return;
+            }
+        }
+
         switch (listView) {
         case CONTACTS:
             this.mainTabPane.getSelectionModel().select(this.contactsTab);
+            // hide view tab if present
+            if (this.mainTabPane.getTabs().contains(this.viewTab)) {
+                this.mainTabPane.getTabs().remove(this.viewTab);
+            }
             break;
         case ASSIGNMENTS:
             this.mainTabPane.getSelectionModel().select(this.assignmentsTab);
+            if (this.mainTabPane.getTabs().contains(this.viewTab)) {
+                this.mainTabPane.getTabs().remove(this.viewTab);
+            }
             break;
         case CLASSGROUPS:
             this.mainTabPane.getSelectionModel().select(this.classesTab);
+            if (this.mainTabPane.getTabs().contains(this.viewTab)) {
+                this.mainTabPane.getTabs().remove(this.viewTab);
+            }
             break;
         case NONE:
         default:
@@ -220,6 +298,59 @@ public class MainWindow extends UiPart<Stage> {
 
     public ClassGroupListPanel getClassGroupListPanel() {
         return this.classGroupListPanel;
+    }
+
+    /**
+     * Show the currently-selected view in the view tab.
+     */
+    private void showViewForCurrentState() {
+        if (this.currentViewType == null || this.currentViewType == ViewType.NONE) {
+            this.hideViewTab();
+            return;
+        }
+
+        switch (this.currentViewType) {
+        case ASSIGNMENT:
+            Assignment ass = (Assignment) this.currentViewPayload;
+            if (ass != null) {
+                List<ContactAssignment> cas = this.logic
+                        .getContactAssignmentsForAssignment(ass);
+                this.assignmentViewPanel.setAssignment(ass, cas, this.logic.getAddressBook());
+                if (!this.mainTabPane.getTabs().contains(this.viewTab)) {
+                    this.mainTabPane.getTabs().add(this.viewTab);
+                }
+                this.mainTabPane.getSelectionModel().select(this.viewTab);
+            }
+            break;
+        default:
+            this.hideViewTab();
+            break;
+        }
+    }
+
+    private void hideViewTab() {
+        if (this.mainTabPane.getTabs().contains(this.viewTab)) {
+            this.mainTabPane.getTabs().remove(this.viewTab);
+        }
+    }
+
+    private void refreshCurrentViewIfVisible() {
+        if (!this.mainTabPane.getTabs().contains(this.viewTab)) {
+            return;
+        }
+
+        switch (this.currentViewType) {
+        case ASSIGNMENT:
+            if (this.currentViewPayload instanceof Assignment) {
+                Assignment ass = (Assignment) this.currentViewPayload;
+                List<ContactAssignment> cas = this.logic
+                        .getContactAssignmentsForAssignment(ass);
+                this.assignmentViewPanel.setAssignment(ass, cas, this.logic.getAddressBook());
+            }
+            break;
+        default:
+            break;
+        }
     }
 
     /**
@@ -242,6 +373,10 @@ public class MainWindow extends UiPart<Stage> {
             }
 
             this.handleListCommand(commandResult);
+
+            // Refresh the currently-visible unique view after any command,
+            // so changes like submit/unsubmit or grade/ungrade are shown.
+            this.refreshCurrentViewIfVisible();
 
             return commandResult;
         } catch (CommandException | ParseException e) {

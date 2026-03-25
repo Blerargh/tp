@@ -66,6 +66,11 @@
                     <StackPane fx:id="assignmentListPanelPlaceholder" />
                 </content>
                 </Tab>
+                <Tab fx:id="viewTab" text="View">
+                <content>
+                  <StackPane fx:id="viewPanelPlaceholder" />
+                </content>
+                </Tab>
             </tabs>
             </TabPane>
         </StackPane>

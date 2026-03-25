@@ -3,6 +3,7 @@ package cpp.logic;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.logging.Logger;
 
 import cpp.commons.core.GuiSettings;
@@ -15,9 +16,12 @@ import cpp.logic.parser.exceptions.ParseException;
 import cpp.model.Model;
 import cpp.model.ReadOnlyAddressBook;
 import cpp.model.assignment.Assignment;
+import cpp.model.assignment.ContactAssignment;
 import cpp.model.classgroup.ClassGroup;
 import cpp.model.contact.Contact;
+import cpp.model.view.ViewState;
 import cpp.storage.Storage;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.ObservableList;
 
 /**
@@ -97,5 +101,26 @@ public class LogicManager implements Logic {
     @Override
     public void setGuiSettings(GuiSettings guiSettings) {
         this.model.setGuiSettings(guiSettings);
+    }
+
+    @Override
+    public Assignment getViewedAssignment() {
+        return this.model.getViewedAssignment();
+    }
+
+    @Override
+    public List<ContactAssignment> getContactAssignmentsForAssignment(
+            Assignment assignment) {
+        return this.model.getContactAssignmentsForAssignment(assignment);
+    }
+
+    @Override
+    public void clearViewedAssignment() {
+        this.model.clearViewedAssignment();
+    }
+
+    @Override
+    public ReadOnlyObjectProperty<ViewState> getViewStateProperty() {
+        return this.model.getViewStateProperty();
     }
 }

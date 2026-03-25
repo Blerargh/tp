@@ -17,6 +17,9 @@ import cpp.model.assignment.exceptions.ContactAlreadyAllocatedAssignmentExceptio
 import cpp.model.assignment.exceptions.ContactAssignmentNotFoundException;
 import cpp.model.classgroup.ClassGroup;
 import cpp.model.contact.Contact;
+import cpp.model.view.ViewState;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
@@ -32,6 +35,7 @@ public class ModelManager implements Model {
     private final FilteredList<Contact> filteredContacts;
     private final FilteredList<Assignment> filteredAssignments;
     private final FilteredList<ClassGroup> filteredClassGroups;
+    private final ReadOnlyObjectWrapper<ViewState> viewState = new ReadOnlyObjectWrapper<>(ViewState.none());
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -282,6 +286,40 @@ public class ModelManager implements Model {
     public void updateFilteredClassGroupList(Predicate<ClassGroup> predicate) {
         Objects.requireNonNull(predicate);
         this.filteredClassGroups.setPredicate(predicate);
+    }
+
+    // =========== View state APIs
+    // =============================================================
+
+    @Override
+    public void viewAssignment(Assignment assignment) {
+        Objects.requireNonNull(assignment);
+        this.viewState.set(ViewState.ofAssignment(assignment));
+    }
+
+    @Override
+    public void clearViewedAssignment() {
+        this.viewState.set(ViewState.none());
+    }
+
+    @Override
+    public Assignment getViewedAssignment() {
+        ViewState vs = this.viewState.get();
+        if (vs == null || vs.getType() != cpp.logic.commands.CommandResult.ViewType.ASSIGNMENT) {
+            return null;
+        }
+        return (Assignment) vs.getPayload();
+    }
+
+    @Override
+    public List<ContactAssignment> getContactAssignmentsForAssignment(Assignment assignment) {
+        Objects.requireNonNull(assignment);
+        return this.assignmentManager.getContactAssignmentsForAssignment(assignment);
+    }
+
+    @Override
+    public ReadOnlyObjectProperty<ViewState> getViewStateProperty() {
+        return this.viewState.getReadOnlyProperty();
     }
 
     @Override
