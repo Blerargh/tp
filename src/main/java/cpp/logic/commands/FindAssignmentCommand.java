@@ -8,19 +8,19 @@ import cpp.model.Model;
 import cpp.model.assignment.AssignmentNameContainsKeywordsPredicate;
 
 /**
- * Finds and lists all assignments in address book whose name contains any of
- * the argument keywords.
- * Keyword matching is case insensitive.
+ * Finds and lists all assignments in address book whose name contains the
+ * specified search string.
+ * Matching is case insensitive and exact (substring match).
  */
 public class FindAssignmentCommand extends Command {
 
     public static final String COMMAND_WORD = "findass";
 
     public static final String MESSAGE_USAGE = FindAssignmentCommand.COMMAND_WORD
-            + ": Finds all assignments whose names contain any of "
-            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + FindAssignmentCommand.COMMAND_WORD + " Lab Homework";
+            + ": Finds all assignments whose names contain the specified search string "
+            + "(case-insensitive) and displays them as a list with index numbers.\n"
+            + "Parameters: SEARCH_STRING\n"
+            + "Example: " + FindAssignmentCommand.COMMAND_WORD + " Assignment 1";
 
     private final AssignmentNameContainsKeywordsPredicate predicate;
 
