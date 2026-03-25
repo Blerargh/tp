@@ -20,6 +20,7 @@ import cpp.model.Model;
 import cpp.model.assignment.Assignment;
 import cpp.model.assignment.AssignmentName;
 import cpp.model.assignment.exceptions.ContactAssignmentAlreadyGradedException;
+import cpp.model.assignment.exceptions.ContactAssignmentGradedBeforeSubmissionException;
 import cpp.model.assignment.exceptions.ContactAssignmentNotFoundException;
 import cpp.model.assignment.exceptions.ContactAssignmentNotSubmittedException;
 import cpp.model.classgroup.ClassGroup;
@@ -59,12 +60,14 @@ public class GradeAssignmentCommand extends Command {
             Contacts graded: %5$s
             Contacts not graded (already graded): %6$s
             Contacts not graded (not submitted yet): %7$s
-            Contacts not graded (not allocated the assignment): %8$s""";
+            Contacts not graded (not allocated the assignment): %8$s
+            Contacts not graded (grade time before submission time): %9$s""";
     public static final String MESSAGE_GRADE_FAILED = """
             Failed to grade any contacts for the assignment.
             Contacts not graded (already graded): %1$s
             Contacts not graded (not submitted yet): %2$s
-            Contacts not graded (not allocated the assignment): %3$s""";
+            Contacts not graded (not allocated the assignment): %3$s
+            Contacts not graded (grade time before submission time): %4$s""";
 
     private final AssignmentName assignmentName;
     private final ClassGroupName classGroupName;
@@ -77,10 +80,12 @@ public class GradeAssignmentCommand extends Command {
     private int alreadyGradedCount = 0;
     private int notSubmittedCount = 0;
     private int notAllocatedCount = 0;
+    private int gradeTimeBeforeSubmissionTimeCount = 0;
     private StringBuilder gradedContacts = new StringBuilder();
     private StringBuilder alreadyGradedContacts = new StringBuilder();
     private StringBuilder notSubmittedContacts = new StringBuilder();
     private StringBuilder notAllocatedContacts = new StringBuilder();
+    private StringBuilder gradeTimeBeforeSubmissionTimeContacts = new StringBuilder();
 
     /**
      * Creates a GradeAssignmentCommand to grade the specified assignment for the
@@ -158,17 +163,23 @@ public class GradeAssignmentCommand extends Command {
             this.notAllocatedContacts.append("None");
         }
 
+        if (this.gradeTimeBeforeSubmissionTimeCount == 0) {
+            this.gradeTimeBeforeSubmissionTimeContacts.append("None");
+        }
+
         if (this.gradedCount == 0) {
             throw new CommandException(
                     String.format(GradeAssignmentCommand.MESSAGE_GRADE_FAILED, this.alreadyGradedContacts.toString(),
-                            this.notSubmittedContacts.toString(), this.notAllocatedContacts.toString()));
+                            this.notSubmittedContacts.toString(), this.notAllocatedContacts.toString(),
+                            this.gradeTimeBeforeSubmissionTimeContacts.toString()));
         }
 
         return new CommandResult(
                 String.format(GradeAssignmentCommand.MESSAGE_SUCCESS, Messages.format(assignmentToGrade),
                         this.gradingDate.format(ParserUtil.DATETIME_FORMATTER), this.gradedCount, this.score,
                         this.gradedContacts.toString(), this.alreadyGradedContacts.toString(),
-                        this.notSubmittedContacts.toString(), this.notAllocatedContacts.toString()));
+                        this.notSubmittedContacts.toString(), this.notAllocatedContacts.toString(),
+                        this.gradeTimeBeforeSubmissionTimeContacts.toString()));
     }
 
     @Override
@@ -183,7 +194,8 @@ public class GradeAssignmentCommand extends Command {
         return this.assignmentName.equals(o.assignmentName)
                 && this.contactIndices.equals(o.contactIndices)
                 && Objects.equals(this.classGroupName, o.classGroupName)
-                && Float.compare(this.score, o.score) == 0;
+                && Float.compare(this.score, o.score) == 0
+                && this.gradingDate.equals(o.gradingDate);
     }
 
     @Override
@@ -193,6 +205,7 @@ public class GradeAssignmentCommand extends Command {
                 .add("contactIndices", this.contactIndices)
                 .add("classGroupName", this.classGroupName)
                 .add("score", this.score)
+                .add("gradingDate", this.gradingDate.format(ParserUtil.DATETIME_FORMATTER))
                 .toString();
     }
 
@@ -234,18 +247,18 @@ public class GradeAssignmentCommand extends Command {
             this.buildSuccessfulGradeString(contact.getName().fullName);
 
         } catch (ContactAssignmentNotFoundException e) {
-            // Skip contacts that don't have the assignment allocated.
             this.notAllocatedCount++;
             this.buildNotAllocatedString(contact.getName().fullName);
         } catch (ContactAssignmentNotSubmittedException e) {
-            // Skip contacts that have not submitted the assignment.
             this.notSubmittedCount++;
             this.buildNotSubmittedString(contact.getName().fullName);
 
         } catch (ContactAssignmentAlreadyGradedException e) {
-            // Skip contacts that have already been marked as graded.
             this.alreadyGradedCount++;
             this.buildAlreadyGradedString(contact.getName().fullName);
+        } catch (ContactAssignmentGradedBeforeSubmissionException e) {
+            this.gradeTimeBeforeSubmissionTimeCount++;
+            this.buildGradeTimeBeforeSubmissionTimeString(contact.getName().fullName);
         }
 
         this.contactsToGrade.add(contact);
@@ -277,5 +290,12 @@ public class GradeAssignmentCommand extends Command {
             this.notAllocatedContacts.append("; ");
         }
         this.notAllocatedContacts.append(contactName);
+    }
+
+    private void buildGradeTimeBeforeSubmissionTimeString(String contactName) {
+        if (this.gradeTimeBeforeSubmissionTimeContacts.length() > 0) {
+            this.gradeTimeBeforeSubmissionTimeContacts.append("; ");
+        }
+        this.gradeTimeBeforeSubmissionTimeContacts.append(contactName);
     }
 }

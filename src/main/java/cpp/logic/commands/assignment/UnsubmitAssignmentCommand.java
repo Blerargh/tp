@@ -26,8 +26,9 @@ import cpp.model.util.AssignmentUtil;
 import cpp.model.util.ClassGroupUtil;
 
 /**
- * Marks an assignment as submitted by contact(s) or class group. The assignment
- * must have been allocated to the contact(s) before it can be submitted.
+ * Marks an assignment as unsubmitted by contact(s) or class group. The
+ * assignment must have been allocated and submitted by the contact(s) before it
+ * can be unsubmitted.
  */
 public class UnsubmitAssignmentCommand extends Command {
 

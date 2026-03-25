@@ -27,8 +27,8 @@ import cpp.model.util.AssignmentUtil;
 import cpp.model.util.ClassGroupUtil;
 
 /**
- * Grades an assignment for a contact. The assignment must have been submitted
- * before it can be graded.
+ * Ungrades an assignment for a contact. The assignment must have been submitted
+ * and graded before it can be ungraded.
  */
 public class UngradeAssignmentCommand extends Command {
 
@@ -36,7 +36,7 @@ public class UngradeAssignmentCommand extends Command {
 
     public static final String MESSAGE_USAGE = UngradeAssignmentCommand.COMMAND_WORD
             + ": Ungrades an assignment for contact(s)."
-            + "Parameters: "
+            + " Parameters: "
             + CliSyntax.PREFIX_ASSIGNMENT + "ASSIGNMENT_NAME "
             + "[" + CliSyntax.PREFIX_CLASS + "CLASS_NAME] "
             + "[" + CliSyntax.PREFIX_CONTACT + "CONTACT_INDICES...] "
