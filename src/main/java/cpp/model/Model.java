@@ -2,6 +2,7 @@ package cpp.model;
 
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.function.Predicate;
 
 import cpp.commons.core.GuiSettings;
@@ -148,6 +149,11 @@ public interface Model {
      * Marks the assignment as ungraded for the given contact.
      */
     void ungrade(Assignment assignment, Contact contact);
+
+    /**
+     * Returns all contact assignments linked to the given contact.
+     */
+    List<ContactAssignment> getContactAssignmentsForContact(Contact contact);
 
     /**
      * Returns true if a class group with the same identity as {@code classGroup}

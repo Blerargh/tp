@@ -215,6 +215,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public List<ContactAssignment> getContactAssignmentsForContact(Contact contact) {
+        Objects.requireNonNull(contact);
+        return this.assignmentManager.getContactAssignmentsForContact(contact);
+    }
+
+    @Override
     public boolean hasClassGroup(ClassGroup classGroup) {
         Objects.requireNonNull(classGroup);
         return this.addressBook.hasClassGroup(classGroup);
