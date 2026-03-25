@@ -2,6 +2,7 @@ package cpp.testutil;
 
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.function.Predicate;
 
 import cpp.commons.core.GuiSettings;
@@ -130,6 +131,11 @@ public class ModelStub implements Model {
 
     @Override
     public void ungrade(Assignment assignment, Contact contact) {
+        throw new AssertionError("This method should not be called.");
+    }
+
+    @Override
+    public List<ContactAssignment> getContactAssignmentsForContact(Contact contact) {
         throw new AssertionError("This method should not be called.");
     }
 
