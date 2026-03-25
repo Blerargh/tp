@@ -236,7 +236,7 @@ public class GradeAssignmentCommand extends Command {
 
     private void gradeByContact(Model model, Assignment assignment, Contact contact) {
         if (this.contactsToGrade.contains(contact)) {
-            // Skip contacts that have already been marked as submitted through
+            // Skip contacts that have already been marked as graded through
             // contact indices in the same command
             return;
         }

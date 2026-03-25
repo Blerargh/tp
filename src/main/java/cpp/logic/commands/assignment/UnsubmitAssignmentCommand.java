@@ -205,7 +205,7 @@ public class UnsubmitAssignmentCommand extends Command {
 
     private void markUnsubmittedByContact(Model model, Assignment assignment, Contact contact) {
         if (this.contactsToUnmark.contains(contact)) {
-            // Skip contacts that have already been marked as submitted through
+            // Skip contacts that have already been marked as unsubmitted through
             // contact indices in the same command
             return;
         }

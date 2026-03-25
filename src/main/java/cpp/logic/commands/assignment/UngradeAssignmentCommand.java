@@ -203,7 +203,7 @@ public class UngradeAssignmentCommand extends Command {
 
     private void ungradeByContact(Model model, Assignment assignment, Contact contact) {
         if (this.contactsToUngrade.contains(contact)) {
-            // Skip contacts that have already been marked as submitted through
+            // Skip contacts that have already been marked as ungraded through
             // contact indices in the same command
             return;
         }
