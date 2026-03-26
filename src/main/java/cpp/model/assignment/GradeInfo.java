@@ -1,5 +1,6 @@
 package cpp.model.assignment;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -63,7 +64,7 @@ public final class GradeInfo {
         if (!isGraded && gradingDate != null) {
             return false;
         }
-        if (!GradeInfo.isValidScore(score)) {
+        if (!GradeInfo.isValidScore(new BigDecimal(score))) {
             return false;
         }
         if (isGraded && submissionInfo.isSubmitted() && gradingDate.isBefore(submissionInfo.getSubmissionDate())) {
@@ -72,8 +73,8 @@ public final class GradeInfo {
         return true;
     }
 
-    public static boolean isValidScore(float score) {
-        return score >= 0 && score <= 100;
+    public static boolean isValidScore(BigDecimal score) {
+        return score.compareTo(BigDecimal.ZERO) >= 0 && score.compareTo(new BigDecimal(100)) <= 0;
     }
 
     public boolean isGraded() {
