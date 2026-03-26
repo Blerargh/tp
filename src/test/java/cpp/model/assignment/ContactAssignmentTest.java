@@ -1,8 +1,13 @@
 package cpp.model.assignment;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import cpp.logic.parser.ParserUtil;
+import cpp.model.assignment.exceptions.ContactAssignmentAlreadySubmittedException;
+import cpp.model.assignment.exceptions.ContactAssignmentNotSubmittedException;
 import cpp.testutil.Assert;
 
 public class ContactAssignmentTest {
@@ -25,7 +30,9 @@ public class ContactAssignmentTest {
 
     @Test
     public void constructor_validAssignmentWithState_success() {
-        ContactAssignment ca = new ContactAssignment("a1", "c1", true, true, 85);
+        LocalDateTime submissionDate = LocalDateTime.now();
+        LocalDateTime gradingDate = submissionDate.plusDays(1);
+        ContactAssignment ca = new ContactAssignment("a1", "c1", true, submissionDate, true, gradingDate, 85);
         Assertions.assertEquals("a1", ca.getAssignmentId());
         Assertions.assertEquals("c1", ca.getContactId());
         Assertions.assertTrue(ca.isSubmitted());
@@ -57,27 +64,38 @@ public class ContactAssignmentTest {
 
     @Test
     public void toString_validContactAssignment_returnsString() {
+        LocalDateTime submissionDate = LocalDateTime.parse(LocalDateTime.now().format(ParserUtil.DATETIME_FORMATTER),
+                ParserUtil.DATETIME_FORMATTER);
+        LocalDateTime gradingDate = LocalDateTime.parse(
+                submissionDate.plusDays(1).format(ParserUtil.DATETIME_FORMATTER), ParserUtil.DATETIME_FORMATTER);
         ContactAssignment ca = new ContactAssignment(
-                "a1", "c1", true, true, 90);
+                "a1", "c1", true, submissionDate, true, gradingDate, 90);
         String expected = """
-                ContactAssignment[assignmentId=a1, contactId=c1, submitted=true, graded=true, score=90]""";
+                ContactAssignment[assignmentId=a1, contactId=c1, submission=SubmissionInfo[submitted=true, \
+                date=%s], grade=GradeInfo[graded=true, date=%s, score=90.0]]"""
+                .formatted(submissionDate.format(ParserUtil.DATETIME_FORMATTER),
+                        gradingDate.format(ParserUtil.DATETIME_FORMATTER));
         Assertions.assertEquals(expected, ca.toString());
     }
 
     @Test
     public void markSubmitted() {
+        LocalDateTime submissionDate = LocalDateTime.now();
         ContactAssignment ca = new ContactAssignment("a1", "c1");
         Assertions.assertFalse(ca.isSubmitted());
-        ca.markSubmitted();
+        ca.markSubmitted(submissionDate);
         Assertions.assertTrue(ca.isSubmitted());
+        Assert.assertThrows(ContactAssignmentAlreadySubmittedException.class, () -> ca.markSubmitted(submissionDate));
     }
 
     @Test
     public void markUnsubmitted() {
-        ContactAssignment ca = new ContactAssignment("a1", "c1", true, false, 0);
+        LocalDateTime submissionDate = LocalDateTime.now();
+        ContactAssignment ca = new ContactAssignment("a1", "c1", true, submissionDate, false, null, 0);
         Assertions.assertTrue(ca.isSubmitted());
         ca.markUnsubmitted();
         Assertions.assertFalse(ca.isSubmitted());
+        Assert.assertThrows(ContactAssignmentNotSubmittedException.class, () -> ca.markUnsubmitted());
     }
 
     @Test
@@ -85,14 +103,18 @@ public class ContactAssignmentTest {
         ContactAssignment ca = new ContactAssignment("a1", "c1");
         Assertions.assertFalse(ca.isGraded());
         Assertions.assertEquals(0, ca.getScore());
-        ca.grade(85);
+        LocalDateTime submissionDate = LocalDateTime.now();
+        ca.markSubmitted(submissionDate);
+        ca.grade(85, submissionDate.plusDays(1));
         Assertions.assertTrue(ca.isGraded());
         Assertions.assertEquals(85, ca.getScore());
     }
 
     @Test
     public void ungrade() {
-        ContactAssignment ca = new ContactAssignment("a1", "c1", true, true, 85);
+        LocalDateTime submissionDate = LocalDateTime.now();
+        LocalDateTime gradingDate = submissionDate.plusDays(1);
+        ContactAssignment ca = new ContactAssignment("a1", "c1", true, submissionDate, true, gradingDate, 85);
         Assertions.assertTrue(ca.isGraded());
         Assertions.assertEquals(85, ca.getScore());
         ca.ungrade();
@@ -102,7 +124,9 @@ public class ContactAssignmentTest {
 
     @Test
     public void getters() {
-        ContactAssignment ca = new ContactAssignment("a1", "c1", true, true, 75);
+        LocalDateTime submissionDate = LocalDateTime.now();
+        LocalDateTime gradingDate = submissionDate.plusDays(1);
+        ContactAssignment ca = new ContactAssignment("a1", "c1", true, submissionDate, true, gradingDate, 75);
         Assertions.assertEquals("a1", ca.getAssignmentId());
         Assertions.assertEquals("c1", ca.getContactId());
         Assertions.assertTrue(ca.isSubmitted());

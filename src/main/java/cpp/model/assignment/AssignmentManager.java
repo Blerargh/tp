@@ -1,5 +1,6 @@
 package cpp.model.assignment;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -98,14 +99,29 @@ public class AssignmentManager {
 
     /**
      * Marks the contact assignment for the given assignment and contact as
+     * submitted. Contact assignment must exist and not already be marked as
      * submitted.
      *
-     * @param assignmentId the id of the assignment to mark as submitted
-     * @param contactId    the id of the contact to mark as submitted
+     * @param assignmentId   the id of the assignment to mark as submitted
+     * @param contactId      the id of the contact to mark as submitted
+     * @param submissionDate the date and time when the assignment was submitted
      */
-    public void submit(String assignmentId, String contactId) {
+    public void submit(String assignmentId, String contactId, LocalDateTime submissionDate) {
         ContactAssignment ca = this.find(assignmentId, contactId);
-        ca.markSubmitted();
+        ca.markSubmitted(submissionDate);
+    }
+
+    /**
+     * Marks the contact assignment for the given assignment and contact as
+     * unsubmitted. Contact assignment must exist and be currently marked as
+     * submitted.
+     *
+     * @param assignmentId the id of the assignment to mark as unsubmitted
+     * @param contactId    the id of the contact to mark as unsubmitted
+     */
+    public void unsubmit(String assignmentId, String contactId) {
+        ContactAssignment ca = this.find(assignmentId, contactId);
+        ca.markUnsubmitted();
     }
 
     /**
@@ -115,11 +131,12 @@ public class AssignmentManager {
      * @param assignmentId the id of the assignment to grade
      * @param contactId    the id of the contact to mark as graded
      * @param score        the score to assign to this contact assignment
+     * @param gradingDate  the date and time when this contact assignment was graded
      */
-    public void grade(String assignmentId, String contactId, int score) {
+    public void grade(String assignmentId, String contactId, int score, LocalDateTime gradingDate) {
         ContactAssignment ca = this.find(assignmentId, contactId);
         if (ca.isSubmitted()) {
-            ca.grade(score);
+            ca.grade(score, gradingDate);
         } else {
             throw new AssignmentNotSubmittedException();
         }

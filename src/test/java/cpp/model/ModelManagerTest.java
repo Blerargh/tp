@@ -2,6 +2,7 @@ package cpp.model;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Assertions;
@@ -142,7 +143,7 @@ public class ModelManagerTest {
     @Test
     public void addContactAssignment_validContactAssignment_addSuccessful() {
         ContactAssignment ca = new ContactAssignment(TypicalAssignments.ASSIGNMENT_ONE.getId(),
-                TypicalContacts.ALICE.getId(), false, false, 0);
+                TypicalContacts.ALICE.getId(), false, null, false, null, 0);
         this.modelManager.addContact(TypicalContacts.ALICE);
         this.modelManager.addAssignment(TypicalAssignments.ASSIGNMENT_ONE);
         this.modelManager.addContactAssignment(ca);
@@ -152,7 +153,7 @@ public class ModelManagerTest {
     @Test
     public void addContactAssignment_duplicateContactAssignment_throwsIllegalArgumentException() {
         ContactAssignment ca = new ContactAssignment(TypicalAssignments.ASSIGNMENT_ONE.getId(),
-                TypicalContacts.ALICE.getId(), false, false, 0);
+                TypicalContacts.ALICE.getId(), false, null, false, null, 0);
         this.modelManager.addContact(TypicalContacts.ALICE);
         this.modelManager.addAssignment(TypicalAssignments.ASSIGNMENT_ONE);
         this.modelManager.addContactAssignment(ca);
@@ -170,7 +171,7 @@ public class ModelManagerTest {
     @Test
     public void removeContactAssignment_validContactAssignment_removeSuccessful() {
         ContactAssignment ca = new ContactAssignment(TypicalAssignments.ASSIGNMENT_ONE.getId(),
-                TypicalContacts.ALICE.getId(), false, false, 0);
+                TypicalContacts.ALICE.getId(), false, null, false, null, 0);
         this.modelManager.addContact(TypicalContacts.ALICE);
         this.modelManager.addAssignment(TypicalAssignments.ASSIGNMENT_ONE);
         this.modelManager.addContactAssignment(ca);
@@ -182,7 +183,7 @@ public class ModelManagerTest {
     @Test
     public void removeContactAssignment_nonExistentContactAssignment_throwsIllegalArgumentException() {
         ContactAssignment ca = new ContactAssignment(TypicalAssignments.ASSIGNMENT_ONE.getId(),
-                TypicalContacts.ALICE.getId(), false, false, 0);
+                TypicalContacts.ALICE.getId(), false, null, false, null, 0);
         Assert.assertThrows(ContactAssignmentNotFoundException.class,
                 () -> this.modelManager.removeContactAssignment(ca));
     }
@@ -191,6 +192,30 @@ public class ModelManagerTest {
     public void removeContactAssignment_nullContactAssignment_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class,
                 () -> this.modelManager.removeContactAssignment(null));
+    }
+
+    @Test
+    public void markSubmitted_validContactAssignment_markSuccessful() {
+        ContactAssignment ca = new ContactAssignment(TypicalAssignments.ASSIGNMENT_ONE.getId(),
+                TypicalContacts.ALICE.getId(), false, null, false, null, 0);
+        this.modelManager.addContact(TypicalContacts.ALICE);
+        this.modelManager.addAssignment(TypicalAssignments.ASSIGNMENT_ONE);
+        this.modelManager.addContactAssignment(ca);
+        Assertions.assertFalse(ca.isSubmitted());
+        this.modelManager.markSubmitted(TypicalAssignments.ASSIGNMENT_ONE, TypicalContacts.ALICE, LocalDateTime.now());
+        Assertions.assertTrue(ca.isSubmitted());
+    }
+
+    @Test
+    public void markUnsubmitted_validContactAssignment_markSuccessful() {
+        ContactAssignment ca = new ContactAssignment(TypicalAssignments.ASSIGNMENT_ONE.getId(),
+                TypicalContacts.ALICE.getId(), true, LocalDateTime.now(), false, null, 0);
+        this.modelManager.addContact(TypicalContacts.ALICE);
+        this.modelManager.addAssignment(TypicalAssignments.ASSIGNMENT_ONE);
+        this.modelManager.addContactAssignment(ca);
+        Assertions.assertTrue(ca.isSubmitted());
+        this.modelManager.markUnsubmitted(TypicalAssignments.ASSIGNMENT_ONE, TypicalContacts.ALICE);
+        Assertions.assertFalse(ca.isSubmitted());
     }
 
     @Test
