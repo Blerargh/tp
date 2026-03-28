@@ -183,6 +183,22 @@ Classes used by multiple components are in the `cpp.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### ClassGroup management
+
+The `Model` component manages `ClassGroup` entities using `UniqueClassGroupList`. This enforces uniqueness constraints and provides methods to add, delete, and update the entities.
+
+Within the `ClassGroup` entities, the `Contact` entities that belong to the class are stored as a list of `String`s representing the `Contact`s `id` field. This design allows us to easily make edits to contacts without having to worry about updating the `ClassGroup` entities, improving the efficiency of `edit` operations.
+
+### Assignment management
+
+The `Model` component manages `Assignment` entities using `UniqueAssignmentList`. This enforces uniqueness constraints and provides methods to add, delete, and update the entities.
+
+`Assignment` entities adopt a different approach, by introducing a separate association class `ContactAssignment` to represent the association between a `Contact` and an `Assignment`. This allows us to easily manage the submission status and grading details including the score of an assignment for each contact, without having to modify the `Contact` or `Assignment` entities themselves. These functionalities are abstracted out into the `AssignmentManager` class, which manages the `ContactAssignment` entities, and provides methods to add, delete, update, and retrieve the entities efficiently.
+
+Similar to the `ClassGroup` design, the `ContactAssignment` class also stores the `Contact`'s `id` field instead of a reference to the `Contact` object itself, for easier management of edits to `Contact`s. `ContactAssignment` objects also store the `Assignment`'s `id` field so that any edits to the `Assignment` can be easily managed as well.
+
+A separate `UniqueContactAssignmentList` is used to manage the list of `ContactAssignment`s, and enforce uniqueness constraints for them.
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
@@ -747,3 +763,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Submission status**: The state of an _Assignment_ for a specified _Contact_ (e.g. not submitted, submitted).
 * **Tags**: A user-defined, optional label attached to a _Contact_ for categorization and filtering (e.g. "Prefect").
 * **Valid**: Satisfies all specified format and constraints defined by the system.
+
+--------------------------------------------------------------------------------------------------------------------
+
+## **Appendix: Instructions for manual testing**
+
+## **Appendix: Effort**
+
+## **Appendix: Planned Enhancements**
