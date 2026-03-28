@@ -387,7 +387,7 @@ TO BE UPDATED.
 
 Deletes the specified contact(s), assignment, or class from the address book.
 
-**Delete contact(s)**
+**Delete contact**
 
 Format: `delete ct/CONTACT_INDICES...`
 
@@ -424,7 +424,7 @@ Format: `delete ct/CONTACT_INDICES...`
 
 * `delete ct/1 3` deletes the 1st and 3rd contacts shown in the displayed list.
 
-  [IMAGE TO BE ADDED]
+  ![Deleting contacts 1 and 3](images/deletecontact-result.png)
 
 **Delete assignment**
 
@@ -447,7 +447,7 @@ Format: `delete ass/ASSIGNMENT_NAME`
 
 * `delete ass/Midterm Exam` deletes the assignment named `Midterm Exam`.
 
-  [IMAGE TO BE ADDED]
+  ![Deleting an assignment](images/deleteass-result.png)
 
 <box type="tip" seamless>
 
@@ -471,11 +471,11 @@ Format: `delete c/CLASS_NAME`
 
 **Examples:**
 
-* `delete c/CS2103T-T14` deletes the class named `CS2103T-T14`.
+* `delete c/CS2103T T14` deletes the class named `CS2103T T14`.
 
 * `delete c/Tutorial Group A` deletes the class named `Tutorial Group A`.
 
-  [IMAGE TO BE ADDED]
+  ![Deleting a class](images/deleteclass-result.png)
 
 <box type="tip" seamless>
 
@@ -822,7 +822,7 @@ If you encounter other issues, please raise a ticket with the project maintainer
 | **Add Assignment**        | `addass ass/ASSIGNMENT_NAME d/DEADLINE [c/CLASS_NAME] [ct/CONTACT_INDICES...]` <br> e.g., `addass ass/Assignment 4 d/15-01-2024 23:59 c/CS2103T-T10-1 ct/4 5`                                                                                              |
 | **Allocate Assignment**   | `allocass ass/ASSIGNMENT_NAME [c/CLASS_NAME] [ct/CONTACT_INDICES...]` <br> e.g., `allocass ass/Assignment 3 c/CS2103T-T10-1 ct/1 2 3`                                                                                                                      |
 | **Unallocate Assignment** | `unallocass ass/ASSIGNMENT_NAME [c/CLASS_NAME] [ct/CONTACT_INDICES...]` <br> e.g., `unallocass ass/Assignment 3 c/CS2103T-T10-1 ct/1 2 3`                                                                                                                  |
-| **Delete**                | `delete ct/CONTACT_INDICES...` e.g., `delete ct/3`<br>`delete ass/ASSIGNMENT_NAME` e.g., `delete ass/Assignment 1`<br>`delete c/CLASS_NAME` e.g., `delete c/CS2103T-T14`                                                                                    |
+| **Delete**                | `delete ct/CONTACT_INDICES...` e.g., `delete ct/3`<br>`delete ass/ASSIGNMENT_NAME` e.g., `delete ass/Assignment 1`<br>`delete c/CLASS_NAME` e.g., `delete c/CS2103T T14`                                                                                    |
 | **Edit**                  | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                                                               |
 | **Find**                  | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                                                                 |
 | **List Contacts**         | `list contacts`                                                                                                                                                                                                                                            |
