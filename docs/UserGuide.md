@@ -662,24 +662,20 @@ Exits the program.
 
 ### Saving the data
 
-AddressBook data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+CPP data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-AddressBook data is saved automatically in `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+CPP data is saved automatically in `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 
 **Warnings:**
 
-* If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.
+* If your changes to the data file makes its format invalid, CPP will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.
 
-* Certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+* Certain edits can cause CPP to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
-
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
