@@ -143,6 +143,8 @@ Within a few seconds the application will appear. The main User Interface (UI) c
 
 ### Quick CLI tutorial (common tasks and expected output)
 
+In this quick tutorial, we will cover some common tasks such as listing contacts, adding a contact, deleting contacts, and finding contacts by name keywords. The expected output shown is based on the default data loaded on first launch. Do paste the commands given in the application's command box and check that the result display and list panel match the expected output given before proceeding to the next command.
+
 <box type="tip" seamless>
 
 **Tips:**
@@ -152,6 +154,8 @@ Within a few seconds the application will appear. The main User Interface (UI) c
 * Use `help` in the command box for a quick list of commands: `help`.
 
 * If you are unsure of the command format, you may enter the command with incomplete parameters (e.g., `addcontact n/John Doe`) and the app will show an error message with the correct usage.
+
+* Refer to the [**Features**](#features) section for advanced features with the full command format, options and advanced examples.
 
 </box>
 
@@ -222,8 +226,6 @@ Within a few seconds the application will appear. The main User Interface (UI) c
 * The app prevents obvious duplicates at entry; if you attempt to add contacts, assignments, or classes with the same name, CPP will reject the entry with an explanatory error.
 
 </box>
-
-Refer to the [**Features**](#features) below for advanced features with the full command format, options and advanced examples.
 
 --------------------------------------------------------------------------------------------------------------------
 
