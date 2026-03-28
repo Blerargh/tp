@@ -579,6 +579,240 @@ Unallocates an assignment from specific contacts.
   The screenshot below illustrates the last example, where the class "CS2103T-T10-1" contains contacts 2-5, and only contacts 1, 2, 4, and 5 had the assignment allocated.<br>
   ![Unallocating Assignment 3](images/unallocass-result.png)
 
+### Marking assignments as submitted for contacts: `submit`
+
+Marks a specific assignment as submitted for the specified contacts.
+
+**Format:** `submit ass/ASSIGNMENT_NAME [c/CLASS_NAME] [ct/CONTACT_INDICES...] [d/SUBMISSION_DATE]`
+
+* Marks the assignment as submitted for the specified contacts, as well as all contacts in the specified class.
+
+* If the assignment is already submitted for the specified contact, the submission status and submission date will not be updated.
+
+* The `ASSIGNMENT_NAME` must match the name of an existing assignment (case-insensitive).
+
+* At least 1 of `[c/CLASS_NAME]` or `[ct/CONTACT_INDICES...]` must be provided.
+
+* The `CLASS_NAME` must match the name of an existing class (case-insensitive).
+
+* The `CONTACT_INDICES...` must contain 1 or more positive integers 1, 2, 3, ..., referring to the index number shown in the displayed contact list.
+
+* The `SUBMISSION_DATE` must be in the format `dd-MM-yyyy HH:mm` and refer to a valid date before the current date and time.
+
+<box type="warning" seamless>
+
+**Warnings:**
+
+* If any of the specified contacts or classes do not exist, the command will fail and no assignments will be marked as submitted.
+
+* If any of the parameters are invalid, the command will also fail and no assignments will be marked as submitted.
+
+* The contact indices specified refer to the currently displayed contact list after filtering (e.g., after a `findcontact` command). It is recommended to run `list contacts` before this command to ensure the correct contact indices are used.
+
+* If the specified class does not contain any students, the command will fail and no assignments will be marked as submitted.
+
+* If no contacts are marked as submitted at the end of the command, the command will fail and the user will see an error message specifying the issue.
+
+</box>
+
+<box type="tip" seamless>
+
+**Tip:** You may omit the `d/SUBMISSION_DATE` parameter to use the current date and time as the submission date.
+
+</box>
+
+**Examples:**
+
+* `submit ass/Assignment 1 ct/1 2 3`<br>
+  Marks "Assignment 1" as submitted for the 1st, 2nd, and 3rd contacts in the list.
+
+* `submit ass/Assignment 2 c/CS2103T10`<br>
+  Marks "Assignment 2" as submitted for all contacts belonging to CS2103T10.
+
+* `submit ass/Assignment 3 c/CS2103T10 ct/1 2 3 d/21-02-2026 23:50`<br>
+  Marks "Assignment 3" as submitted for the 1st, 2nd, and 3rd contacts in the list, as well as all other contacts belonging to CS2103T10, with the specified submission date and time: 21 Feb 2026 11.50pm.
+
+  The screenshot below illustrates the last example, where the class "CS2103T10" contains contacts 2-5, and contact 3 already has the assignment submitted.
+  
+  [IMAGE TO BE ADDED IN VIEW TAB]
+
+### Marking assignments as unsubmitted for contacts: `unsubmit`
+
+Marks a specific assignment as unsubmitted for the specified contacts.
+
+**Format:** `unsubmit ass/ASSIGNMENT_NAME [c/CLASS_NAME] [ct/CONTACT_INDICES...]`
+
+* Marks the assignment as unsubmitted for the specified contacts, as well as all contacts in the specified class.
+
+* If the assignment is not submitted for the specified contact, the submission status and submission date will not be updated.
+
+* The `ASSIGNMENT_NAME` must match the name of an existing assignment (case-insensitive).
+
+* At least 1 of `[c/CLASS_NAME]` or `[ct/CONTACT_INDICES...]` must be provided.
+
+* The `CLASS_NAME` must match the name of an existing class (case-insensitive).
+
+* The `CONTACT_INDICES...` must contain 1 or more positive integers 1, 2, 3, ..., referring to the index number shown in the displayed contact list.
+
+<box type="warning" seamless>
+
+**Warnings:**
+
+* Unsubmitting the assignment will also remove the submission date, and any grading information (score, grading date) associated with it.
+
+* If any of the specified contacts or classes do not exist, the command will fail and no assignments will be marked as unsubmitted.
+
+* If any of the parameters are invalid, the command will also fail and no assignments will be marked as unsubmitted.
+
+* The contact indices specified refer to the currently displayed contact list after filtering (e.g., after a `findcontact` command). It is recommended to run `list contacts` before this command to ensure the correct contact indices are used.
+
+* If the specified class does not contain any students, the command will fail and no assignments will be marked as unsubmitted.
+
+* If no contacts are marked as unsubmitted at the end of the command, the command will fail and the user will see an error message specifying the issue.
+
+</box>
+
+<box type="tip" seamless>
+
+**Tip:** You can enter both the `c/CLASS_NAME` and `ct/CONTACT_INDICES...` parameters to unsubmit the assignment from more contacts at the same time.
+
+</box>
+
+**Examples:**
+
+* `unsubmit ass/Assignment 1 ct/1 2 3`<br>
+  Marks "Assignment 1" as unsubmitted for the 1st, 2nd, and 3rd contacts in the list
+
+* `unsubmit ass/Assignment 2 c/CS2103T10`<br>
+  Marks "Assignment 2" as unsubmitted for all contacts belonging to CS2103T10.
+
+* `unsubmit ass/Assignment 3 c/CS2103T10 ct/1 2 3`<br>
+  Marks "Assignment 3" as unsubmitted for the 1st, 2nd, and 3rd contacts in the list, as well as all other contacts belonging to CS2103T10.
+
+  The screenshot below illustrates the last example, where the class "CS2103T10" contains contacts 2-5, and contact 3 did not have the assignment submitted.
+  
+  [IMAGE TO BE ADDED IN VIEW TAB]
+
+### Grading assignments for contacts: `grade`
+
+Grades a specific assignment for the specified contacts with a score.
+
+**Format:** `grade ass/ASSIGNMENT_NAME [c/CLASS_NAME] [ct/CONTACT_INDICES...] s/SCORE [d/GRADING_DATE]`
+
+* Marks an assignment as graded for the specified contacts, as well as contacts in the specified class, with the specified score and grading date.
+
+* If the assignment is already graded or not submitted for the specified contact, the grading status and grading date will not be updated.
+
+* The `ASSIGNMENT_NAME` must match the name of an existing assignment (case-insensitive).
+
+* At least 1 of `[c/CLASS_NAME]` or `[ct/CONTACT_INDICES...]` must be provided.
+
+* The `CLASS_NAME` must match the name of an existing class (case-insensitive).
+
+* The `CONTACT_INDICES...` must contain 1 or more positive integers 1, 2, 3, ..., referring to the index number shown in the displayed contact list.
+
+* The `SCORE` must be a decimal number between 0 and 100 (inclusive), and will be rounded to 1 decimal place.
+
+* The `GRADING_DATE` must be in the format `dd-MM-yyyy HH:mm` and refer to a valid date before the current date and time and after the submission date and time.
+
+<box type="warning" seamless>
+
+**Warnings:**
+
+* An assignment must be submitted before it can be graded. If you try to grade an assignment that is not submitted for a contact, the assignment will not be graded for that contact.
+
+* No matter the number of decimal places specified for the score, it will be rounded to 1 decimal place. For example, if you enter `s/85.6500`, the score will be recorded as `85.7`.
+
+* If any of the specified contacts or classes do not exist, the command will fail and no assignments will be graded.
+
+* If any of the parameters are invalid, the command will also fail and no assignments will be graded.
+
+* The contact indices specified refer to the currently displayed contact list after filtering (e.g., after a `findcontact` command). It is recommended to run `list contacts` before this command to ensure the correct contact indices are used.
+
+* If the specified class does not contain any students, the command will fail and no assignments will be graded.
+
+* If no contacts are graded at the end of the command, the command will fail and the user will see an error message specifying the issue.
+
+</box>
+
+<box type="tip" seamless>
+
+**Tip:** You may omit the `d/GRADING_DATE` parameter to use the current date and time as the grading date.
+
+</box>
+
+**Examples:**
+
+* `grade ass/Assignment 1 ct/1 2 3 s/85.5`<br>
+  Grades "Assignment 1" with a score of 85.5 for the 1st, 2nd, and 3rd contacts in the list, with the current date and time as the grading date.
+
+* `grade ass/Assignment 2 c/CS2103T10 s/75.0`<br>
+  Grades "Assignment 2" with a score of 75.0 for all contacts in the class "CS2103T10", with the current date and time as the grading date.
+
+* `grade ass/Assignment 3 c/CS2103T10 ct/1 2 3 s/67.9 d/21-02-2026 23:50`<br>
+  Grades "Assignment 3" with a score of 67.9 for the 1st, 2nd, and 3rd contacts in the list, as well as all other contacts in CS2103T10, with 21 Feb 2026 11.50pm as the grading date.
+
+  The screenshot below illustrates the last example, where the class "CS2103T10" contains contacts 2-5, contact 3 did not have the assignment submitted, and contact 4 submitted but the assignment was already graded.
+
+  [IMAGE TO BE ADDED IN VIEW TAB]
+
+### Ungrading assignments for contacts: `ungrade`
+
+Ungrades a specific assignment for the specified contacts.
+
+**Format:** `ungrade ass/ASSIGNMENT_NAME [c/CLASS_NAME] [ct/CONTACT_INDICES...]`
+
+* Marks an assignment as ungraded for the specified contacts, as well as contacts in the specified class.
+
+* If the assignment is not graded for the specified contact, the grading status and grading date will not be updated.
+
+* The `ASSIGNMENT_NAME` must match the name of an existing assignment (case-insensitive).
+
+* At least 1 of `[c/CLASS_NAME]` or `[ct/CONTACT_INDICES...]` must be provided.
+
+* The `CLASS_NAME` must match the name of an existing class (case-insensitive).
+
+* The `CONTACT_INDICES...` must contain 1 or more positive integers 1, 2, 3, ..., referring to the index number shown in the displayed contact list.
+
+<box type="warning" seamless>
+
+**Warnings:**
+
+* Ungrading the assignment will remove both the grading date and score.
+
+* If any of the specified contacts or classes do not exist, the command will fail and no assignments will be ungraded.
+
+* If any of the parameters are invalid, the command will also fail and no assignments will be ungraded.
+
+* The contact indices specified refer to the currently displayed contact list after filtering (e.g., after a `findcontact` command). It is recommended to run `list contacts` before this command to ensure the correct contact indices are used.
+
+* If the specified class does not contain any students, the command will fail and no assignments will be ungraded.
+
+* If no contacts are ungraded at the end of the command, the command will fail and the user will see an error message specifying the issue.
+
+</box>
+
+<box type="tip" seamless>
+
+**Tip:** You can enter both the `c/CLASS_NAME` and `ct/CONTACT_INDICES...` parameters to ungrade the assignment from more contacts at the same time.
+
+</box>
+
+**Examples:**
+
+* `ungrade ass/Assignment 1 ct/1 2 3`<br>
+  Ungrades "Assignment 1" for the 1st, 2nd, and 3rd contacts in the list.
+
+* `ungrade ass/Assignment 2 c/CS2103T10`<br>
+  Ungrades "Assignment 2" for all contacts in the class "CS2103T10".
+
+* `ungrade ass/Assignment 3 c/CS2103T10 ct/1 2 3`<br>
+  Ungrades "Assignment 3" for the 1st, 2nd, and 3rd contacts in the list, as well as all other contacts in CS2103T10.
+
+  The screenshot below illustrates the last example, where the class "CS2103T10" contains contacts 2-5, contact 3 did not have the assignment submitted, and contact 4 submitted but the assignment was not graded yet.
+
+  [IMAGE TO BE ADDED IN VIEW TAB]
+
 ### Listing all contacts : `list contacts`
 
 Shows a list of all contacts in the address book.
