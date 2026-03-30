@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.Region;
 
 /**
@@ -32,7 +33,9 @@ public class ResultDisplay extends UiPart<Region> {
      */
     public void setFeedbackToUser(String feedbackToUser) {
         Objects.requireNonNull(feedbackToUser);
+        this.resultDisplay.setTextFormatter(new TextFormatter<>(change -> change));
         this.resultDisplay.setText(feedbackToUser);
+        this.resultDisplay.setTextFormatter(new TextFormatter<>(change -> null));
     }
 
 }
