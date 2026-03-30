@@ -10,8 +10,8 @@ import javafx.scene.layout.Region;
 /**
  * Panel containing the list of contact-assignment entries for an assignment.
  */
-public class ContactAssignmentListPanel extends UiPart<Region> {
-    private static final String FXML = "ContactAssignmentListPanel.fxml";
+public class ContactAssignmentContactListPanel extends UiPart<Region> {
+    private static final String FXML = "ContactAssignmentContactListPanel.fxml";
 
     @FXML
     private ListView<ContactAssignmentWithContact> contactAssignmentListView;
@@ -20,13 +20,13 @@ public class ContactAssignmentListPanel extends UiPart<Region> {
      * Creates a {@code ContactAssignmentListPanel} with the given
      * {@code ObservableList} of {@code ContactAssignmentWithContact}.
      */
-    public ContactAssignmentListPanel(ObservableList<ContactAssignmentWithContact> cas) {
-        super(ContactAssignmentListPanel.FXML);
+    public ContactAssignmentContactListPanel(ObservableList<ContactAssignmentWithContact> cas) {
+        super(ContactAssignmentContactListPanel.FXML);
         this.contactAssignmentListView.setItems(cas);
-        this.contactAssignmentListView.setCellFactory(listView -> new ContactAssignmentListViewCell());
+        this.contactAssignmentListView.setCellFactory(listView -> new ContactAssignmentContactListViewCell());
     }
 
-    class ContactAssignmentListViewCell extends ListCell<ContactAssignmentWithContact> {
+    class ContactAssignmentContactListViewCell extends ListCell<ContactAssignmentWithContact> {
         @Override
         protected void updateItem(ContactAssignmentWithContact caWithContact, boolean empty) {
             super.updateItem(caWithContact, empty);
@@ -34,7 +34,7 @@ public class ContactAssignmentListPanel extends UiPart<Region> {
                 this.setGraphic(null);
                 this.setText(null);
             } else {
-                this.setGraphic(new ContactAssignmentCard(caWithContact, this.getIndex() + 1).getRoot());
+                this.setGraphic(new ContactAssignmentContactCard(caWithContact, this.getIndex() + 1).getRoot());
             }
         }
     }

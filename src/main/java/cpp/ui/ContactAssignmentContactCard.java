@@ -15,9 +15,9 @@ import javafx.scene.layout.Region;
 /**
  * UI component that displays information of a {@code ContactAssignment}.
  */
-public class ContactAssignmentCard extends UiPart<Region> {
+public class ContactAssignmentContactCard extends UiPart<Region> {
 
-    private static final String FXML = "ContactAssignmentCard.fxml";
+    private static final String FXML = "ContactAssignmentContactCard.fxml";
 
     public final ContactAssignment contactAssignment;
 
@@ -47,8 +47,8 @@ public class ContactAssignmentCard extends UiPart<Region> {
      * {@code ContactAssignment}
      * and the associated {@code Contact} for display.
      */
-    public ContactAssignmentCard(ContactAssignmentWithContact caWithContact, int displayedIndex) {
-        super(ContactAssignmentCard.FXML);
+    public ContactAssignmentContactCard(ContactAssignmentWithContact caWithContact, int displayedIndex) {
+        super(ContactAssignmentContactCard.FXML);
         ContactAssignment ca = caWithContact.getContactAssignment();
         Contact contact = caWithContact.getContact();
         this.contactAssignment = ca;

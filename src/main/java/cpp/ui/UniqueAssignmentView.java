@@ -28,7 +28,7 @@ public class UniqueAssignmentView extends UiPart<Region> {
     @FXML
     private StackPane contactAssignmentsPlaceholder;
 
-    private ContactAssignmentListPanel contactAssignmentListPanel;
+    private ContactAssignmentContactListPanel contactAssignmentListPanel;
 
     public UniqueAssignmentView() {
         super(UniqueAssignmentView.FXML);
@@ -51,7 +51,7 @@ public class UniqueAssignmentView extends UiPart<Region> {
         if (this.contactAssignmentListPanel != null) {
             this.contactAssignmentsPlaceholder.getChildren().clear();
         }
-        this.contactAssignmentListPanel = new ContactAssignmentListPanel(observableCas);
+        this.contactAssignmentListPanel = new ContactAssignmentContactListPanel(observableCas);
         this.contactAssignmentsPlaceholder.getChildren().add(this.contactAssignmentListPanel.getRoot());
     }
 }
