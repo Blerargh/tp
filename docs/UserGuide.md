@@ -382,9 +382,66 @@ Shows a list of all assignments in the address book.
 
 TO BE UPDATED.
 
-### [TO BE UPDATED] Locating contacts by name: `find`
+### Finding contacts : `findcontact`
 
-TO BE UPDATED.
+Finds and displays contacts based on the specified criteria. You can search by contact name (default), phone number, or email address. Matching is case-insensitive and uses keyword-based searching.
+
+**Format:** 
+* `findcontact KEYWORD [MORE_KEYWORDS]...` — search by name (default)
+* `findcontact p/KEYWORD [MORE_KEYWORDS]...` — search by phone number
+* `findcontact e/KEYWORD [MORE_KEYWORDS]...` — search by email address
+
+**Command word shortcuts:**
+* `findcontact` can be shortened to `findct`
+
+**Key points:**
+
+* **Keyword matching:** The command will find contacts that contain ANY of the specified keywords (case-insensitive). For example, `findcontact alice bob` will return all contacts whose name contains "alice" OR "bob".
+
+* **Phone search (p/):** When searching by phone, the keywords are treated as substrings of phone numbers. Example: `findcontact p/123 456` will find contacts with phone numbers containing "123" or "456".
+
+* **Email search (e/):** When searching by email, keywords are matched case-insensitively against email addresses. Example: `findcontact e/gmail yahoo` will find contacts with emails containing "gmail" or "yahoo".
+
+* **Conflicting prefixes:** You cannot use multiple search types in one command. For example, `findcontact p/123 e/test` is invalid. Choose one search method per command.
+
+* **Tab switching:** The tab will automatically switch to the `Contacts` tab upon successful execution.
+
+* **Filter persistence:** The search results will remain filtered until you run another command that filters the list (e.g., another `find` command) or use `list contacts` to show all contacts again.
+
+<box type="warning" seamless>
+
+**Warnings:**
+
+* Do not mix prefixes with plain keywords. For example, `findcontact alice p/123` is invalid. Use either plain keywords or a prefix, but not both.
+
+* Each prefix (p/, e/, n/) must have at least one keyword. Using a prefix with no keywords (e.g., `findcontact p/`) will result in an error.
+
+* You cannot use unrecognized prefixes like `c/`, `ass/`, or `n/` (only p/ and e/ prefix values are valid). The system will reject commands with invalid prefixes.
+
+</box>
+
+**Examples:**
+
+* `findcontact alice`
+  Finds all contacts whose name contains "alice" (case-insensitive).
+
+* `findct john doe`
+  Using the abbreviated command, finds all contacts whose name contains "john" or "doe".
+
+* `findcontact p/91234567`
+  Finds all contacts whose phone number contains "91234567".
+
+* `findcontact e/gmail.com`
+  Finds all contacts whose email contains "gmail.com".
+
+* `findct p/9123 8765`
+  Finds all contacts whose phone number contains "9123" or "8765".
+
+<box type="tip" seamless>
+
+**Tip:** After searching, you can use `list contacts` to clear the filter and see all contacts again. You can also click on the "Contacts" tab to achieve the same result, but note that tab-clicking won't clear existing filters.
+
+</box>
 
 ### [TO BE UPDATED] Deleting a contact : `delete`
 
@@ -732,7 +789,7 @@ If you encounter other issues, please raise a ticket with the project maintainer
 | **Unallocate Assignment** | `unallocass ass/ASSIGNMENT_NAME [c/CLASS_NAME] [ct/CONTACT_INDICES...]` <br> e.g., `unallocass ass/Assignment 3 c/CS2103T-T10-1 ct/1 2 3`                                                                                                                  |
 | **Delete**                | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                                                                        |
 | **Edit**                  | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                                                               |
-| **Find**                  | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                                                                 |
+| **Find Contact**          | `findcontact (findct) [KEYWORD...] [p/KEYWORD...] [e/KEYWORD...]`<br> e.g., `findcontact alice` or `findct p/91234567`                                                                                                                                     |
 | **List Contacts**         | `list contacts`                                                                                                                                                                                                                                            |
 | **List Classes**          | `list classes`                                                                                                                                                                                                                                             |
 | **List Assignments**      | `list assignments`                                                                                                                                                                                                                                         |
