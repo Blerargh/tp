@@ -15,14 +15,14 @@ public abstract class ListCommand extends Command {
     public static final String MESSAGE_ASSIGNMENTS = "Listed all assignments";
     public static final String MESSAGE_CLASSES = "Listed all classes";
     public static final String MESSAGE_TAB_EMPTY = "Tab cannot be empty!";
-    public static final String MESSAGE_TAB_INVALID = "Tab must be one of the following: contacts, classes, assignments";
+    public static final String MESSAGE_TAB_INVALID = "Tab must be one of the following: contacts (ct), classes (c), assignments (ass)";
 
     public static final String MESSAGE_USAGE = ListCommand.COMMAND_WORD
             + ": Lists all items in the specified tab.\n"
             + "Parameters: TAB\n"
-            + "Example: " + ListCommand.COMMAND_WORD + " contacts\n"
-            + "Example: " + ListCommand.COMMAND_WORD + " assignments\n"
-            + "Example: " + ListCommand.COMMAND_WORD + " classes";
+            + "Example: " + ListCommand.COMMAND_WORD + " contacts (ct)\n"
+            + "Example: " + ListCommand.COMMAND_WORD + " assignments (ass)\n"
+            + "Example: " + ListCommand.COMMAND_WORD + " classes (c)";
 
     protected ListCommand() {
     }
