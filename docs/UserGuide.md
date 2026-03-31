@@ -384,13 +384,13 @@ TO BE UPDATED.
 
 ### Finding contacts : `findcontact`
 
-Finds and displays contacts based on the specified criteria. You can search by contact name (default), phone number, or email address. Matching is case-insensitive and uses keyword-based searching.
+Finds and displays contacts based on the specified criteria. You can search by contact name, or by phone number/email (exact match). Matching is case-insensitive.
 
 **Format:**
 
-* `findcontact KEYWORD [MORE_KEYWORDS]...` — search by name (default)
-* `findcontact p/KEYWORD [MORE_KEYWORDS]...` — search by phone number
-* `findcontact e/KEYWORD [MORE_KEYWORDS]...` — search by email address
+* `findcontact KEYWORD [MORE_KEYWORDS]...` — search by name using keywords (default)
+* `findcontact p/PHONE` — search by phone number (exact match)
+* `findcontact e/EMAIL` — search by email address (exact match)
 
 **Command word shortcuts:**
 
@@ -398,27 +398,29 @@ Finds and displays contacts based on the specified criteria. You can search by c
 
 **Key points:**
 
-* **Keyword matching:** The command will find contacts that contain ANY of the specified keywords (case-insensitive). For example, `findcontact alice bob` will return all contacts whose name contains "alice" OR "bob".
+* **Name search (default):** The command will find contacts whose names contain ANY of the specified keywords (case-insensitive). Keywords are separated by spaces. For example, `findcontact alice bob` will return all contacts whose name contains "alice" OR "bob".
 
-* **Phone search (p/):** When searching by phone, the keywords are treated as substrings of phone numbers. Example: `findcontact p/123 456` will find contacts with phone numbers containing "123" or "456".
+* **Phone search (p/):** Searches for contacts by exact phone number match. The entire phone number must match exactly. Example: `findcontact p/91234567` will find the contact with phone number 91234567.
 
-* **Email search (e/):** When searching by email, keywords are matched case-insensitively against email addresses. Example: `findcontact e/gmail yahoo` will find contacts with emails containing "gmail" or "yahoo".
+* **Email search (e/):** Searches for contacts by exact email address match (case-insensitive). The entire email must match exactly. Example: `findcontact e/alice@gmail.com` will find the contact with that exact email.
 
-* **Conflicting prefixes:** You cannot use multiple search types in one command. For example, `findcontact p/123 e/test` is invalid. Choose one search method per command.
+* **Conflicting prefixes:** You cannot use multiple search types in one command. For example, `findcontact p/91234567 e/alice@gmail.com` is invalid. Choose one search method per command.
 
 * **Tab switching:** The tab will automatically switch to the `Contacts` tab upon successful execution.
 
-* **Filter persistence:** The search results will remain filtered until you run another command that filters the list (e.g., another `find` command) or use `list contacts` to show all contacts again.
+* **Filter persistence:** The search results will remain filtered until you run another command that filters the list (e.g., another `findcontact` command) or use `list contacts` to show all contacts again.
 
 <box type="warning" seamless>
 
 **Warnings:**
 
-* Do not mix prefixes with plain keywords. For example, `findcontact alice p/123` is invalid. Use either plain keywords or a prefix, but not both.
+* Do not mix prefixes with plain keywords. For example, `findcontact alice p/91234567` is invalid. Use either plain keywords or a prefix, but not both.
 
-* Each prefix (p/, e/, n/) must have at least one keyword. Using a prefix with no keywords (e.g., `findcontact p/`) will result in an error.
+* Each prefix (p/, e/) must have a value. Using a prefix with no value (e.g., `findcontact p/`) will result in an error.
 
-* You cannot use unrecognized prefixes like `c/`, `ass/`, or `n/` (only p/ and e/ prefix values are valid). The system will reject commands with invalid prefixes.
+* For phone and email searches, the entire value must match exactly. Partial matches will not return results.
+
+* You cannot use unrecognized prefixes like `c/`, `ass/`, or `n/`. The system will reject commands with invalid prefixes.
 
 </box>
 
@@ -431,14 +433,10 @@ Finds and displays contacts based on the specified criteria. You can search by c
   Using the abbreviated command, finds all contacts whose name contains "john" or "doe".
 
 * `findcontact p/91234567`
-  Finds all contacts whose phone number contains "91234567".
+  Finds the contact with phone number 91234567.
 
-* `findcontact e/gmail.com`
-  Finds all contacts whose email contains "gmail.com".
-
-* `findct p/9123 8765`
-  Finds all contacts whose phone number contains "9123" or "8765".
-
+* `findcontact e/alice@gmail.com`
+  Finds the contact with email <alice@gmail.com>.
 <box type="tip" seamless>
 
 **Tip:** After searching, you can use `list contacts` to clear the filter and see all contacts again. You can also click on the "Contacts" tab to achieve the same result, but note that tab-clicking won't clear existing filters.
@@ -447,12 +445,12 @@ Finds and displays contacts based on the specified criteria. You can search by c
 
 ### Finding assignments : `findass`
 
-Finds and displays assignments based on the specified criteria. You can search by assignment name (default) or assignment deadline. Matching is case-insensitive for names and accepts deadline dates in standard formats.
+Finds and displays assignments based on the specified criteria. You can search by assignment name or by assignment deadline (exact match). Matching is case-insensitive.
 
 **Format:**
 
-* `findass SEARCH_STRING` — search by assignment name (default)
-* `findass d/DEADLINE` — search by assignment deadline
+* `findass SEARCH_STRING` — search by assignment name
+* `findass d/DEADLINE` — search by assignment deadline (exact match)
 
 **Supported deadline formats:**
 
@@ -461,9 +459,9 @@ Finds and displays assignments based on the specified criteria. You can search b
 
 **Key points:**
 
-* **Name search:** The command will find assignments that contain the specified text in their name (case-insensitive). For example, `findass CS2103` will find all assignments whose name contains "CS2103".
+* **Name search (default):** The command will find assignments whose names contain the specified text. For example, `findass CS2103` will find all assignments whose name contains "CS2103".
 
-* **Deadline search (d/):** When searching by deadline, enter a date (and optionally time) to find assignments. The deadline value must be in one of the supported formats. Example: `findass d/31-12-2024` will find assignments with the deadline of 31st December 2024.
+* **Deadline search (d/):** Searches for assignments by exact deadline match. The deadline value must match exactly in one of the supported formats. Example: `findass d/31-12-2024` will only find assignments with a deadline on 31st December 2024 (date-only format).
 
 * **Tab switching:** The tab will automatically switch to the `Assignments` tab upon successful execution.
 
@@ -475,7 +473,9 @@ Finds and displays assignments based on the specified criteria. You can search b
 
 * You cannot combine text with the deadline prefix. For example, `findass CS2103 d/31-12-2024` is invalid. Use either a plain name search or the d/ prefix, but not both.
 
-* The deadline prefix (d/) must have a valid date value. Using a prefix with no date (e.g., `findass d/`) will result in an error. Invalid date formats will also be rejected.
+* The deadline prefix (d/) must have a valid date value in the correct format. Using a prefix with no date (e.g., `findass d/`) will result in an error. Invalid date formats will also be rejected.
+
+* For deadline searches, the HH may be omitted. For example, if an assignment has a deadline of `31-12-2024 23:59`, searching with `findass d/31-12-2024` will also match it.
 
 * You cannot use unrecognized prefixes like `p/`, `e/`, `c/`, or `n/`. The system will reject commands with invalid prefixes.
 
@@ -485,17 +485,17 @@ Finds and displays assignments based on the specified criteria. You can search b
 
 **Examples:**
 
-* `findass Assignment 1`
-  Finds all assignments whose name contains "Assignment 1" (case-insensitive).
+* `findass Assignment`
+  Finds all assignments whose name contains "Assignment" (case-insensitive).
 
 * `findass CS2103`
   Finds all assignments whose name contains "CS2103".
 
 * `findass d/31-12-2024`
-  Finds all assignments with a deadline on 31st December 2024.
+  Finds all assignments with a deadline of 31st December 2024 (exact match).
 
 * `findass d/15-01-2024 23:59`
-  Finds all assignments with a deadline on 15th January 2024 at 23:59 (11:59 PM).
+  Finds all assignments with a deadline of 15th January 2024 at 23:59 (exact match).
 
 <box type="tip" seamless>
 
@@ -849,7 +849,7 @@ If you encounter other issues, please raise a ticket with the project maintainer
 | **Unallocate Assignment** | `unallocass ass/ASSIGNMENT_NAME [c/CLASS_NAME] [ct/CONTACT_INDICES...]` <br> e.g., `unallocass ass/Assignment 3 c/CS2103T-T10-1 ct/1 2 3`                                                                                                                  |
 | **Delete**                | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                                                                        |
 | **Edit**                  | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                                                               |
-| **Find Contact**          | `findcontact (findct) [KEYWORD...] [p/KEYWORD...] [e/KEYWORD...]`<br> e.g., `findcontact alice` or `findct p/91234567`                                                                                                                                     |
+| **Find Contact**          | `findcontact (findct) KEYWORD [MORE_KEYWORDS]...` or `findcontact p/PHONE` or `findcontact e/EMAIL`<br> e.g., `findcontact alice` or `findct p/91234567` or `findcontact e/alice@gmail.com`                                                                |
 | **Find Assignment**       | `findass SEARCH_STRING` or `findass d/DEADLINE`<br> e.g., `findass CS2103` or `findass d/31-12-2024`                                                                                                                                                       |
 | **List Contacts**         | `list contacts`                                                                                                                                                                                                                                            |
 | **List Classes**          | `list classes`                                                                                                                                                                                                                                             |
