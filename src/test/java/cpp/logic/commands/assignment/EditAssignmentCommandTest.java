@@ -41,7 +41,7 @@ public class EditAssignmentCommandTest {
 
         CommandResult expectedResult = new CommandResult(
                 String.format(EditAssignmentCommand.MESSAGE_EDIT_ASSIGNMENT_SUCCESS,
-                        Messages.format(editedAssignment)), CommandResult.ListView.ASSIGNMENTS);
+                        Messages.format(editedAssignment)));
 
         ModelManager expectedModel = new ModelManager(this.model.getAddressBook(), new UserPrefs());
         expectedModel.setAssignment(TypicalAssignments.ASSIGNMENT_ONE, editedAssignment);
@@ -89,7 +89,7 @@ public class EditAssignmentCommandTest {
 
         CommandResult expectedResult = new CommandResult(
                 String.format(EditAssignmentCommand.MESSAGE_EDIT_ASSIGNMENT_SUCCESS,
-                        Messages.format(editedAssignment)), CommandResult.ListView.ASSIGNMENTS);
+                        Messages.format(editedAssignment)));
 
         ModelManager expectedModel = new ModelManager(this.model.getAddressBook(), new UserPrefs());
         expectedModel.setAssignment(TypicalAssignments.ASSIGNMENT_ONE, editedAssignment);
@@ -102,7 +102,8 @@ public class EditAssignmentCommandTest {
         // Add ASSIGNMENT_TWO so we can attempt a name+deadline collision
         this.model.addAssignment(TypicalAssignments.ASSIGNMENT_TWO);
 
-        // Try to edit ASSIGNMENT_ONE to match ASSIGNMENT_TWO's name and deadline exactly
+        // Try to edit ASSIGNMENT_ONE to match ASSIGNMENT_TWO's name and deadline
+        // exactly
         EditAssignmentDescriptor descriptor = new EditAssignmentDescriptor();
         descriptor.setName(TypicalAssignments.ASSIGNMENT_TWO.getName());
         descriptor.setDeadline(TypicalAssignments.ASSIGNMENT_TWO.getDeadline());

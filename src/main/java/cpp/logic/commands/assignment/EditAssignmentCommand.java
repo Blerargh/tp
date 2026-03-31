@@ -22,29 +22,30 @@ import cpp.model.assignment.AssignmentName;
  */
 public class EditAssignmentCommand extends Command {
 
-    public static final String COMMAND_WORD = "editassignment";
+    public static final String COMMAND_WORD = "editass";
 
     public static final String MESSAGE_USAGE = EditAssignmentCommand.COMMAND_WORD
             + ": Edits the details of the assignment identified "
             + "by the index number used in the displayed assignment list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + CliSyntax.PREFIX_ASSIGNMENT + "NAME] "
+            + "[" + CliSyntax.PREFIX_ASSIGNMENT + "ASSIGNMENT_NAME] "
             + "[" + CliSyntax.PREFIX_DATETIME + "DEADLINE]\n"
             + "Example: " + EditAssignmentCommand.COMMAND_WORD + " 1 "
             + CliSyntax.PREFIX_ASSIGNMENT + "Assignment 1234 "
             + CliSyntax.PREFIX_DATETIME + "20-12-2026 23:59";
 
     public static final String MESSAGE_EDIT_ASSIGNMENT_SUCCESS = "Edited Assignment: %1$s";
-    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_ASSIGNMENT =
-            "This assignment already exists in the address book.";
+    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.\n"
+            + EditAssignmentCommand.MESSAGE_USAGE;
+    public static final String MESSAGE_DUPLICATE_ASSIGNMENT = "This assignment already exists in the address book.";
 
     private final Index index;
     private final EditAssignmentDescriptor editAssignmentDescriptor;
 
     /**
-     * @param index                    of the assignment in the filtered assignment list to edit
+     * @param index                    of the assignment in the filtered assignment
+     *                                 list to edit
      * @param editAssignmentDescriptor details to edit the assignment with
      */
     public EditAssignmentCommand(Index index, EditAssignmentDescriptor editAssignmentDescriptor) {
@@ -82,7 +83,7 @@ public class EditAssignmentCommand extends Command {
         model.setAssignment(assignmentToEdit, editedAssignment);
         return new CommandResult(
                 String.format(EditAssignmentCommand.MESSAGE_EDIT_ASSIGNMENT_SUCCESS,
-                        Messages.format(editedAssignment)), CommandResult.ListView.ASSIGNMENTS);
+                        Messages.format(editedAssignment)));
     }
 
     @Override
@@ -107,7 +108,8 @@ public class EditAssignmentCommand extends Command {
     }
 
     /**
-     * Stores the details to edit the assignment with. Each non-empty field value will
+     * Stores the details to edit the assignment with. Each non-empty field value
+     * will
      * replace the corresponding field value of the assignment.
      */
     public static class EditAssignmentDescriptor {
@@ -117,7 +119,8 @@ public class EditAssignmentCommand extends Command {
         /**
          * Creates an empty EditAssignmentDescriptor.
          */
-        public EditAssignmentDescriptor() {}
+        public EditAssignmentDescriptor() {
+        }
 
         /**
          * Copy constructor.

@@ -20,7 +20,9 @@ public class EditAssignmentCommandParser implements Parser<EditAssignmentCommand
 
     /**
      * Parses the given {@code String} of arguments in the context of the
-     * EditAssignmentCommand and returns an EditAssignmentCommand object for execution.
+     *
+     * EditAssignmentCommand and returns an EditAssignmentCommand object for
+     * execution.
      *
      * @throws ParseException if the user input does not conform the expected format
      */
@@ -30,13 +32,9 @@ public class EditAssignmentCommandParser implements Parser<EditAssignmentCommand
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
                 args, CliSyntax.PREFIX_ASSIGNMENT, CliSyntax.PREFIX_DATETIME);
 
-        Index index;
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
-                            EditAssignmentCommand.MESSAGE_USAGE), pe);
+        if (argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    EditAssignmentCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(
@@ -56,6 +54,8 @@ public class EditAssignmentCommandParser implements Parser<EditAssignmentCommand
         if (!descriptor.isAnyFieldEdited()) {
             throw new ParseException(EditAssignmentCommand.MESSAGE_NOT_EDITED);
         }
+
+        Index index = ParserUtil.parseIndex(argMultimap.getPreamble());
 
         return new EditAssignmentCommand(index, descriptor);
     }
