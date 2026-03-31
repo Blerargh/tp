@@ -387,9 +387,9 @@ TO BE UPDATED.
 
 Deletes the specified contact(s), assignment, or class from the address book.
 
-**Delete contacts**
+#### Delete contacts
 
-Format: `delete ct/CONTACT_INDICES...`
+**Format:** `delete ct/CONTACT_INDICES...`
 
 * Deletes the contact(s) at the specified `CONTACT_INDICES`.
 
@@ -401,7 +401,7 @@ Format: `delete ct/CONTACT_INDICES...`
 
 <box type="warning" seamless>
 
-**Warning:**
+**Warnings:**
 
 * Deletion is permanent and cannot be undone.
 
@@ -424,9 +424,39 @@ Format: `delete ct/CONTACT_INDICES...`
 
 * `delete ct/1 3` deletes the 1st and 3rd contacts shown in the displayed list.
 
-  ![Deleting contacts 1 and 3](images/deletecontact-result.png)
+#### Delete class
 
-**Delete assignment**
+Format: `delete c/CLASS_NAME`
+
+* Deletes the class with the given `CLASS_NAME`.
+
+* The name is matched case-insensitively.
+
+* Deleting a class removes the grouping only and removes all contact allocations to the class. The contacts that were in the class are **not** deleted from the address book.
+
+<box type="warning" seamless>
+
+**Warnings:**
+
+* Deleting a class is permanent. You will need to recreate the class and re-add contacts if you delete it by mistake.
+
+* Deleting a class does not unallocate any assignments that are allocated to contacts belonging to the class.
+
+</box>
+
+<box type="tip" seamless>
+
+**Tip:** If you just want to remove a single student from a class, use `unallocclass` instead of deleting the entire class.
+
+</box>
+
+**Examples:**
+
+* `delete c/CS2103T T14` deletes the class named `CS2103T T14`.
+
+* `delete c/Tutorial Group A` deletes the class named `Tutorial Group A`.
+
+#### Delete assignment
 
 Format: `delete ass/ASSIGNMENT_NAME`
 
@@ -439,6 +469,13 @@ Format: `delete ass/ASSIGNMENT_NAME`
 <box type="warning" seamless>
 
 **Warning:** Deleting an assignment removes it and all its grading records permanently. This cannot be undone.
+
+</box>
+
+<box type="tip" seamless>
+
+**Tip:** Use `list assignments` to see all assignment names before deleting, so you can copy the exact name.
+
 </box>
 
 **Examples:**
@@ -446,41 +483,6 @@ Format: `delete ass/ASSIGNMENT_NAME`
 * `delete ass/Assignment 1` deletes the assignment named `Assignment 1`.
 
 * `delete ass/Midterm Exam` deletes the assignment named `Midterm Exam`.
-
-  ![Deleting an assignment](images/deleteass-result.png)
-
-<box type="tip" seamless>
-
-**Tip:** Use `list assignments` to see all assignment names before deleting, so you can copy the exact name.
-</box>
-
-**Delete class**
-
-Format: `delete c/CLASS_NAME`
-
-* Deletes the class with the given `CLASS_NAME`.
-
-* The name is matched case-insensitively.
-
-* Deleting a class removes the grouping only and removes all contact allocations to the class. The contacts that were in the class are **not** deleted from the address book.
-
-<box type="warning" seamless>
-
-**Warning:** Deleting a class is permanent. You will need to recreate the class and re-add contacts if you delete it by mistake.
-</box>
-
-**Examples:**
-
-* `delete c/CS2103T T14` deletes the class named `CS2103T T14`.
-
-* `delete c/Tutorial Group A` deletes the class named `Tutorial Group A`.
-
-  ![Deleting a class](images/deleteclass-result.png)
-
-<box type="tip" seamless>
-
-**Tip:** If you just want to remove a single student from a class, use `unallocclass` instead of deleting the entire class.
-</box>
 
 ### Adding classes: `addclass`
 
@@ -822,7 +824,7 @@ If you encounter other issues, please raise a ticket with the project maintainer
 | **Add Assignment**        | `addass ass/ASSIGNMENT_NAME d/DEADLINE [c/CLASS_NAME] [ct/CONTACT_INDICES...]` <br> e.g., `addass ass/Assignment 4 d/15-01-2024 23:59 c/CS2103T-T10-1 ct/4 5`                                                                                              |
 | **Allocate Assignment**   | `allocass ass/ASSIGNMENT_NAME [c/CLASS_NAME] [ct/CONTACT_INDICES...]` <br> e.g., `allocass ass/Assignment 3 c/CS2103T-T10-1 ct/1 2 3`                                                                                                                      |
 | **Unallocate Assignment** | `unallocass ass/ASSIGNMENT_NAME [c/CLASS_NAME] [ct/CONTACT_INDICES...]` <br> e.g., `unallocass ass/Assignment 3 c/CS2103T-T10-1 ct/1 2 3`                                                                                                                  |
-| **Delete**                | `delete ct/CONTACT_INDICES...` e.g., `delete ct/3`<br>`delete ass/ASSIGNMENT_NAME` e.g., `delete ass/Assignment 1`<br>`delete c/CLASS_NAME` e.g., `delete c/CS2103T T14`                                                                                    |
+| **Delete**                | `delete ct/CONTACT_INDICES...` e.g., `delete ct/3`<br>`delete ass/ASSIGNMENT_NAME` e.g., `delete ass/Assignment 1`<br>`delete c/CLASS_NAME` e.g., `delete c/CS2103T T14`                                                                                   |
 | **Edit**                  | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                                                                               |
 | **Find**                  | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                                                                 |
 | **List Contacts**         | `list contacts`                                                                                                                                                                                                                                            |
