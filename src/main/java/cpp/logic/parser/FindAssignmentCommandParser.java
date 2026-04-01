@@ -1,5 +1,9 @@
 package cpp.logic.parser;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import cpp.logic.Messages;
 import cpp.logic.commands.FindAssignmentCommand;
 import cpp.logic.parser.exceptions.ParseException;
@@ -11,6 +15,8 @@ import cpp.model.assignment.AssignmentSearchPredicate;
  * Parses input arguments and creates a new FindAssignmentCommand object
  */
 public class FindAssignmentCommandParser implements Parser<FindAssignmentCommand> {
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private static final DateTimeFormatter DATETIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
     /**
      * Parses the given {@code String} of arguments in the context of the
@@ -43,6 +49,8 @@ public class FindAssignmentCommandParser implements Parser<FindAssignmentCommand
                 throw new ParseException(
                         String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, FindAssignmentCommand.MESSAGE_USAGE));
             }
+            // Validate deadline format (must be dd-MM-yyyy or dd-MM-yyyy HH:mm)
+            this.validateDeadlineFormat(deadlineValue);
             predicate = new AssignmentDeadlineContainsKeywordPredicate(deadlineValue);
         } else {
             // Default to name search using preamble
@@ -59,6 +67,28 @@ public class FindAssignmentCommandParser implements Parser<FindAssignmentCommand
         }
 
         return new FindAssignmentCommand(predicate);
+    }
+
+    /**
+     * Validates that the deadline value conforms to one of the supported formats:
+     * dd-MM-yyyy or dd-MM-yyyy HH:mm
+     *
+     * @param deadlineValue the deadline value to validate
+     * @throws ParseException if the deadline format is invalid
+     */
+    private void validateDeadlineFormat(String deadlineValue) throws ParseException {
+        try {
+            // Try parsing as full datetime format first (dd-MM-yyyy HH:mm)
+            LocalDateTime.parse(deadlineValue, FindAssignmentCommandParser.DATETIME_FORMATTER);
+        } catch (DateTimeParseException e1) {
+            try {
+                // Try parsing as date-only format (dd-MM-yyyy)
+                LocalDateTime.parse(deadlineValue + " 00:00", FindAssignmentCommandParser.DATETIME_FORMATTER);
+            } catch (DateTimeParseException e2) {
+                throw new ParseException(
+                        "Invalid deadline format. Please use dd-MM-yyyy or dd-MM-yyyy HH:mm");
+            }
+        }
     }
 
 }

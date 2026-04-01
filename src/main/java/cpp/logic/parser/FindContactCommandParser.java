@@ -57,6 +57,8 @@ public class FindContactCommandParser implements Parser<FindContactCommand> {
                 throw new ParseException(
                         String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, FindContactCommand.MESSAGE_USAGE));
             }
+            // Validate phone format using existing parser utility
+            ParserUtil.parsePhone(phoneValue);
             predicate = new ContactPhoneContainsKeywordsPredicate(Arrays.asList(phoneValue));
         } else if (hasEmailPrefix) {
             if (!preamble.isEmpty()) {
@@ -68,6 +70,8 @@ public class FindContactCommandParser implements Parser<FindContactCommand> {
                 throw new ParseException(
                         String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, FindContactCommand.MESSAGE_USAGE));
             }
+            // Validate email format using existing parser utility
+            ParserUtil.parseEmail(emailValue);
             predicate = new ContactEmailContainsKeywordsPredicate(Arrays.asList(emailValue));
         } else {
             // Default to name search using preamble
