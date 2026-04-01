@@ -68,9 +68,8 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_addAlias() throws Exception {
         Contact contact = new ContactBuilder().build();
-        String addContactDetails = ContactUtil.getContactDetails(contact);
         AddContactCommand command = (AddContactCommand) this.parser
-                .parseCommand(AddContactCommand.COMMAND_WORD_ALIAS + " " + addContactDetails);
+                .parseCommand(ContactUtil.getAddContactAliasCommand(contact));
         Assertions.assertEquals(new AddContactCommand(contact), command);
     }
 
