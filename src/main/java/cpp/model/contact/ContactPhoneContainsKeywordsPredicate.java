@@ -32,4 +32,11 @@ public class ContactPhoneContainsKeywordsPredicate implements ContactSearchPredi
         ContactPhoneContainsKeywordsPredicate otherPredicate = (ContactPhoneContainsKeywordsPredicate) other;
         return this.keywords.equals(otherPredicate.keywords);
     }
+
+    @Override
+    public String toString() {
+        return new cpp.commons.util.ToStringBuilder(this)
+                .add("keywords", this.keywords)
+                .toString();
+    }
 }

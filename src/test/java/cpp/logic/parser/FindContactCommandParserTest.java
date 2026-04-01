@@ -29,4 +29,14 @@ public class FindContactCommandParserTest {
         CommandParserTestUtil.assertParseSuccess(this.parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
     }
 
+    @Test
+    public void parse_unrecognizedPrefix_throwsParseException() {
+        // unrecognized prefixes in preamble should throw error
+        CommandParserTestUtil.assertParseFailure(this.parser, "c/Contact",
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, FindContactCommand.MESSAGE_USAGE));
+
+        CommandParserTestUtil.assertParseFailure(this.parser, "ass/Assignment",
+                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, FindContactCommand.MESSAGE_USAGE));
+    }
+
 }

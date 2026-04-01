@@ -48,4 +48,11 @@ public class AssignmentDeadlineContainsKeywordPredicate implements AssignmentSea
         AssignmentDeadlineContainsKeywordPredicate otherPredicate = (AssignmentDeadlineContainsKeywordPredicate) other;
         return this.keyword.equals(otherPredicate.keyword);
     }
+
+    @Override
+    public String toString() {
+        return new cpp.commons.util.ToStringBuilder(this)
+                .add("keyword", this.keyword)
+                .toString();
+    }
 }

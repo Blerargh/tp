@@ -23,7 +23,7 @@ public class FindContactCommandParser implements Parser<FindContactCommand> {
      * Supports finding by name (default), phone (p/KEYWORD), or email (e/KEYWORD)
      * Examples: findcontact alice
      * findcontact p/91234567
-     * findcontact e/gmail
+     * findcontact e/alice@gmail.com
      *
      * @throws ParseException if the user input does not conform the expected format
      */

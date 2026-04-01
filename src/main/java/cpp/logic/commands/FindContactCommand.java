@@ -8,10 +8,19 @@ import cpp.model.Model;
 import cpp.model.contact.ContactSearchPredicate;
 
 /**
- * Finds and lists all contacts in address book whose name/phone/email contains
- * any of the
- * argument keywords.
- * Keyword matching is case insensitive.
+ * Finds and lists all contacts in address book using the {@code findcontact}
+ * ({@code findct}) command.
+ * <p>
+ * Supports three search modes:
+ * <br>
+ * - Name search: finds contacts whose names contain any of the specified
+ * keywords
+ * (case-insensitive, keyword-based search).<br>
+ * - Phone search: finds contacts whose phone number matches the specified value
+ * exactly (case-insensitive).<br>
+ * - Email search: finds contacts whose email address matches the specified
+ * value
+ * exactly (case-insensitive).
  */
 public class FindContactCommand extends Command {
 

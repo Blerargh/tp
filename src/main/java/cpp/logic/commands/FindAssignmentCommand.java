@@ -8,9 +8,17 @@ import cpp.model.Model;
 import cpp.model.assignment.AssignmentSearchPredicate;
 
 /**
- * Finds and lists all assignments in address book whose name contains the
- * specified search string.
- * Matching is case insensitive and exact (substring match).
+ * Finds and lists all assignments in the address book using the {@code findass}
+ * command.
+ * <p>
+ * Supports two search modes:
+ * <br>
+ * - Name search: finds assignments whose names contain the specified search
+ * string
+ * (case-insensitive, substring match).<br>
+ * - Deadline search: finds assignments whose deadline matches the specified
+ * value
+ * exactly (case-insensitive, supports dd-MM-yyyy and dd-MM-yyyy HH:mm formats).
  */
 public class FindAssignmentCommand extends Command {
 
