@@ -21,10 +21,10 @@ public class FindAssignmentCommandParserTest {
         // no leading and trailing whitespaces
         FindAssignmentCommand expectedFindCommand = new FindAssignmentCommand(
                 new AssignmentNameContainsKeywordsPredicate("CS2103"));
-        CommandParserTestUtil.assertParseSuccess(this.parser, "CS2103", expectedFindCommand);
+        CommandParserTestUtil.assertParseSuccess(this.parser, " ass/CS2103", expectedFindCommand);
 
         // single search string
-        CommandParserTestUtil.assertParseSuccess(this.parser, "Assignment", new FindAssignmentCommand(
+        CommandParserTestUtil.assertParseSuccess(this.parser, " ass/Assignment", new FindAssignmentCommand(
                 new AssignmentNameContainsKeywordsPredicate("Assignment")));
     }
 
@@ -38,20 +38,20 @@ public class FindAssignmentCommandParserTest {
     @Test
     public void parse_emptyDeadlineValue_throwsParseException() {
         // empty deadline value should throw error
-        CommandParserTestUtil.assertParseFailure(this.parser, "d/",
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, FindAssignmentCommand.MESSAGE_USAGE));
+        CommandParserTestUtil.assertParseFailure(this.parser, " d/",
+                ParserUtil.MESSAGE_INVALID_DATETIME);
     }
 
     @Test
     public void parse_unrecognizedPrefix_throwsParseException() {
         // unrecognized prefixes in preamble should throw error
-        CommandParserTestUtil.assertParseFailure(this.parser, "p/Contact",
+        CommandParserTestUtil.assertParseFailure(this.parser, " p/Contact",
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, FindAssignmentCommand.MESSAGE_USAGE));
 
-        CommandParserTestUtil.assertParseFailure(this.parser, "e/email@test.com",
+        CommandParserTestUtil.assertParseFailure(this.parser, " e/email@test.com",
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, FindAssignmentCommand.MESSAGE_USAGE));
 
-        CommandParserTestUtil.assertParseFailure(this.parser, "c/ClassName",
+        CommandParserTestUtil.assertParseFailure(this.parser, " c/ClassName",
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, FindAssignmentCommand.MESSAGE_USAGE));
     }
 

@@ -23,10 +23,10 @@ public class FindContactCommandParserTest {
         // no leading and trailing whitespaces
         FindContactCommand expectedFindCommand = new FindContactCommand(
                 new ContactNameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
-        CommandParserTestUtil.assertParseSuccess(this.parser, "Alice Bob", expectedFindCommand);
+        CommandParserTestUtil.assertParseSuccess(this.parser, " n/Alice Bob", expectedFindCommand);
 
         // multiple whitespaces between keywords
-        CommandParserTestUtil.assertParseSuccess(this.parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
+        CommandParserTestUtil.assertParseSuccess(this.parser, " \n n/Alice \n \t Bob  \t", expectedFindCommand);
     }
 
     @Test
