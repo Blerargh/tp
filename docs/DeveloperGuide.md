@@ -383,7 +383,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to `addcontact` a contact with fields (ContactName, Phone, Email, Address, Class name, Assignment name).
+1. User requests to `addcontact` a contact with fields (Name, Phone, Email, Address, Class name, Assignment name).
 1. System <u>[shows updated contact list (Use Case 2)](#use-case-2-list-contacts)</u>.
 1. Use case ends.
 
@@ -391,7 +391,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. User left optional fields blank (e.g. Class name, Assignment name).
   * 1a1. System accepts the input and proceeds.
-* 1b. A contact with the same ContactName and Phone number exists in contact list.
+* 1b. A contact with the same name and phone number exists in contact list.
   * 1b1. System shows an error message.
   * 1b2. Use case ends.
 * 1c. Invalid or missing fields.
