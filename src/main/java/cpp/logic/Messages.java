@@ -28,8 +28,7 @@ public class Messages {
     public static final String MESSAGE_CONTACTS_LISTED_OVERVIEW = "%1$d contacts listed!";
     public static final String MESSAGE_ASSIGNMENTS_LISTED_OVERVIEW = "%1$d assignments listed!";
     public static final String MESSAGE_CLASS_GROUPS_LISTED_OVERVIEW = "%1$d class groups listed!";
-    public static final String MESSAGE_DUPLICATE_FIELDS = """
-            Multiple values specified for the following single-valued field(s): """;
+    public static final String MESSAGE_DUPLICATE_FIELDS = "Multiple values specified for the following field(s): ";
     public static final String MESSAGE_DEADLINE_START_AFTER_END = """
             The start deadline cannot be after the end deadline.""";
 
