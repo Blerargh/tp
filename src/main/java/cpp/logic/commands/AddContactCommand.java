@@ -35,7 +35,7 @@ public class AddContactCommand extends Command {
             + CliSyntax.PREFIX_ADDRESS + "ADDRESS "
             + "[" + CliSyntax.PREFIX_CLASS + "CLASS_NAME] "
             + "[" + CliSyntax.PREFIX_ASSIGNMENT + "ASSIGNMENT_NAME] "
-            + "[" + CliSyntax.PREFIX_TAG + "TAG [TAG]...]\n"
+            + "[" + CliSyntax.PREFIX_TAG + "TAGS...]\n"
             + "Example: " + AddContactCommand.COMMAND_WORD + " "
             + CliSyntax.PREFIX_NAME + "John Doe "
             + CliSyntax.PREFIX_PHONE + "98765432 "
