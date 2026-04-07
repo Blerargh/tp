@@ -1155,7 +1155,7 @@ Edits the details of an existing contact in the address book.
 
 * Editing a contact's name to match another existing contact's name (case-insensitive) is disallowed, and the command will fail if you attempt to do so. For example, if there is already a contact named "Alice Tan", you cannot edit another contact's name to "alice tan" or "ALICE TAN".
 
-* Editing a contact's details while you are in a filtered list view (e.g. after using `findcontact`) may cause confusion as the list may change to match the predicates applied on the filtered view. It is recommended to use `list contacts`, or `findcontact` with a predicate that is not among the fields you wish to edit, if you wish to see the results of your edit command in the displayed contact list.
+* Editing a contact's details while you are in a filtered list view (e.g. after using `findcontact`) may cause confusion as the list may change to match the filters applied previously. After an edit, you should use `list contacts` or `findcontact` with an updated filter if you want to see the edited entry.
 
 </box>
 
@@ -1193,7 +1193,7 @@ Edits the name of an existing class in the address book.
 
 * Editing a class name is permanent and will be reflected across all contact allocations. Ensure the new name is correct before confirming the edit.
 
-* Editing a class name while you are in a filtered list view (e.g. after using `findclass`) may cause confusion as the list may change to match the predicates applied on the filtered view. It is recommended to use `list classes` if you wish to see the results of your edit command in the displayed class list.
+* Editing a class name while you are in a filtered list view (e.g. after using `findclass`) may cause confusion as the list may change to match the filters applied previously. After an edit, you should use `list classes` or `findclass` with an updated filter if you want to see the edited entry.
 
 </box>
 
@@ -1233,11 +1233,11 @@ Edits the details of an existing assignment in the address book.
 
 <box type="warning" seamless>
 
-**Warning:**
+**Warnings:**
 
 * Editing an assignment's name or deadline is permanent and will be reflected across all contact allocations. Ensure the new name is correct before confirming the edit.
 
-* Editing an assignment's details while you are in a filtered list view (e.g. after using `findass`) may cause confusion as the list may change to match the predicates applied on the filtered view. It is recommended to use `list assignments` if you wish to see the results of your edit command in the displayed assignment list.
+* Editing an assignment's details while you are in a filtered list view (e.g. after using `findass`) may cause confusion as the list may change to match the filters applied previously. After an edit, you should use `list assignments` or `findass` with an updated filter if you want to see the edited entry.
 
 </box>
 
@@ -1253,7 +1253,7 @@ Edits the details of an existing assignment in the address book.
 Edits the name and deadline of the 1st assignment in the displayed assignment list to "Assignment 1234" and 20 December 2026 11.59pm respectively.
 
 * `findass ass/Assignment 1` followed by `editass 1 d/01-01-2027 00:00`<br>
-Edits only the deadline of the 1st assignment in the filtered list to 1 January 2027 12.00am.
+Edits only the deadline of the 1st assignment in the filtered list to 1 January 2027 12am.
 
 ### Deleting contacts, assignments, or classes : `delete`
 
