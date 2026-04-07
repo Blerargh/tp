@@ -324,8 +324,8 @@ Adds a contact to the address book.
 * `addcontact n/Betsy Crowe e/betsycrowe@example.com a/Betsy Street, Block 123, #06-07 p/1234567` <br>
   Creates a contact with the name "Betsy Crowe", phone number "1234567", email "betsycrowe<span></span>@example.com", address "Betsy Street, Block 123, #06-07"
 
-* `addcontact n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 c/CS2103T-T10-1 ass/Assignment 1 t/friends owesMoney`<br>
-  Creates a contact with the name "John Doe", phone number "98765432", email "johnd<span></span>@example.com", address "311, Clementi Ave 2, #02-25", allocated to class group "CS2103T-T10-1" and assignment "Assignment 1", with tags "friends" and "owesMoney".
+* `addcontact n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 c/CS2103T T10 1 ass/Assignment 1 t/friends owesMoney`<br>
+  Creates a contact with the name "John Doe", phone number "98765432", email "johnd<span></span>@example.com", address "311, Clementi Ave 2, #02-25", allocated to class group "CS2103T T10 1" and assignment "Assignment 1", with tags "friends" and "owesMoney".
 
 * `addct n/Jane Lee p/91234567 e/janelee@example.com a/45 Clementi Road t/monitoring remedial`<br>
   Creates a contact using the alias command `addct`, with tags "monitoring" and "remedial".
