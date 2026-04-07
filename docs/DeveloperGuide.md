@@ -245,6 +245,10 @@ The UI layer handles list display through a hierarchy of components:
 * Each card (e.g., `ContactCard`, `AssignmentCard`, `ClassGroupCard`) displays the entity with its index and details.
 * The `CommandResult.ListView` enum controls which panel is displayed to the user.
 
+The class diagram below illustrates the structure of the UI components involved in displaying list data.
+
+<puml src="diagrams/ListUiClassDiagram.puml" alt="UI Components Structure for List Feature" />
+
 **Design:**
 
 Both `list` and find-related commands use predicates to filter data, providing a consistent approach to data manipulation. The observable lists in JavaFX automatically update the UI whenever the filtered list changes, eliminating the need for manual UI refresh calls.
