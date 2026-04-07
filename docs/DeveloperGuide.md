@@ -232,6 +232,10 @@ When a user executes `list contacts`, the following sequence occurs:
 1. The `Model` updates its observable `FilteredList<Contact>`, which automatically triggers UI updates via JavaFX data binding.
 1. A `CommandResult` is returned with `ListView.CONTACTS`, directing the UI to display the contact list panel.
 
+The sequence diagram below illustrates the interactions within the `Logic` component, taking `list contacts` as an example.
+
+<puml src="diagrams/ListSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `list contacts` Command" />
+
 **UI Integration:**
 
 The UI layer handles list display through a hierarchy of components:
