@@ -257,6 +257,10 @@ Both `list` and find-related commands use predicates to filter data, providing a
 
 The find-related commands allow users to search for contacts, assignments, or class groups using various search criteria. Three separate find commands are implemented: `findcontact` (`findct`), `findass`, and `findclass` (`findc`), each supporting different search modes and predicates.
 
+Here is a class diagram showing the structure of the Find command hierarchy:
+
+<puml src="diagrams/FindCommandClassDiagram.puml" alt="Class Diagram for Find Commands" />
+
 #### FindContactCommand (`findcontact` / `findct`)
 
 `FindContactCommand` (alias: `findct`) supports three search modes:
@@ -300,6 +304,10 @@ When a user executes `findcontact n/alice bob`:
 1. The `Model` updates its `FilteredList<Contact>`, automatically triggering UI refresh through JavaFX observables.
 1. A `CommandResult` with `ListView.CONTACTS` directs the UI to display the filtered contact list.
 
+The sequence diagram below illustrates the interactions within the `Logic` component for the `findcontact n/alice` command:
+
+<puml src="diagrams/FindContactSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `findcontact n/alice` Command" />
+
 #### Predicate Implementation
 
 Each predicate implements the `Predicate<T>` interface to evaluate whether an entity matches the search criteria:
@@ -318,6 +326,12 @@ Each predicate implements the `Predicate<T>` interface to evaluate whether an en
 * **Flexible Search Modes**: Different entity types support different search modes based on their properties (e.g., assignments support deadline search, which contacts do not).
 * **Case Sensitivity**: Name-based searches are case-insensitive for better user experience, while phone searches are exact to ensure accuracy.
 * **Consistent Pattern**: All find commands follow the same predicate-based filtering pattern, maintaining architectural consistency with the list commands.
+
+**UI Integration for Find:**
+
+The find commands uses the same UI components as the list commands. Results are displayed through `ContactListPanel`, `AssignmentListPanel`, and `ClassGroupListPanel`, which render the filtered data as lists of cards. This reuse ensures a consistent user experience between list and find operations.
+
+<puml src="diagrams/FindUiClassDiagram.puml" alt="UI Components Structure for Find Feature" />
 
 ### \[Proposed\] Undo/redo feature
 
