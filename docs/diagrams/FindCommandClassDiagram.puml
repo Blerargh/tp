@@ -26,7 +26,6 @@ Find_Command .up.> CommandResult : creates
 note right of Find_Command
     Find*Command = FindContactCommand,
     FindAssignmentCommand, FindClassCommand
-    
     Each uses corresponding predicates:
     - ContactNameContainsKeywordsPredicate
     - ContactPhoneMatchesKeywordsPredicate
