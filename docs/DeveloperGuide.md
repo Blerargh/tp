@@ -226,9 +226,9 @@ The `list` command displays all contacts, assignments, or class groups to the us
 
 When a user executes `list contacts`, the following sequence occurs:
 
-1. `ListContactCommandParser` parses the command and creates a `ListContactCommand` with a predicate that shows all contacts (`PREDICATE_SHOW_ALL_CONTACTS`).
+1. `ListCommandParser` parses the `contacts` subcommand and creates a `ListContactCommand`.
 1. The `LogicManager` executes the `ListContactCommand`.
-1. The command calls `model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS)` to update the filtered list in the model.
+1. The command calls `model.updateFilteredContactList(Model.PREDICATE_SHOW_ALL_CONTACTS)` to update the filtered list in the model.
 1. The `Model` updates its observable `FilteredList<Contact>`, which automatically triggers UI updates via JavaFX data binding.
 1. A `CommandResult` is returned with `ListView.CONTACTS`, directing the UI to display the contact list panel.
 
@@ -276,9 +276,9 @@ Exactly one of the three search modes must be specified per command.
 `FindAssignmentCommand` supports two search modes:
 
 * **Name Search** (`ass/ASSIGNMENT_NAME_SEARCH_STRING`): Substring matching (case-insensitive). Uses `AssignmentNameContainsKeywordsPredicate`.
-* **Deadline Search** (`dt_start/DEADLINE` and/or `dt_end/DEADLINE`): Date range matching supporting formats `dd-MM-yyyy` or `dd-MM-yyyy HH:mm`. Uses `AssignmentDeadlineInRangePredicate`.
+* **Deadline Search** (`ds/DEADLINE` and/or `de/DEADLINE`): Date range matching supporting formats `dd-MM-yyyy` or `dd-MM-yyyy HH:mm`. Uses `AssignmentDeadlineInRangePredicate`.
 
-Exactly one of the two search modes must be specified per command. For deadline search, at least one of `dt_start/` or `dt_end/` must be provided.
+Exactly one of the two search modes must be specified per command. For deadline search, at least one of `ds/` or `de/` must be provided.
 
 #### FindClassCommand (`findclass` / `findc`)
 
