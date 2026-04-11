@@ -353,24 +353,26 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | new user                                    | see usage instructions                             | refer to instructions when I forget how to use the App                     |
 | `* * *`  | user                                        | delete a contact                                   | remove entries that I no longer need                                       |
 | `* * *`  | user                                        | find a contact by name                             | locate details of contacts without having to go through the entire list    |
-| `* * *`  | user                                        | find contacts by a specific field                  |                                                                            |
+| `* * *`  | user                                        | find contacts by a specific field                  | narrow down my search to quickly locate the right contact                  |
 | `* * *`  | user                                        | add contacts                                       | easily retrieve them                                                       |
 | `* * *`  | user                                        | see all the assignments/contacts/classes           | keep track of what has been created                                        |
 | `* *`    | busy user                                   | add deadlines/events                               | keep track of my things easily                                             |
 | `* * *`  | teacher managing many students              | organize my students into separate groups by class | easily identify which students belong to which class                       |
 | `* * *`  | teacher                                     | see all assignment status for each student         | keep track of every individual's performance                               |
 | `* * *`  | teacher changing classes every year         | easily delete multiple old contacts                | keep only the contacts I need accessible                                   |
-| `* * *`  | CLI user                                    | quickly exit the program                           | don't have to waste time clicking the close button                         |
+| `* * *`  | CLI user                                    | quickly exit the program                           | avoid wasting time clicking the close button                               |
 | `* *`    | user                                        | hide private contact details                       | minimize chance of someone else seeing them by accident                    |
 | `* *`    | user pursuing efficiency                    | sort contacts by date accessed                     | easily find the most recently contacted contacts                           |
 | `* *`    | forgetful teacher                           | find students even when I mistype their names      | easily find them even if I don't remember the exact spelling of their name |
 | `* *`    | user with multiple devices                  | export and import selected contacts                | easily switch between devices                                              |
 | `* *`    | meticulous teacher                          | add private notes (e.g., allergies)                | recall critical student welfare details                                    |
-| `* *`    | user                                        | retrieve my input history                          | don't have to retype the entire command when I make a small typo           |
+| `* *`    | user                                        | retrieve my input history                          | avoid retyping the entire command when I make a small typo                 |
 | `* *`    | careless user                               | undo my actions                                    | correct mistakes without losing my work                                    |
 | `* *`    | form teacher                                | retrieve emails of a specific group                | blast announcements via email without manual entry                         |
 | `* *`    | teacher managing committees                 | assign custom tags (e.g., "Prefect")               | filter students by extra-curricular roles                                  |
 | `* *`    | normal user                                 | edit contact details                               | keep my contact information up to date                                     |
+| `* *`    | teacher                                     | edit class details                                 | keep class information up to date                                          |
+| `* *`    | teacher                                     | edit assignment details                            | keep assignment information up to date                                     |
 | `* *`    | teacher                                     | mark an assignment as submitted for a student      | track which students have handed in their work                             |
 | `* *`    | teacher                                     | unmark a submission for a student                  | correct accidental submission records                                      |
 | `* *`    | teacher                                     | grade an assignment for a student                  | record the student's score for that assignment                             |
@@ -467,7 +469,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User <u>[views the list of contacts assigned to a class (Use Case 18)](#use-case-18-view-a-class)</u>.
+1. User <u>[views the list of contacts assigned to a class (Use Case 21)](#use-case-21-view-a-class)</u>.
 1. User requests to remove a contact from the class.
 1. System removes the contact from the class.
 1. Use case ends.
@@ -538,7 +540,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User <u>[views the list of contacts assigned to an assignment (Use Case 19)](#use-case-19-view-an-assignment)</u>.
+1. User <u>[views the list of contacts assigned to an assignment (Use Case 22)](#use-case-22-view-an-assignment)</u>.
 1. User requests to unassign an assignment with fields (Assignment name, Class name, Contact indices).
 1. System unassigns the assignment from the contacts.
 1. Use case ends.
@@ -608,11 +610,71 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1b. User specified multiple assignments to delete.
   * 1b1. System repeats Steps 2 and 3 for all assignments.
 
+#### Use Case 14: Edit a Contact
+
+**MSS**
+
+1. User requests to edit a contact with updated fields (Name, Phone, Email, Address, Tags).
+1. System updates the contact with the new details.
+1. Use case ends.
+
+**Extensions**
+
+* 1a. Invalid contact.
+  * 1a1. System shows an error message.
+  * 1a2. Use case ends.
+* 1b. No fields provided to edit.
+  * 1b1. System shows an error message.
+  * 1b2. Use case ends.
+* 1c. Invalid field format.
+  * 1c1. System shows an error message.
+  * 1c2. Use case ends.
+
+#### Use Case 15: Edit a Class
+
+**MSS**
+
+1. User requests to edit a class with an updated name.
+1. System updates the class with the new name.
+1. Use case ends.
+
+**Extensions**
+
+* 1a. Invalid class.
+  * 1a1. System shows an error message.
+  * 1a2. Use case ends.
+* 1b. No fields provided to edit.
+  * 1b1. System shows an error message.
+  * 1b2. Use case ends.
+* 1c. A class with the new name already exists.
+  * 1c1. System shows an error message.
+  * 1c2. Use case ends.
+
+#### Use Case 16: Edit an Assignment
+
+**MSS**
+
+1. User requests to edit an assignment with updated fields (Name, Deadline).
+1. System updates the assignment with the new details.
+1. Use case ends.
+
+**Extensions**
+
+* 1a. Invalid assignment.
+  * 1a1. System shows an error message.
+  * 1a2. Use case ends.
+* 1b. No fields provided to edit.
+  * 1b1. System shows an error message.
+  * 1b2. Use case ends.
+* 1c. Invalid field format (e.g. invalid deadline).
+  * 1c1. System shows an error message.
+  * 1c2. Use case ends.
+
 <!-- Start of non MVP feature use cases -->
 
 **The use cases below are for features that are not part of the MVP, but are proposed to be implemented if time permits.**
 
-#### Use Case 14: Find a Contact
+#### Use Case 17: Find a Contact
 
 **MSS**
 
@@ -629,7 +691,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   * 1b1. System shows an error message.
   * 1b2. Use case ends.
 
-#### Use Case 15: Find a Class
+#### Use Case 18: Find a Class
 
 **MSS**
 
@@ -643,7 +705,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   * 1a1. System shows an empty list with a message indicating no matches found.
   * 1a2. Use case ends.
 
-#### Use Case 16: Find an Assignment
+#### Use Case 19: Find an Assignment
 
 **MSS**
 
@@ -660,7 +722,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   * 1b1. System shows an error message.
   * 1b2. Use case ends.
 
-#### Use Case 17: View a Contact
+#### Use Case 20: View a Contact
 
 **MSS**
 
@@ -675,7 +737,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   * 2a1. System shows an error message.
   * 2a2. Use case ends.
 
-#### Use Case 18: View a Class
+#### Use Case 21: View a Class
 
 **MSS**
 
@@ -690,7 +752,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   * 2a1. System shows an error message.
   * 2a2. Use case ends.
 
-#### Use Case 19: View an Assignment
+#### Use Case 22: View an Assignment
 
 **MSS**
 
@@ -705,7 +767,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   * 2a1. System shows an error message.
   * 2a2. Use case ends.
 
-#### Use Case 20: Update Submission Status of an Assignment
+#### Use Case 23: Update Submission Status of an Assignment
 
 **MSS**
 
@@ -722,7 +784,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   * 1b1. System shows an error message.
   * 1b2. Use case ends.
 
-#### Use Case 21: Mark an Assignment
+#### Use Case 24: Mark an Assignment
 
 **MSS**
 
@@ -741,7 +803,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   * 1c1. System shows an error message.
   * 1c2. Use case ends.
 
-#### Use Case 22: Unmark an Assignment
+#### Use Case 25: Unmark an Assignment
 
 **MSS**
 
