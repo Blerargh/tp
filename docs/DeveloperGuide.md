@@ -846,7 +846,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Invalid**: Violates one or more specified formats or constraints defined by the system.
 * **JSON (JavaScript Object Notation)**: The human-readable file format used to automatically save and load application data locally.
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
 * **Submission status**: The state of an _Assignment_ for a specified _Contact_ (e.g. not submitted, submitted).
 * **Tags**: A user-defined, optional label attached to a _Contact_ for categorization and filtering (e.g. "Prefect").
 * **Valid**: Satisfies all specified format and constraints defined by the system.
