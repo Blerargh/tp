@@ -823,7 +823,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Non-Functional Requirements
 
 1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-1. Should be able to hold up to 1000 contacts, 500 classes, and 500 assignments without a noticeable performance degradation or sluggishness during in performance for typical usage.
+1. Should be able to hold up to 1000 contacts, 500 classes, and 500 assignments without a noticeable performance degradation or sluggishness during typical usage.
 1. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 1. Should respond to user commands within 2 seconds to ensure a smooth user experience.
 1. Should launch and load existing data within 5 seconds.
