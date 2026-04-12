@@ -1569,6 +1569,9 @@ In the meantime, users can manually extract the required data from `addressbook.
 1. **File permission issues (Windows)**: Running the app from a protected folder (e.g., `C:\Program Files`) may prevent writing `data/` or `preferences.json`.<br>
    Workaround: Run from a user-writable folder (e.g., Documents) or run the terminal as Administrator.
 
+1. **File overwrite issues with multiple instances**: Running multiple instances of CPP simultaneously can cause conflicts in writing to `addressbook.json` and `preferences.json`, leading to potential data loss.<br>
+   Workaround: Avoid running multiple instances at the same time. Always ensure one instance is closed before starting another.
+
 If you encounter other issues, please open a GitHub Issue in the [project repository](https://github.com/AY2526S2-CS2103T-T10-1/tp/issues) and include `data/addressbook.json` and `preferences.json` in your report for troubleshooting.
 
 --------------------------------------------------------------------------------------------------------------------
