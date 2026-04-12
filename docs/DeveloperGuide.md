@@ -567,9 +567,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   * 2a2. Use case ends.
 * 2b. Assignment is not allocated to one of the contacts.
   * 2b1. System proceeds with Step 3 without the contact.
-* 2c. User left _Class name_ field blank.
+* 2c. User left only the _Class name_ field blank.
   * 2c1. System proceeds with Step 3, unallocating only from contacts specified.
-* 2d. User left _Contact indices_ field blank.
+* 2d. User left only the _Contact indices_ field blank.
   * 2d1. System proceeds with Step 3, unallocating from all contacts in the specified class.
 * 2e. User left both _Class name_ and _Contact indices_ fields blank.
   * 2e1. System shows an error message.
@@ -751,10 +751,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2a. Invalid contact.
   * 2a1. System shows an error message.
   * 2a2. Use case ends.
-* 2b. Contact has no classes allocated.
+* 2b. Contact has no classes allocated but has assignments allocated.
   * 2b1. System displays the contact details including any assignments allocated, but with a label indicating that the contact is not allocated to any classes.
   * 2b2. Use case ends.
-* 2c. Contact has no assignments allocated.
+* 2c. Contact has no assignments allocated but has classes allocated.
   * 2c1. System displays the contact details including any classes allocated, but with a label indicating that the contact is not allocated to any assignments.
   * 2c2. Use case ends.
 * 2d. Contact has no classes or assignments allocated.
@@ -889,7 +889,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
+1. Should work on any _mainstream OS_ as long as it has Java 17 or above installed.
 1. Should be able to hold up to 1000 contacts, 500 classes, and 500 assignments without a noticeable performance degradation or sluggishness during typical usage.
 1. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 1. Should respond to user commands within 2 seconds to ensure a smooth user experience.
@@ -903,7 +903,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * **Assignment**: A task created by the user containing minimally a deadline, and may include submission status and grading. Can be allocated to _Classes_ and _Contacts_.
 * **Class**: A user-defined group of contacts.
-* **CLI (Command Line Interface)**: The text-based interface through which users interact with the system by typing command.
+* **CLI (Command Line Interface)**: The text-based interface through which users interact with the system by typing commands.
 * **Command**: A text-based instruction entered into the CLI that triggers a system action.
 * **Contact**: An individual entry of a student or teacher, containing minimally a name, phone number, email address, and may include _Classes_ and _Assignments_.
 * **Deadline**: Time and date specifying the due date of an _Assignment_.
