@@ -25,11 +25,9 @@ public class AssignmentNameTest {
         Assertions.assertTrue(AssignmentName.isValidName("peter the 2nd")); // alphanumeric characters
         Assertions.assertTrue(AssignmentName.isValidName("Capital Tan")); // with capital letters
         Assertions.assertTrue(AssignmentName.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
-        Assertions.assertTrue(AssignmentName.isValidName("Assignment-1")); // with hyphen in middle
+        Assertions.assertTrue(AssignmentName.isValidName("Assignment-1")); // with hyphen between characters
         Assertions.assertTrue(AssignmentName.isValidName("Final (Lab)")); // with brackets
         Assertions.assertTrue(AssignmentName.isValidName("Project (Part-1)")); // with hyphen and brackets
-        Assertions.assertTrue(AssignmentName.isValidName("-Assignment")); // hyphen at start
-        Assertions.assertTrue(AssignmentName.isValidName("/Assignment")); // slash at start
     }
 
     @Test
@@ -38,6 +36,9 @@ public class AssignmentNameTest {
         Assertions.assertFalse(AssignmentName.isValidName(" ")); // spaces only
         Assertions.assertFalse(AssignmentName.isValidName("^")); // only non-alphanumeric characters
         Assertions.assertFalse(AssignmentName.isValidName("peter*")); // contains non-alphanumeric characters
+        Assertions.assertFalse(AssignmentName.isValidName("-Assignment")); // hyphen at start
+        Assertions.assertFalse(AssignmentName.isValidName("Assignment-")); // hyphen at end
+        Assertions.assertFalse(AssignmentName.isValidName("(Lab)")); // starts with bracket
     }
 
     @Test

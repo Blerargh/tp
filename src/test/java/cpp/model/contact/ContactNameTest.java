@@ -27,7 +27,13 @@ public class ContactNameTest {
         Assertions.assertFalse(ContactName.isValidName("")); // empty string
         Assertions.assertFalse(ContactName.isValidName(" ")); // spaces only
         Assertions.assertFalse(ContactName.isValidName("^")); // only non-alphanumeric characters
-        Assertions.assertFalse(ContactName.isValidName("peter*")); // contains non-alphanumeric characters
+        Assertions.assertFalse(ContactName.isValidName("peter*")); // contains invalid character
+        Assertions.assertFalse(ContactName.isValidName("-James")); // hyphen at start
+        Assertions.assertFalse(ContactName.isValidName("a-")); // hyphen at end
+        Assertions.assertFalse(ContactName.isValidName("-")); // just hyphen
+        Assertions.assertFalse(ContactName.isValidName("(Alan)")); // starts with bracket
+        Assertions.assertFalse(ContactName.isValidName("/o")); // slash not in s/o or d/o pattern
+        Assertions.assertFalse(ContactName.isValidName("a/b")); // slash not in allowed pattern
 
         // valid name
         Assertions.assertTrue(ContactName.isValidName("peter jack")); // alphabets only
@@ -35,9 +41,9 @@ public class ContactNameTest {
         Assertions.assertTrue(ContactName.isValidName("peter the 2nd")); // alphanumeric characters
         Assertions.assertTrue(ContactName.isValidName("Capital Tan")); // with capital letters
         Assertions.assertTrue(ContactName.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
-        Assertions.assertTrue(ContactName.isValidName("Mary-Jane")); // with hyphen in middle
+        Assertions.assertTrue(ContactName.isValidName("Mary-Jane")); // with hyphen between characters
         Assertions.assertTrue(ContactName.isValidName("Anne-Marie Tan")); // hyphenated first name
-        Assertions.assertTrue(ContactName.isValidName("John (Doc) Smith")); // with brackets
+        Assertions.assertTrue(ContactName.isValidName("John (Doc) Smith")); // with brackets containing name
         Assertions.assertTrue(ContactName.isValidName("Tan Ah Beng (Alan)")); // ethnic name in brackets
         Assertions.assertTrue(ContactName.isValidName("Arun s/o Muthu")); // son of pattern
         Assertions.assertTrue(ContactName.isValidName("Priya d/o Kumar")); // daughter of pattern
@@ -45,12 +51,6 @@ public class ContactNameTest {
         Assertions.assertTrue(ContactName.isValidName("Priya D/O Kumar")); // uppercase daughter of pattern
         Assertions.assertTrue(ContactName.isValidName("s/o")); // son of alone (for search keywords)
         Assertions.assertTrue(ContactName.isValidName("d/o")); // daughter of alone (for search keywords)
-        Assertions.assertTrue(ContactName.isValidName("/o")); // slash followed by letter
-        Assertions.assertTrue(ContactName.isValidName("-James")); // hyphen at start
-        Assertions.assertTrue(ContactName.isValidName("-")); // just hyphen
-        Assertions.assertTrue(ContactName.isValidName("(Alan)")); // name in brackets
-    }
-
     }
 
     @Test
