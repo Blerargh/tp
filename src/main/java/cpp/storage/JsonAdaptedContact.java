@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import cpp.commons.exceptions.IllegalValueException;
+import cpp.logic.parser.ParserUtil;
 import cpp.model.contact.Address;
 import cpp.model.contact.Contact;
 import cpp.model.contact.ContactName;
@@ -83,7 +84,7 @@ class JsonAdaptedContact {
         if (!ContactName.isValidName(this.name)) {
             throw new IllegalValueException(ContactName.MESSAGE_CONSTRAINTS);
         }
-        final ContactName modelName = new ContactName(this.name);
+        final ContactName modelName = ParserUtil.parseName(this.name);
 
         if (this.phone == null) {
             throw new IllegalValueException(
