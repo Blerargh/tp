@@ -93,7 +93,7 @@ class JsonAdaptedContact {
         if (!Phone.isValidPhone(this.phone)) {
             throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
         }
-        final Phone modelPhone = new Phone(this.phone);
+        final Phone modelPhone = ParserUtil.parsePhone(this.phone);
 
         if (this.email == null) {
             throw new IllegalValueException(
@@ -102,7 +102,7 @@ class JsonAdaptedContact {
         if (!Email.isValidEmail(this.email)) {
             throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
         }
-        final Email modelEmail = new Email(this.email);
+        final Email modelEmail = ParserUtil.parseEmail(this.email);
 
         if (this.address == null) {
             throw new IllegalValueException(
@@ -111,7 +111,7 @@ class JsonAdaptedContact {
         if (!Address.isValidAddress(this.address)) {
             throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
         }
-        final Address modelAddress = new Address(this.address);
+        final Address modelAddress = ParserUtil.parseAddress(this.address);
 
         final Set<Tag> modelTags = new HashSet<>(contactTags);
         return new Contact(this.id, modelName, modelPhone, modelEmail, modelAddress, modelTags);
