@@ -427,7 +427,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Documentation, logging, testing, configuration, dev-ops**
+## **Documentation, Logging, Testing, Configuration, DevOps**
 
 * [Documentation guide](Documentation.md)
 * [Testing guide](Testing.md)
