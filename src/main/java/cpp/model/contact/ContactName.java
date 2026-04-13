@@ -17,6 +17,7 @@ public class ContactName {
             Forward slashes "/" are only allowed in "s/o" or "d/o" patterns (case-insensitive), and must follow the \
             pattern [Name] [s/o or d/o] [Name], \
             requiring at least one word before and after the space-delimited separator.
+            "s/o" and "d/o" patterns are only allowed once in a name.
             Hyphens "-" must be between two alphanumeric characters.
             Parentheses must:
                 - Not be at the start of the name
@@ -35,11 +36,14 @@ public class ContactName {
      * (not at start)
      */
     public static final String VALIDATION_REGEX = """
-            [A-Za-z](\
-            [\\p{Alnum} ]\
+            ^\
+            (?!(.*[sSdD]/[oO]){2,})\
+            [A-Za-z]\
+            ([\\p{Alnum} ]\
             |(?<=[\\p{Alnum}])-(?=[\\p{Alnum}])\
             |(?<=[\\p{Alnum}\\)] )[sSdD]/[oO](?= [\\(\\p{Alnum}])\
-            |\\([\\p{Alnum}]([\\p{Alnum} ]*[\\p{Alnum}])?\\))*""";
+            |\\([\\p{Alnum}](?:[\\p{Alnum} ]*[\\p{Alnum}])?\\))*\
+            $""";
 
     public final String fullName;
 
