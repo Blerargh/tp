@@ -546,6 +546,8 @@ Allocates an assignment to specific contacts.
 
 * The `CONTACT_INDICES...` must contain 1 or more positive integers 1, 2, 3, ..., referring to the index number shown in the displayed contact list.
 
+* By default, the assignment submission status for each allocated contact will be set to `false`, and it will be associated with a default score of 0.
+
 <box type="warning" seamless>
 
 **Warnings:**
@@ -645,6 +647,8 @@ Marks a specific assignment as submitted for the specified contacts.
 **Format:** `submit ass/ASSIGNMENT_NAME [c/CLASS_NAME] [ct/CONTACT_INDICES...] [d/SUBMISSION_DATE]`
 
 * Marks the assignment as submitted for the specified contacts, as well as all contacts in the specified class.
+
+* By default, the grade associated with the submission will remain as 0 until explicitly graded.
 
 * If the assignment is already submitted for the specified contact, the submission status and submission date will not be updated.
 
