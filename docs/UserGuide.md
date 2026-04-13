@@ -21,7 +21,7 @@ Classroom Plus Plus (CPP) is a desktop application designed for educators to man
 
 * Use [**Features**](#features) to view the full list of features, command reference, and examples.
 
-* Use [**FAQ**](#faq) and [**Known issues**](#known-issues-and-workarounds) when troubleshooting.
+* Refer to the [**FAQ**](#faq) and [**Known issues**](#known-issues-and-workarounds) section when troubleshooting.
 
 * Refer to the [**Command summary**](#command-summary) for a quick reference of all commands and formats.
 
@@ -60,7 +60,7 @@ This quick start assumes you are a teacher who wants to install CPP, open the ap
 
 1. Open File Explorer and navigate to **"This PC"** or **"My Computer"**.
 
-1. Look for the drive where you plan to store the app home (e.g., `C:\` or `D:\`).
+1. Look for the drive where you plan to store the app and its data (e.g., `C:\` or `D:\`).
 
 1. Check the **"Free space"** column for that drive to ensure it has at least `500MB` free.
 
@@ -480,9 +480,9 @@ Unallocates a class from specific contacts.
 
 **Warnings:**
 
-* If any of the specified contacts or class do not exist, the command will fail and no allocation is done.
+* If any of the specified contacts or class do not exist, the command will fail and no unallocation is done.
 
-* If any of the parameters are invalid, the command will also fail and no allocation is done.
+* If any of the parameters are invalid, the command will also fail and no unallocation is done.
 
 * The contact indices specified refer to the currently displayed contact list after filtering (e.g., after a `findcontact` command). It is recommended to run `list contacts` before this command to ensure the correct contact indices are used.
 
@@ -575,7 +575,7 @@ Adds an assignment to the address book.
 
 **Examples:**
 
-* `addass ass/Assignment-1 (CS2103T) d/01-12-2023 23:59`<br>`
+* `addass ass/Assignment-1 (CS2103T) d/01-12-2023 23:59`<br>
   Creates an assignment with the name "Assignment-1 (CS2103T)" and deadline "1 Dec 2023 11.59pm".
 
 * `addass ass/Assignment 2 d/15-12-2023 23:59 c/CS2103T-T10-1 (NUS)`<br>
@@ -813,7 +813,7 @@ Marks a specific assignment as unsubmitted for the specified contacts.
 **Examples:**
 
 * `unsubmit ass/Assignment 1 ct/1 2 3`<br>
-  Marks "Assignment 1" as unsubmitted for the 1st, 2nd, and 3rd contacts in the list
+  Marks "Assignment 1" as unsubmitted for the 1st, 2nd, and 3rd contacts in the list.
 
 * `unsubmit ass/Assignment 2 c/CS2103T T10 1`<br>
   Marks "Assignment 2" as unsubmitted for all contacts belonging to "CS2103T T10 1".
@@ -1060,10 +1060,6 @@ Finds and displays contacts based on the specified criteria. You can search by c
 
 * Each prefix (`n/`,`p/`,`e/`) must have a value. Using a prefix with no value (e.g.,`findcontact p/`) will result in an error.
 
-* Invalid contact names will not be allowed. For a detailed list of criteria for valid contact names, please refer to the feature documentation on [**Adding a contact**](#adding-a-contact-addcontact).
-
-* For phone and email searches, the entire value must match exactly. Partial matches will not return results.
-
 </box>
 
 <box type="tip" seamless>
@@ -1127,10 +1123,10 @@ Finds and displays classes based on the specified criteria. You can search by cl
 **Examples:**
 
 * `findclass c/CS2103`<br>
-  Finds all classes whose name contains "CS2103" (case-insensitive).
+  Finds all classes whose name contains "CS2103" as a substring (case-insensitive).
 
 * `findclass c/Tutorial Class`<br>
-  Finds all classes whose name contains "Tutorial" or "Class" (case-insensitive).
+  Finds all classes whose name contains "Tutorial Class" as a substring (case-insensitive).
 
 ### Finding assignments : `findass`
 
@@ -1616,7 +1612,7 @@ In the meantime, users can manually extract the required data from `addressbook.
 **A**: Make a copy of `data/addressbook.json` and store it in a safe location such as a cloud or external drive. To restore, stop CPP, replace the `addressbook.json` in the app home `data/` folder, then start CPP.
 
 **Q**: How does CPP prevent duplicate entries?\
-**A**: CPP performs basic duplicate detection at entry. The app prevents duplicate names within the same category. While an assignment and a class can share the same name, you cannot have two assignments, two classes, or two contacts with identical names. CPP will reject any duplicate entry within a domain with an explanatory error.
+**A**: CPP performs basic duplicate detection at entry. The app prevents duplicate names within assignments or within classes itself. While an assignment and a class can share the same name, you cannot have two assignments or two classes share the same name. For contacts, CPP prevents duplicate combinations of name and tags, but allows multiple contacts to share the same name as long as their tags differ.
 
 **Q**: Can I export/import data for other systems (e.g., Excel)?\
 **A**: The primary data format used by CPP is JavaScript Object Notation (JSON). We do not support importing from Excel, but users may manually convert their Excel files to JSON format, adhering to the structure and format of the `addressbook.json` file generated on first run. Manual editing of `addressbook.json` is not recommended unless you are comfortable with the JSON format.
