@@ -179,7 +179,8 @@ public class AddressBookParser {
         // Currently, this function only considers non-alias command words for
         // suggestions to avoid confusion. If alias suggestions are desired, they can be
         // added here.
-        String[] validCommands = { AddContactCommand.COMMAND_WORD,
+        String[] validCommands = {
+                AddContactCommand.COMMAND_WORD,
                 EditContactCommand.COMMAND_WORD,
                 EditClassGroupCommand.COMMAND_WORD,
                 EditAssignmentCommand.COMMAND_WORD,
