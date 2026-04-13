@@ -972,19 +972,21 @@ Shows a list of all assignments in the address book.
 
 ### Finding contacts : `findcontact`
 
-Finds and displays contacts based on the specified criteria. You can search by contact name (keyword match), or by phone number/email (exact match). Matching is case-insensitive.
+Finds and displays contacts based on the specified criteria. You can search by contact name, by phone number, or by email. Substring matching will be performed, and matching is case-insensitive.
 
 **Format:**
 
-1. `findcontact n/CONTACT_NAME_KEYWORDS...` — search by name using keywords (keyword match)
-1. `findcontact p/PHONE_NUMBER` — search by phone number (exact match)
-1. `findcontact e/EMAIL` — search by email address (exact match)
+1. `findcontact n/CONTACT_NAME_SEARCH_STRING` — search by name
+1. `findcontact p/PHONE_NUMBER` — search by phone number
+1. `findcontact e/EMAIL` — search by email address
 
-* **Name search `n/`:** The command will find contacts whose names contain **any** of the specified keywords (case-insensitive). Keywords are separated by spaces. For example, `findcontact n/alice bob` will return all contacts whose name contains "alice" or "bob".
+* **Name search `n/`:** The command will find contacts whose names contain the specified substring (case-insensitive). For example, `findcontact n/alice` will return all contacts whose name contains "alice".
 
-* **Phone search `p/`:** Searches for contacts by exact phone number match. The entire phone number must match exactly.
+* **Phone search `p/`:** Searches for contacts by phone number.
 
-* **Email search `e/`:** Searches for contacts by exact email address match (case-insensitive). The entire email must match exactly.
+* **Email search `e/`:** Searches for contacts by email address. (case-insensitive).
+
+* All consecutive spaces will be replaced by a single space, and any leading or trailing spaces will be retained. For example, `findcontact n/<4 SPACES> Alice <5 SPACES> Smith <3 SPACES>` will find all contacts whose name contains " Alice Smith ". With this search string, "Alice Smith" will not be displayed, but "bob alice smith lang" will be displayed.
 
 * You cannot use multiple search types in one command. For example, `findcontact p/91234567 e/alice@gmail.com` is invalid. Choose one search method per command.
 
@@ -1001,8 +1003,6 @@ Finds and displays contacts based on the specified criteria. You can search by c
 * Invalid contact names will not be allowed. For a detailed list of criteria for valid contact names, please refer to the feature documentation on [**Adding a contact**](#adding-a-contact-addcontact).
 
 * For phone and email searches, the entire value must match exactly. Partial matches will not return results.
-
-* You cannot use unrecognized prefixes like `c/`, `ass/`, or `d/`. The system will reject commands with invalid prefixes.
 
 </box>
 
@@ -1022,21 +1022,23 @@ Finds and displays contacts based on the specified criteria. You can search by c
   Finds all contacts whose name contains "alice" (case-insensitive).
 
 * `findct n/john doe`<br>
-  Using the abbreviated command, finds all contacts whose name contains "john" or "doe".
+  Using the abbreviated command, finds all contacts whose name contains "john doe".
 
 * `findcontact p/91234567`<br>
-  Finds all contacts with phone number 91234567.
+  Finds all contacts with phone number containing "91234567".
 
-* `findcontact e/alice@gmail.com`<br>
-  Finds all contacts with email <alice@gmail.com>.
+* `findcontact e/gmail.com`<br>
+  Finds all contacts with email containing "gmail.com".
 
 ### Finding classes : `findclass`
 
-Finds and displays classes based on the specified criteria. You can search by class name (keyword match). Matching is case-insensitive.
+Finds and displays classes based on the specified criteria. You can search by class name (substring match). Matching is case-insensitive.
 
-**Format:** `findclass c/CLASS_NAME_KEYWORDS...`
+**Format:** `findclass c/CLASS_NAME_SEARCH_STRING`
 
-* **Name search `c/`:** The command will find classes whose names contain **any** of the specified keywords (case-insensitive). Keywords are separated by spaces. For example, `findclass c/CS2103 Class` will return all classes whose name contains "CS2103" or "Class".
+* **Name search `c/`:** The command will find classes whose names contain the specified substring (case-insensitive). For example, `findclass c/CS2103` will return all classes whose name contains "CS2103".
+
+* All consecutive spaces will be replaced by a single space, and any leading or trailing spaces will be retained. For example, `findclass c/<4 SPACES> CS2103 <5 SPACES> Tutorial <3 SPACES>` will find all classes whose name contains " CS2103 Tutorial ". With this search string, "CS2103 Tutorial" will not be displayed, but "nus cs2103 tutorial group 10" will be displayed.
 
 * The tab will automatically switch to the `Classes` tab upon successful execution.
 
@@ -1048,9 +1050,7 @@ Finds and displays classes based on the specified criteria. You can search by cl
 
 * Invalid class names will not be allowed. For a detailed list of criteria for valid class names, please refer to the feature documentation on [**Adding classes**](#adding-classes-addclass).
 
-* `CLASS_NAME_KEYWORDS` must not be empty. Using the `c/` prefix with no value (e.g., `findclass c/`) will result in an error, and no filter is applied.
-
-* You cannot use unrecognized prefixes like `n/`, `p/`, `e/`, `d/`, or `ass/`. The system will reject commands with invalid prefixes.
+* `CLASS_NAME_SEARCH_STRING` must not be empty. Using the `c/` prefix with no value (e.g., `findclass c/`) will result in an error, and no filter is applied.
 
 </box>
 
@@ -1106,8 +1106,6 @@ Finds and displays assignments based on the specified criteria. You can search b
 * For deadline searches, the time may be omitted. For example, if an assignment has a deadline of `31-12-2024 23:59`, searching with `findass ds/31-12-2024` will also match it.
 
 * Any time values provided will be treated as the time in the timezone set in `preferences.json`. By default, this is set to GMT +8, but you can change it to your local timezone if needed. Acceptable values range from -18 to 18, and any invalid or missing timezone values will default to GMT +8.
-
-* You cannot use unrecognized prefixes like `p/`, `e/`, `c/`, or `n/`. The system will reject commands with invalid prefixes.
 
 </box>
 
