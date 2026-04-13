@@ -832,7 +832,7 @@ Marks a specific assignment as unsubmitted for the specified contacts.
 
 Grades a specific assignment for the specified contacts with a score.
 
-**Format:** `grade ass/ASSIGNMENT_NAME [c/CLASS_NAME] [ct/CONTACT_INDICES...] s/SCORE [d/GRADING_DATE]`
+**Format:** `grade ass/ASSIGNMENT_NAME s/SCORE [c/CLASS_NAME] [ct/CONTACT_INDICES...] [d/GRADING_DATE]`
 
 * Marks an assignment as graded for the specified contacts, as well as contacts in the specified class, with the specified score and grading date.
 
