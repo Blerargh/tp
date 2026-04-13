@@ -149,7 +149,7 @@ Within a few seconds the application will appear. The main User Interface (UI) c
 
 ### Quick CLI tutorial (common tasks and expected output)
 
-In this quick tutorial, we will cover some common tasks such as listing contacts, adding a contact, deleting contacts, and finding contacts by name keywords. The expected output shown is based on the default data loaded on first launch. Do paste the commands given in the application's command box and check that the result display and list panel match the expected output given before proceeding to the next command.
+In this quick tutorial, we will cover some common tasks such as listing contacts, adding a contact, deleting contacts, and finding contacts by name substring. The expected output shown is based on the default data loaded on first launch. Do paste the commands given in the application's command box and check that the result display and list panel match the expected output given before proceeding to the next command.
 
 <box type="tip" seamless>
 
@@ -209,18 +209,18 @@ In this quick tutorial, we will cover some common tasks such as listing contacts
     Deleted Contact: Charlotte Oliveiro; Phone: 93210283; Email: charlotte@example.com; Address: Blk 11 Ang Mo Kio Street 74, #11-04; Tags: [neighbours]
     ```
 
-* **Find by name keywords (case-insensitive):**
+* **Find by name substring (case-insensitive):**
 
     Command:
 
     ```text
-    findcontact n/dAviD IRFAN
+    findcontact n/dAviD L
     ```
 
-    Expected: Confirmation message in result display and contact list updated to show names containing "david irfan" (case-insensitive).
+    Expected: Confirmation message in result display and contact list updated to show names containing "david l" (case-insensitive).
 
     ```text
-    2 contacts listed!
+    1 contact(s) listed!
     ```
 
 <box type="warning" seamless>
@@ -372,8 +372,6 @@ Adds a class to the address book.
 
   * Hyphens `-` must be between two alphanumeric characters.
 
-  * Open parenthesis `(` cannot be at the start of the name, and must have a closing parenthesis `)`.
-
   * Parentheses must:
 
     * Not be at the start of the name
@@ -386,7 +384,7 @@ Adds a class to the address book.
 
     * Closing parenthesis `)` must be immediately preceded by an alphanumeric character.
 
-* `CLASS_NAME` should not match the name of any existing class (space-less and case-insensitive matching). If you wish to add multiple different classes with the same name, you are advised to disambiguate them manually.
+* `CLASS_NAME` should not match the name of any existing class (space-less and case-insensitive matching). If you wish to add multiple different classes with the same name, you are advised to disambiguate them manually (e.g. with parentheses and/or hyphens).
 
 * `ct/CONTACT_INDICES...` is optional and can be used to allocate the class to specific contacts upon creation. If the `ct/` prefix is included, at least 1 contact index must be specified.
 
@@ -527,8 +525,6 @@ Adds an assignment to the address book.
 
   * Hyphens `-` must be between two alphanumeric characters.
 
-  * Open parenthesis `(` cannot be at the start of the name, and must have a closing parenthesis `)`.
-
   * Parentheses must:
 
     * Not be at the start of the name
@@ -541,7 +537,7 @@ Adds an assignment to the address book.
 
     * Closing parenthesis `)` must be immediately preceded by an alphanumeric character.
 
-* `ASSIGNMENT_NAME` should not match the name of any existing assignment (space-less and case-insensitive matching). If you wish to add multiple different assignments with the same name but for different classes, you are advised to disambiguate them manually.
+* `ASSIGNMENT_NAME` should not match the name of any existing assignment (space-less and case-insensitive matching). If you wish to add multiple different assignments with the same name but for different classes, you are advised to disambiguate them manually (e.g. with parentheses and/or hyphens).
 
 * The `DEADLINE` provided must be in the format `dd-MM-yyyy HH:mm`.
 
@@ -712,7 +708,7 @@ Marks a specific assignment as submitted for the specified contacts.
 
 * Marks the assignment as submitted for the specified contacts, as well as all contacts in the specified class.
 
-* By default, the grade associated with the submission will remain as 0 until explicitly graded.
+* By default, the grade associated with the submission will remain as 0 until explicitly graded otherwise.
 
 * If the assignment is already submitted for the specified contact, the submission status and submission date will not be updated.
 

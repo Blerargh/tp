@@ -33,9 +33,9 @@ public class Messages {
     public static final String MESSAGE_ASSIGNMENT_NOT_FOUND = "The assignment provided is not found";
     public static final String MESSAGE_CLASS_GROUP_NOT_FOUND = "The class group provided is not found";
     public static final String MESSAGE_CLASS_GROUP_NO_CONTACTS = "The class group provided has no contacts";
-    public static final String MESSAGE_CONTACTS_LISTED_OVERVIEW = "%1$d contacts listed!";
-    public static final String MESSAGE_ASSIGNMENTS_LISTED_OVERVIEW = "%1$d assignments listed!";
-    public static final String MESSAGE_CLASS_GROUPS_LISTED_OVERVIEW = "%1$d class groups listed!";
+    public static final String MESSAGE_CONTACTS_LISTED_OVERVIEW = "%1$d contact(s) listed!";
+    public static final String MESSAGE_ASSIGNMENTS_LISTED_OVERVIEW = "%1$d assignment(s) listed!";
+    public static final String MESSAGE_CLASS_GROUPS_LISTED_OVERVIEW = "%1$d class group(s) listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS = "Multiple values specified for the following field(s): ";
     public static final String MESSAGE_DEADLINE_START_AFTER_END = """
             The start deadline cannot be after the end deadline.""";
