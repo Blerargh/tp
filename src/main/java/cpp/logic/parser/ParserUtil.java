@@ -281,6 +281,10 @@ public class ParserUtil {
         return new ClassGroupName(trimmedName);
     }
 
+    /**
+     * Parses a {@code String name} into a {@code ClassGroupName}. If isSpaceless is
+     * true, all spaces will be removed from the trimmed name before validation.
+     */
     public static ClassGroupName parseClassGroupName(String string, boolean isSpaceless) throws ParseException {
         Objects.requireNonNull(string);
         String trimmedName = string.trim().replaceAll("\\s+", " ");
