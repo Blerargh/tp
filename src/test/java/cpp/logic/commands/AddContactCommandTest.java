@@ -14,6 +14,7 @@ import cpp.model.ReadOnlyAddressBook;
 import cpp.model.assignment.AssignmentName;
 import cpp.model.classgroup.ClassGroupName;
 import cpp.model.contact.Contact;
+import cpp.model.contact.ContactName;
 import cpp.testutil.Assert;
 import cpp.testutil.ContactBuilder;
 import cpp.testutil.ModelStub;
@@ -175,6 +176,12 @@ public class AddContactCommandTest {
         public void addContact(Contact contact) {
             Objects.requireNonNull(contact);
             this.contactsAdded.add(contact);
+        }
+
+        @Override
+        public boolean hasContactWithName(ContactName name) {
+            Objects.requireNonNull(name);
+            return this.contactsAdded.stream().anyMatch(contact -> contact.getName().equals(name));
         }
 
         @Override

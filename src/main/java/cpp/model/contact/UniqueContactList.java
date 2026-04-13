@@ -50,6 +50,15 @@ public class UniqueContactList implements Iterable<Contact> {
     }
 
     /**
+     * Returns true if the list contains a contact with the same name as
+     * {@code name}.
+     */
+    public boolean containsName(ContactName name) {
+        Objects.requireNonNull(name);
+        return this.internalList.stream().anyMatch(contact -> contact.getName().equals(name));
+    }
+
+    /**
      * Adds a contact to the list.
      * The contact must not already exist in the list.
      */
