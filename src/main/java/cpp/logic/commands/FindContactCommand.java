@@ -11,11 +11,11 @@ import cpp.model.contact.ContactSearchPredicate;
 /**
  * Finds and lists all contacts in address book using the {@code findcontact}
  * ({@code findct}) command.
- * 
+ *
  * Supports three search modes:
- * 
- * - Name search: finds contacts whose names contain any of the specified
- * keywords (case-insensitive, keyword-based search).<br>
+ *
+ * - Name search: finds contacts whose names contain the specified string
+ * (case-insensitive).
  * - Phone search: finds contacts whose phone number contains the specified
  * value.
  * - Email search: finds contacts whose email address contains the specified
