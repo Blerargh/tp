@@ -24,6 +24,11 @@ public class ViewCommandParser implements Parser<ViewCommand> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
                 CliSyntax.PREFIX_CONTACT, CliSyntax.PREFIX_ASSIGNMENT, CliSyntax.PREFIX_CLASS);
 
+        if (!argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(
+                    String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
+        }
+
         argMultimap.verifyNoDuplicatePrefixesFor(
                 CliSyntax.PREFIX_CONTACT, CliSyntax.PREFIX_ASSIGNMENT, CliSyntax.PREFIX_CLASS);
 
@@ -56,7 +61,7 @@ public class ViewCommandParser implements Parser<ViewCommand> {
      */
     private ViewCommand parseViewAssignment(ArgumentMultimap argMultimap) throws ParseException {
         AssignmentName name = ParserUtil.parseAssignmentName(
-                argMultimap.getValue(CliSyntax.PREFIX_ASSIGNMENT).get());
+                argMultimap.getValue(CliSyntax.PREFIX_ASSIGNMENT).get(), true);
         return new ViewAssignmentCommand(name);
     }
 
@@ -65,7 +70,7 @@ public class ViewCommandParser implements Parser<ViewCommand> {
      */
     private ViewCommand parseViewClassGroup(ArgumentMultimap argMultimap) throws ParseException {
         ClassGroupName name = ParserUtil.parseClassGroupName(
-                argMultimap.getValue(CliSyntax.PREFIX_CLASS).get());
+                argMultimap.getValue(CliSyntax.PREFIX_CLASS).get(), true);
         return new ViewClassGroupCommand(name);
     }
 
